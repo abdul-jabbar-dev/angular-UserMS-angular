@@ -1,0 +1,35 @@
+<div class="  flex items-center justify-center min-h-screen  ">
+    <section *ngIf="profile; else isLoading"
+        class="w-full max-w-[430px] relative  rounded-[6px]  mx-2 -mt-6 overflow-hidden">
+
+        <img src="/assets/profile.png"
+            class="rounded-full w-[200px] mx-auto my-10 p-0  shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] ">
+
+        <h1 class="text-xl font-bold text-center">{{profile.first_name+" "+ profile.last_name}}</h1>
+        <small class="block my-1 text-center">@{{profile.username}}</small>
+        <p class="mt-5 text-start">Email: {{profile.email}}</p>
+        <p class="mt-5 text-start">Phone: {{profile.phone||'--'}}</p>
+        <p class="mt-5 text-start">Age: {{profile.age||'--'}}</p>
+        <p class="mt-5 text-start">Role: <span class="uppercase">{{profile.role||'--'}}</span></p>
+
+    </section>
+
+    <ng-template #isLoading>
+        <section class="w-full max-w-[430px] animate-pulse relative  rounded-[6px]  mx-2 -mt-6 overflow-hidden">
+
+            <div
+                class="bg-gray-600 rounded-full w-[120px] h-[120px] mx-auto my-10 p-0 border-[6px] box-content opacity-15  shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)]  ">
+            </div>
+            <div class="w-full flex flex-col justify-center items-center">
+                <h1 class="text-xl font-bold text-center w-40 bg-slate-600 h-4 rounded-lg opacity-15 mb-2"> </h1>
+                <h1 class="text-xl font-bold text-center w-24 bg-slate-600 h-4 rounded-lg opacity-15 mb-6"> </h1>
+                <h1 class="text-xl font-bold text-center w-96 bg-slate-600 h-4 rounded-lg opacity-15 my-1"> </h1>
+                <h1 class="text-xl font-bold text-center w-96 bg-slate-600 h-4 rounded-lg opacity-15 my-1"> </h1>
+                <h1 class="text-xl font-bold text-center w-96 bg-slate-600 h-4 rounded-lg opacity-15 my-1"> </h1>
+                <h1 class="text-xl font-bold text-center w-96 bg-slate-600 h-4 rounded-lg opacity-15 my-1"> </h1>
+            </div>
+
+
+        </section>
+    </ng-template>
+</div>
