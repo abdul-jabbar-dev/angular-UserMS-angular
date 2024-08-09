@@ -1,9 +1,18 @@
 import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { TUser } from 'server/src/types/User';
+ 
 import { AuthService } from 'src/app/services/auth.service';
-
+interface TUser {
+  password?: string;
+  role?: 'admin' | 'subscriber';
+  first_name: string;
+  email: string;
+  username?: string;
+  last_name: string;
+  age: number;
+  phone: string;
+}
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
