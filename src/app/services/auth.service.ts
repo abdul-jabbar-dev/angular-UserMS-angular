@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { SupabaseService } from 'src/app/services/supabase.service';
 import { OAuthResponse } from '@supabase/supabase-js';
 import { StoreService } from './store.service';

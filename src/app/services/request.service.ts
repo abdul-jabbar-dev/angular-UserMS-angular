@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RequestService {
-  private apiUrl = 'https://angular-userms-nest-knex.onrender.com';
-  // private apiUrl = 'http://localhost:3000';
+  // private apiUrl = 'https://angular-userms-nest-knex.onrender.com';
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient, public store: StoreService) {}
 
@@ -67,7 +67,8 @@ export class RequestService {
       'Content-Type': 'application/json',
     });
     if (this.store.getToken()) {
-      headers.append('Authorization', this.store.getToken() as string);
+      headers.append('Authorization', this.store.getToken() as string);  
+      headers.append('authorization', this.store.getToken() as string);
     }
     const body = JSON.stringify(data);
     return await this.http.post(this.apiUrl + pref, body, { headers });

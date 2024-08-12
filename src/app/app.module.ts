@@ -26,6 +26,7 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
 import { UsersComponent } from './users/users.component';
 import { AdminUserComponent } from './users/admin-user/admin-user.component';
 import { AllUserComponent } from './users/all-user/all-user.component';
+import { MyProductsComponent } from './products/my-products/my-products.component';
 
  
  
@@ -45,6 +46,7 @@ import { AllUserComponent } from './users/all-user/all-user.component';
     UsersComponent,
     AdminUserComponent,
     AllUserComponent,
+    MyProductsComponent,
   ],
   imports: [
     BrowserModule,

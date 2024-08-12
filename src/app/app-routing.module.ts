@@ -11,6 +11,7 @@ import { AllProductsComponent } from './products/all-products/all-products.compo
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { AdminUserComponent } from './users/admin-user/admin-user.component';
 import { AuthGuard } from './AuthGuard';
+import { MyProductsComponent } from './products/my-products/my-products.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
@@ -19,7 +20,6 @@ const routes: Routes = [
   {
     path: 'registration',
     component: RegisterComponent,
-    
   },
   {
     path: 'create_products',
@@ -47,6 +47,7 @@ const routes: Routes = [
       },
     ],
   },
+  { path: 'my_products', component: MyProductsComponent, canActivate: [AuthGuard] },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
   { path: '', component: AllProductsComponent },
 ];
