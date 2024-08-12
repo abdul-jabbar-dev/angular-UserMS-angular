@@ -1,5 +1,7 @@
+import { firstValueFrom } from 'rxjs';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { RequestService } from 'src/app/services/request.service';
 import { SupabaseService } from 'src/app/services/supabase.service';
 
 @Component({
@@ -14,7 +16,10 @@ export class CreateProductsComponent {
     file: null,
   };
   isCreateing: boolean = false;
-  constructor(public supabase: SupabaseService) {}
+  constructor(
+    public supabase: SupabaseService,
+    public request: RequestService
+  ) {}
   createProductForm = new FormGroup({
     title: new FormControl<string>('', [
       Validators.required,
@@ -27,7 +32,6 @@ export class CreateProductsComponent {
     desc: new FormControl<string>(''),
     image: new FormControl<string>('', [Validators.required]),
   });
-
   distroSelectImg() {
     this.selectedImg = { url: '', name: '', file: null };
   }
@@ -63,13 +67,18 @@ export class CreateProductsComponent {
       if (data) {
         this.createProductForm.patchValue({
           image: (data as any).data.fullPath,
-        });
-        const result = await this.supabase.insertData(
-          'Products',
-          this.createProductForm.getRawValue()
-        );
+        }); 
+         const result = await firstValueFrom(
+          await this.request.create(
+            '/product/create',
+            this.createProductForm.getRawValue()
+          )
+        );  
+        // const result = await this.supabase.insertData(
+        //   'Products',
+        //   this.createProductForm.getRawValue()
+        // );
         if (result?.error) {
-          console.log(result?.error);
           this.isCreateing = false;
         } else {
           console.log(result);
