@@ -29,8 +29,5 @@ export class AllProductsComponent implements OnInit {
   }
   switchBookmark(event: MouseEvent) {
     event.stopPropagation();
-  }
-  cliccc() {
-    console.log('click parent');
-  }
+  } 
 }

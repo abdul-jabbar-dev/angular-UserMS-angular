@@ -1,0 +1,12 @@
+<div class="p-4 max-w-3xl bg-white rounded-lg sm:p-8 mx-auto">
+    <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold leading-none text-gray-900">My Products</h3>
+    </div>
+    <div class="flow-root">
+        <ul role="list" class="divide-y select-none divide-gray-200">
+            <li *ngFor="let item of allMyProducts" class="py-3 sm:py-4">
+                <app-edit-my-products [item]="item"></app-edit-my-products>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,3 +1,4 @@
+import { EditMyProductsComponent } from './products/edit-my-products/edit-my-products.component';
 import { AllUserComponent } from './users/all-user/all-user.component';
 import { UsersComponent } from './users/users.component';
 import { ContactusComponent } from './contactus/contactus.component';
@@ -11,6 +12,7 @@ import { AllProductsComponent } from './products/all-products/all-products.compo
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { AdminUserComponent } from './users/admin-user/admin-user.component';
 import { AuthGuard } from './AuthGuard';
+import { MyProductsComponent } from './products/my-products/my-products.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
@@ -19,7 +21,6 @@ const routes: Routes = [
   {
     path: 'registration',
     component: RegisterComponent,
-    
   },
   {
     path: 'create_products',
@@ -48,6 +49,12 @@ const routes: Routes = [
     ],
   },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
+  {
+    path: 'my_products',
+    component: MyProductsComponent,
+    canActivate: [AuthGuard],
+    // children: [{ path: ':id', component: EditMyProductsComponent }],
+  },
   { path: '', component: AllProductsComponent },
 ];
 

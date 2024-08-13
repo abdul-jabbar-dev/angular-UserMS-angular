@@ -26,6 +26,8 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
 import { UsersComponent } from './users/users.component';
 import { AdminUserComponent } from './users/admin-user/admin-user.component';
 import { AllUserComponent } from './users/all-user/all-user.component';
+import { MyProductsComponent } from './products/my-products/my-products.component';
+import { EditMyProductsComponent } from './products/edit-my-products/edit-my-products.component';
 
  
  
@@ -45,13 +47,15 @@ import { AllUserComponent } from './users/all-user/all-user.component';
     UsersComponent,
     AdminUserComponent,
     AllUserComponent,
+    MyProductsComponent,
+    EditMyProductsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [RouteService, RouterLinkService, SupabaseService,AuthService,StoreService, RequestService,AuthGuard],
   bootstrap: [AppComponent],

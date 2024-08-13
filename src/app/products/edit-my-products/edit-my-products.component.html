@@ -1,0 +1,41 @@
+<li class="py-3 sm:py-4">
+    <div class="flex items-center space-x-4">
+        <div class="flex-shrink-0">
+            <img class="w-32 h-32 select-none rounded-xl"
+                [src]="'https://vdlbpitmjmlzfxhvgyxo.supabase.co/storage/v1/object/public/'+item?.image"
+                alt="Neil image">
+        </div>
+        <div class="flex-1 min-w-0">
+
+
+            <p class="text-sm text-gray-500 ">
+                <label *ngIf="isEditable; else netitle" class="font-semibold py-2"  for="desc"> Product Name:
+                    <input [value]="item.title" id="desc" type="text"
+                        class="border text-gray-900 font-normal px-3 py-3 rounded-md w-full" />
+                </label>
+
+                <ng-template #netitle> <span class="">{{ item.title }}</span> </ng-template>
+            </p>
+
+
+            <p class="text-sm text-gray-500 my-2">
+                <label *ngIf="isEditable; else neprice" class="font-semibold" for="desc"> Product Price:
+                    <input [value]="item.price" id="desc" type="text"
+                        class="border text-gray-900 font-normal p-3 my-3 rounded-md w-full" />
+                </label>
+
+                <ng-template #neprice> <span class="">{{ item.price }}</span> </ng-template>
+            </p>
+
+            <p class="text-sm text-gray-500 ">
+                <label *ngIf="isEditable; else nedesc" class="font-semibold" for="desc"> Product Description:
+                    <textarea id="desc" type="text" class="border text-gray-900 font-normal p-3 rounded-md w-full"
+                        cols="7" rows="5" [value]="item.desc"></textarea>
+                </label>
+
+                <ng-template #nedesc> <span class="">{{ item.desc }}</span> </ng-template>
+            </p>
+        </div>
+        <span (click)="IsEditable()" class="hover:underline hover:text-blue-900 active:text-red-700">Edit</span>
+    </div>
+</li>
