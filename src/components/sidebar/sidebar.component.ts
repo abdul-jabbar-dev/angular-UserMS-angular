@@ -78,9 +78,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
         icon: '/assets/icon/nav/All.svg',
       },
       {
-        title: 'Bookmarks',
-        id: 'bookmarks',
-        link: '/bookmarks',
+        title: 'Favourite',
+        id: 'favourite',
+        link: '/favourite',
         isActive: false,
         icon: '/assets/icon/nav/Love.svg',
         isAuthorization: true,

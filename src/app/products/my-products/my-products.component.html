@@ -3,9 +3,24 @@
         <h3 class="text-xl font-bold leading-none text-gray-900">My Products</h3>
     </div>
     <div class="flow-root">
-        <ul role="list" class="divide-y select-none divide-gray-200">
+        <!-- Loading Spinner -->
+        <div *ngIf="!allMyProducts.length && !noData" class="flex justify-center items-center">
+            <div
+                class="w-16 h-16 border-4 border-gray-400 border-t-transparent border-double rounded-full animate-spin">
+            </div>
+            <p class="ml-4 text-gray-500">Loading products...</p>
+        </div>
+
+        <!-- No Data Message -->
+        <div *ngIf="noData && !allMyProducts.length" class="text-center text-gray-500 mt-6">
+            <p>No products found.</p>
+        </div>
+
+        <!-- Product List -->
+        <ul *ngIf="allMyProducts.length > 0" class="divide-y divide-gray-200">
             <li *ngFor="let item of allMyProducts" class="py-3 sm:py-4">
-                <app-edit-my-products [item]="item"></app-edit-my-products>
+                <app-edit-my-products (updatedProduct)="handleProductUpdate($event)" [item]="item">
+                </app-edit-my-products>
             </li>
         </ul>
     </div>

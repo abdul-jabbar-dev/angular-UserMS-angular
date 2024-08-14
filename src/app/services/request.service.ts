@@ -14,25 +14,35 @@ export class RequestService {
 
   async get(
     pref: string,
-    query?: Record<string, string | number | boolean>
+    query?: Record<string, string | number | boolean | null>
   ): Promise<Observable<any>> {
-    let options = { headers: new HttpHeaders(), params: new HttpParams() };
+    try {
+     
+      let options = { headers: new HttpHeaders(), params: new HttpParams() };
 
-    const token = this.store.getToken() as string;
-    if (token && token.length > 15) {
-      options.headers = options.headers.append('Authorization', token);
-    }
-
-    if (query) {
-      Object.keys(query).forEach((key) => {
-        options.params = options.params.append(key, query[key].toString());
+      const token = this.store.getToken() as string;
+      if (token && token.length > 15) {
+        options.headers = options.headers.append('Authorization', token);
+      }
+  
+      if (query) {
+        Object.keys(query).forEach((key) => {
+          if (query[key]) {
+            options.params = options.params.append(
+              key,
+              (query[key] as any).toString() || null
+            );
+          }
+        });
+      }
+      return this.http.get(this.apiUrl + pref, {
+        headers: options.headers,
+        params: options.params,
       });
+    } catch (error) {
+      console.log(error);
+      throw new Error(JSON.stringify(error));
     }
-
-    return this.http.get(this.apiUrl + pref, {
-      headers: options.headers,
-      params: options.params,
-    });
   }
 
   async put(pref: string, body: any): Promise<Observable<any>> {

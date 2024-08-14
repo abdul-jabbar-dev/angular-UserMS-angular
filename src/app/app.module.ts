@@ -28,6 +28,7 @@ import { AdminUserComponent } from './users/admin-user/admin-user.component';
 import { AllUserComponent } from './users/all-user/all-user.component';
 import { MyProductsComponent } from './products/my-products/my-products.component';
 import { EditMyProductsComponent } from './products/edit-my-products/edit-my-products.component';
+import { FavouriteComponent } from './favourite/favourite.component';
 
  
  
@@ -49,6 +50,7 @@ import { EditMyProductsComponent } from './products/edit-my-products/edit-my-pro
     AllUserComponent,
     MyProductsComponent,
     EditMyProductsComponent,
+    FavouriteComponent,
   ],
   imports: [
     BrowserModule,

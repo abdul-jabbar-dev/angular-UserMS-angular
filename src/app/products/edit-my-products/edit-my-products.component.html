@@ -1,41 +1,116 @@
-<li class="py-3 sm:py-4">
-    <div class="flex items-center space-x-4">
-        <div class="flex-shrink-0">
-            <img class="w-32 h-32 select-none rounded-xl"
-                [src]="'https://vdlbpitmjmlzfxhvgyxo.supabase.co/storage/v1/object/public/'+item?.image"
-                alt="Neil image">
-        </div>
-        <div class="flex-1 min-w-0">
+<span class="relative w-full">
+    <li [class]="isEditable?'py-3 sm:py-4 shadow-md relative':'py-3 sm:py-4  '">
+        <form *ngIf="!isUpdating" [formGroup]="productEdit" (submit)="update()"
+            class="flex items-center space-x-4 px-8">
+
+            <div class="flex-shrink-0">
+
+                <img class="w-32 h-32 select-none rounded-xl"
+                    [src]="selectedImage.url?selectedImage.url:'https://vdlbpitmjmlzfxhvgyxo.supabase.co/storage/v1/object/public/'+item?.image"
+                    [alt]="selectedImage.name">
+
+                <div *ngIf="isEditable">
+                    <label *ngIf="!selectedImage.url; else chngOldImg" for="neimage"
+                        class="hover:underline block text-center hover:text-blue-900 mx-auto active:text-red-700">Change
+                        <input accept="image/*" id="neimage" (change)="addImage($event)" class="hidden" type="file">
+                    </label>
+                    <ng-template #chngOldImg>
+                        <p class="text-center uppercase hover:text-blue-900 mx-auto active:text-red-700 "
+                            (click)="removePrevImg()">Remove</p>
+                    </ng-template>
+                </div>
 
 
-            <p class="text-sm text-gray-500 ">
-                <label *ngIf="isEditable; else netitle" class="font-semibold py-2"  for="desc"> Product Name:
-                    <input [value]="item.title" id="desc" type="text"
-                        class="border text-gray-900 font-normal px-3 py-3 rounded-md w-full" />
-                </label>
+            </div>
 
-                <ng-template #netitle> <span class="">{{ item.title }}</span> </ng-template>
-            </p>
+            <div class="flex-1 min-w-0">
+
+                <p class="text-sm text-gray-500 ">
+                    <label *ngIf="isEditable; else netitle" class="font-semibold py-2" for="desc"> Product Name:
+                        <input formControlName="title" [value]="item.title" id="desc" type="text"
+                            class="border text-gray-900 font-normal px-3 py-3 mt-2 rounded-md w-full" />
+                        <div class="text-red-800 m-0 p-0 text-sm"
+                            *ngIf="productEdit.get('title')?.touched && productEdit.get('title')?.invalid">
+                            <small *ngIf="productEdit.get('title')?.errors?.['required']">Title is
+                                required.</small>
+                            <small *ngIf="productEdit.get('title')?.errors?.['minlength']">Title must be at least
+                                3 characters
+                                long.</small>
+                        </div>
+                    </label>
+
+                    <ng-template #netitle> <span class="text-xl">{{ item.title }}</span> </ng-template>
+                </p>
+
+                <div class="text-sm font-semibold items-center text-gray-500 my-2 flex justify-between gap-x-3">
+                    <div>
+                        <label *ngIf="isEditable; else neprice" for="desc"> Product Price:
+                            <input formControlName="price" id="desc" type="number"
+                                class="border text-gray-900 font-normal p-3 my-3 rounded-md w-full" />
+                            <div class="text-red-800 m-0 p-0 text-sm"
+                                *ngIf="productEdit.get('price')?.touched && productEdit.get('price')?.invalid">
+                                <small *ngIf="productEdit.get('price')?.errors?.['required']">Price is
+                                    required.</small>
+                                <small *ngIf="productEdit.get('price')?.errors?.['pattern']">Price must be a valid
+                                    number.</small>
+                            </div>
+                        </label>
+
+                        <ng-template #neprice> <span class="">{{ item.price|number:'1.0-0'}}</span> </ng-template>
+                    </div>
+
+                    <div>
+                        <label *ngIf="isEditable; else nestatus" class="font-semibold" for="status"> Status:
+                            <select formControlName="status"
+                                class="px-4 py-3 font-normal my-2 rounded  appearance-none bg-white border text-black"
+                                name="status" id="status">
+                                <option class="text-green-800" value="available">Available</option>
+                                <option class=" " value="hide">Hide</option>
+                            </select>
+                            <div class="text-red-800 m-0 p-0 text-sm"
+                                *ngIf="productEdit.get('status')?.touched && productEdit.get('status')?.invalid">
+                                <small *ngIf="productEdit.get('status')?.errors?.['required']">Status is
+                                    required.</small>
+                            </div>
+                        </label>
+                        <ng-template #nestatus> <span class="uppercase">{{ item.status }}</span> </ng-template>
+
+                    </div>
+
+                </div>
+
+                <p class="text-sm text-gray-500 ">
+                    <label *ngIf="isEditable; else nedesc" class="font-semibold " for="desc"> Product Description:
+                        <textarea formControlName="desc" id="desc" type="text"
+                            class="border text-gray-900 font-normal mt-2 p-3 rounded-md w-full" cols="7" rows="5"
+                            [value]="item.desc"></textarea>
+                    </label>
+
+                    <ng-template #nedesc> <span class="">{{ item.desc }}</span> </ng-template>
+                </p>
+            </div>
+
+            <span *ngIf="!isEditable" (click)="IsEditable()"
+                class="hover:underline hover:text-blue-900 active:text-red-700">Edit</span>
 
 
-            <p class="text-sm text-gray-500 my-2">
-                <label *ngIf="isEditable; else neprice" class="font-semibold" for="desc"> Product Price:
-                    <input [value]="item.price" id="desc" type="text"
-                        class="border text-gray-900 font-normal p-3 my-3 rounded-md w-full" />
-                </label>
 
-                <ng-template #neprice> <span class="">{{ item.price }}</span> </ng-template>
-            </p>
+            <span *ngIf="isEditable" class="flex flex-col gap-y-4">
+                <span class="hover:underline hover:text-green-900 active:text-red-700"
+                    (click)="closeUpdate()">Close</span>
+                <button type="submit" class="hover:underline hover:text-green-900 active:text-red-700">Confirm</button>
 
-            <p class="text-sm text-gray-500 ">
-                <label *ngIf="isEditable; else nedesc" class="font-semibold" for="desc"> Product Description:
-                    <textarea id="desc" type="text" class="border text-gray-900 font-normal p-3 rounded-md w-full"
-                        cols="7" rows="5" [value]="item.desc"></textarea>
-                </label>
+            </span>
 
-                <ng-template #nedesc> <span class="">{{ item.desc }}</span> </ng-template>
-            </p>
-        </div>
-        <span (click)="IsEditable()" class="hover:underline hover:text-blue-900 active:text-red-700">Edit</span>
-    </div>
-</li>
+        </form>
+
+
+        <div *ngIf="isUpdating" style="border-top-color:transparent "
+            class="w-16 h-16 border-4 border-gray-400 border-double mx-auto rounded-full animate-spin"></div>
+
+    </li>
+    <span *ngIf="isSuccess"
+        class="px-6 py-2 rounded-md bg-green-100 text-gray-600 absolute bottom-0 right-0 border-b-2 border-green-300">
+        Product Update Successfully
+    </span>
+</span>

@@ -43,17 +43,16 @@ export class CreateProductsComponent {
       image: file.name,
     });
     this.createProductForm.get('image')?.updateValueAndValidity();
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      this.selectedImg.url = reader.result as string;
-      this.selectedImg.file = file;
-    };
-
-    this.selectedImg.name = file?.name;
-
     if (file) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.selectedImg.url = reader.result as string;
+        this.selectedImg.file = file;
+      };
+
+      this.selectedImg.name = file?.name;
+
       reader.readAsDataURL(file);
     }
   }

@@ -1,3 +1,4 @@
+import { FavouriteComponent } from './favourite/favourite.component';
 import { EditMyProductsComponent } from './products/edit-my-products/edit-my-products.component';
 import { AllUserComponent } from './users/all-user/all-user.component';
 import { UsersComponent } from './users/users.component';
@@ -50,10 +51,14 @@ const routes: Routes = [
   },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
   {
+    path: 'favourite',
+    component: FavouriteComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'my_products',
     component: MyProductsComponent,
     canActivate: [AuthGuard],
-    // children: [{ path: ':id', component: EditMyProductsComponent }],
   },
   { path: '', component: AllProductsComponent },
 ];

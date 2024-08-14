@@ -1,25 +1,36 @@
-import { firstValueFrom } from 'rxjs';
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { RequestService } from 'src/app/services/request.service';
-import { EditMyProductsComponent } from '../edit-my-products/edit-my-products.component';
+import { TProduct } from 'server/src/types/Product';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-my-products',
   templateUrl: './my-products.component.html',
   styleUrls: ['./my-products.component.css'],
 })
-export class MyProductsComponent {
-  allMyProducts:any|[] = [];
+export class MyProductsComponent implements OnInit {
+  allMyProducts: TProduct[] = [];
   constructor(public request: RequestService) {}
+  noData = false;
   async ngOnInit() {
     try {
       const result = await firstValueFrom(
         await this.request.get('/product/my_products')
       );
-      this.allMyProducts = result; 
+      if (result.length > 0) {
+        this.noData = false;
+        this.allMyProducts = result;
+      } else {
+        this.noData = true;
+      }
     } catch (error) {
       this.allMyProducts = [];
-      console.log(error);
     }
+  }
+
+  handleProductUpdate(updatedProduct: TProduct) {
+    this.allMyProducts = this.allMyProducts.map((item) =>
+      item.id === updatedProduct.id ? updatedProduct : item
+    );
   }
 }
