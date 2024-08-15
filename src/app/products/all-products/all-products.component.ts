@@ -1,16 +1,17 @@
-import { Subscription, firstValueFrom } from 'rxjs';
+ 
+import {  firstValueFrom } from 'rxjs';
 import { SupabaseService } from 'src/app/services/supabase.service';
 import { Component, OnInit } from '@angular/core';
 import { RequestService } from 'src/app/services/request.service';
 import { SharedModule } from 'src/app/services/shared/shared.module';
-
+ 
 @Component({
   selector: 'app-all-products',
   templateUrl: './all-products.component.html',
   styleUrls: ['./all-products.component.css'],
 })
 export class AllProductsComponent implements OnInit {
-   constructor(
+   constructor( 
     public supabase: SupabaseService,
     public request: RequestService
   ) {}
