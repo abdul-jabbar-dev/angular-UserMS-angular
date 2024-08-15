@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
- 
+
 import { AuthService } from 'src/app/services/auth.service';
 interface TUser {
   password?: string;
@@ -78,9 +78,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
         icon: '/assets/icon/nav/All.svg',
       },
       {
-        title: 'Bookmarks',
-        id: 'bookmarks',
-        link: '/bookmarks',
+        title: 'Favourite',
+        id: 'favourite',
+        link: '/favourite',
         isActive: false,
         icon: '/assets/icon/nav/Love.svg',
         isAuthorization: true,
@@ -169,8 +169,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
       }
       link.isActive = link.link === url;
     });
+
     this.menus.forEach((link) => {
-      link.isActive = link.link === url;
+      if (url.includes(link.link + '/')) {
+        console.log(link.link + '/', url);
+        link.isActive = true;
+      } else {
+        link.isActive = link.link === url;
+      }
     });
 
     this.cdr.detectChanges();

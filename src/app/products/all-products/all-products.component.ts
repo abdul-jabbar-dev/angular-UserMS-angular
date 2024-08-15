@@ -1,5 +1,8 @@
+import { Subscription, firstValueFrom } from 'rxjs';
 import { SupabaseService } from 'src/app/services/supabase.service';
 import { Component, OnInit } from '@angular/core';
+import { RequestService } from 'src/app/services/request.service';
+import { SharedModule } from 'src/app/services/shared/shared.module';
 
 @Component({
   selector: 'app-all-products',
@@ -7,7 +10,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./all-products.component.css'],
 })
 export class AllProductsComponent implements OnInit {
-  constructor(public supabase: SupabaseService) {}
+   constructor(
+    public supabase: SupabaseService,
+    public request: RequestService
+  ) {}
   productList:
     | [
         {
@@ -20,17 +26,18 @@ export class AllProductsComponent implements OnInit {
         }
       ]
     | null = null;
-  ngOnInit() { 
+  async ngOnInit() {
+    let searchValue = '';
+     SharedModule.searchValueChange.subscribe((e) => console.log(e));
+
     try {
-      this.supabase
-        .getData('Products')
-        .then((res) => (this.productList = res as any));
+      let token = { token: localStorage.getItem('token') as string };
+      this.productList = await firstValueFrom(
+        await this.request.get('/product/get_products', token)
+      );
     } catch (error) {}
   }
   switchBookmark(event: MouseEvent) {
     event.stopPropagation();
-  }
-  cliccc() {
-    console.log('click parent');
   }
 }

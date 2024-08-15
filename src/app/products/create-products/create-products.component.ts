@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+import { RequestService } from 'src/app/services/request.service';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SupabaseService } from 'src/app/services/supabase.service';
 
@@ -8,13 +10,17 @@ import { SupabaseService } from 'src/app/services/supabase.service';
   styleUrls: ['./create-products.component.css'],
 })
 export class CreateProductsComponent {
+  isError = '';
   selectedImg: { url: string; name: string; file: File | null } = {
     url: '',
     name: '',
     file: null,
   };
   isCreateing: boolean = false;
-  constructor(public supabase: SupabaseService) {}
+  constructor(
+    public supabase: SupabaseService,
+    public request: RequestService
+  ) {}
   createProductForm = new FormGroup({
     title: new FormControl<string>('', [
       Validators.required,
@@ -31,56 +37,87 @@ export class CreateProductsComponent {
   distroSelectImg() {
     this.selectedImg = { url: '', name: '', file: null };
   }
-
   imageSubmit(event: any) {
     const file = event.target.files[0];
     this.createProductForm.patchValue({
       image: file.name,
     });
     this.createProductForm.get('image')?.updateValueAndValidity();
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      this.selectedImg.url = reader.result as string;
-      this.selectedImg.file = file;
-    };
-
-    this.selectedImg.name = file?.name;
-
     if (file) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.selectedImg.url = reader.result as string;
+        this.selectedImg.file = file;
+      };
+
+      this.selectedImg.name = file?.name;
+
       reader.readAsDataURL(file);
     }
   }
   async onSubmit() {
     this.isCreateing = true;
-    if (this.createProductForm.valid) {
-      const data = await this.supabase.uploadAvatar(
-        'products/' + this.selectedImg.name,
-        this.selectedImg.file as File
-      );
-
-      if (data) {
-        this.createProductForm.patchValue({
-          image: (data as any).data.fullPath,
-        });
-        const result = await this.supabase.insertData(
-          'Products',
-          this.createProductForm.getRawValue()
+    try {
+      this.isError = '';
+      if (this.createProductForm.valid) {
+        const data = await this.supabase.uploadAvatar(
+          'products/' + this.selectedImg.name,
+          this.selectedImg.file as File
         );
-        if (result?.error) {
-          console.log(result?.error);
-          this.isCreateing = false;
-        } else {
-          console.log(result);
-          this.isCreateing = false;
+        if (data) {
+          this.createProductForm.patchValue({
+            image: (data as any).data.fullPath,
+          });
+          const result = await firstValueFrom(
+            await this.request.create(
+              '/product/create',
+              this.createProductForm.getRawValue()
+            )
+          );
+
+          // const result = await this.supabase.insertData(
+          // 'Products',
+          // this.createProductForm.getRawValue()
+          // );
+
+          if (result?.error) {
+            console.log(result?.error);
+            this.isCreateing = false;
+          } else {
+            console.log(result);
+            this.isCreateing = false;
+          }
+          this.createProductForm.reset();
+          this.selectedImg = { file: null, name: '', url: '' };
         }
-        this.createProductForm.reset();
-        this.selectedImg = { file: null, name: '', url: '' };
+      } else {
+        this.createProductForm.markAllAsTouched();
       }
-    } else {
-      this.createProductForm.markAllAsTouched();
+      this.isCreateing = false;
+    } catch (error) {
+      console.log(error);
+      this.isCreateing = false;
+      if (typeof error === 'string') {
+        this.isError = error;
+      } else if ((error as any).error) {
+        this.isError = (error as any).error.message;
+      } else {
+        this.isError = (error as any).message;
+      }
+      setTimeout(() => {
+        this.isError = '';
+      }, 5000);
     }
+  }
+  OnDestroy() {
+    this.createProductForm.reset();
     this.isCreateing = false;
+    this.isError = '';
+    this.selectedImg = {
+      url: '',
+      name: '',
+      file: null,
+    };
   }
 }

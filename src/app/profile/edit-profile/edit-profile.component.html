@@ -6,7 +6,7 @@
             class="rounded-full w-[200px] mx-auto my-10 p-0  shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] ">
 
         <h1 class="text-xl font-bold text-center">{{profile.first_name+" "+ profile.last_name}}</h1>
-        <small class="block my-1 text-center">@{{profile.username}}</small>
+        <small class="block my-1 text-center">{{'@'+profile.username}}</small>
         <p class="mt-5 text-start">Email: {{profile.email}}</p>
         <p class="mt-5 text-start">Phone: {{profile.phone||'--'}}</p>
         <p class="mt-5 text-start">Age: {{profile.age||'--'}}</p>

@@ -14,7 +14,6 @@ export class SupabaseService {
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
   }
 
-  // Example method: Fetch data from a table
   async getData(table: string) {
     let { data, error } = await this.supabase.from(table).select('*');
     if (error) {
@@ -23,7 +22,6 @@ export class SupabaseService {
     return data;
   }
 
-  // Example method: Insert data into a table
   async insertData(table: string, newData: any) {
     let data = await this.supabase.from(table).insert(newData);
     console.log(data);
@@ -35,7 +33,6 @@ export class SupabaseService {
     return data;
   }
 
-  // Example method: Update data in a table
   async updateData(table: string, id: string, updatedData: any) {
     let { data, error } = await this.supabase
       .from(table)
@@ -54,11 +51,14 @@ export class SupabaseService {
     }
     return data;
   }
-  uploadAvatar(filePath: string, file: File) {
-    return this.supabase.storage
+  async uploadAvatar(filePath: string, file: File) {
+    return await this.supabase.storage
       .from('media')
       .upload(filePath + '__' + Date.now(), file, {
         upsert: false,
       });
+  }
+  async deleteAvatar(filePath: string) {
+    return await this.supabase.storage.from('media').remove([filePath]);
   }
 }
