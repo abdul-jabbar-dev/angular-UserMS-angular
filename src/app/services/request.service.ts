@@ -7,7 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RequestService {
-  private apiUrl = 'https://angular-userms-nest-knex.onrender.com';
+  private apiUrl =
+    'https://angular-userms-nest-knex-production.up.railway.app';
+  // private apiUrl = 'https://angular-userms-nest-knex.onrender.com';
   // private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient, public store: StoreService) {}
@@ -17,14 +19,13 @@ export class RequestService {
     query?: Record<string, string | number | boolean | null>
   ): Promise<Observable<any>> {
     try {
-      
       let options = { headers: new HttpHeaders(), params: new HttpParams() };
 
       const token = this.store.getToken() as string;
       if (token && token.length > 15) {
         options.headers = options.headers.append('Authorization', token);
       }
-  
+
       if (query) {
         Object.keys(query).forEach((key) => {
           if (query[key]) {

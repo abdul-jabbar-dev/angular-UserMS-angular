@@ -15,7 +15,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "@supabase/realtime-js"
+              "@supabase/realtime-js","ws"
             ],
             "outputPath": "dist/test-supabse",
             "index": "src/index.html",
