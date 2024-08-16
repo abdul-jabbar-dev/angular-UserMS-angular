@@ -29,7 +29,7 @@ export class LoginComponent {
       }else{
 
       }
-    } catch (error) {
+    } catch (error) { 
       this.error = error as string;
       setTimeout(() => {
         this.error = '';

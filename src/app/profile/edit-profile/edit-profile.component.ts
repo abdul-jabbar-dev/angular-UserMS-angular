@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { firstValueFrom } from 'rxjs'; 
+import { firstValueFrom } from 'rxjs';
 import { RequestService } from 'src/app/services/request.service';
 interface TUser {
   password?: string;
@@ -16,9 +16,8 @@ interface TUser {
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.css'],
 })
-
 export class EditProfileComponent implements OnInit {
-  profile: TUser | null = null;
+  profile: (TUser & { img: string }) | null = null;
   constructor(public request: RequestService) {}
 
   async ngOnInit(): Promise<void> {
@@ -26,11 +25,13 @@ export class EditProfileComponent implements OnInit {
       await this.getProfile();
     } catch (error) {}
   }
+
   async getProfile() {
     try {
       this.profile = await firstValueFrom(
         await this.request.get('/user/get_my_profile')
       );
+      
     } catch (error) {
       console.log(error);
     }

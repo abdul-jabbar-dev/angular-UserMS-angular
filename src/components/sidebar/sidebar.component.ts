@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
- 
+
 import { AuthService } from 'src/app/services/auth.service';
 interface TUser {
   password?: string;
@@ -78,9 +78,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
         icon: '/assets/icon/nav/All.svg',
       },
       {
-        title: 'Bookmarks',
-        id: 'bookmarks',
-        link: '/bookmarks',
+        title: 'Favourite',
+        id: 'favourite',
+        link: '/favourite',
         isActive: false,
         icon: '/assets/icon/nav/Love.svg',
         isAuthorization: true,
@@ -119,6 +119,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
             forAdmin: false,
           },
         ],
+      },
+      {
+        title: 'Products',
+        id: 'products',
+        isActive: false,
+        icon: '/assets/icon/nav/ListProducts.svg',
+        link: '/prduct_list',
+        forAdmin: true,
       },
     ];
   }
@@ -169,8 +177,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
       }
       link.isActive = link.link === url;
     });
+
     this.menus.forEach((link) => {
-      link.isActive = link.link === url;
+      if (url.includes(link.link + '/')) {
+        console.log(link.link + '/', url);
+        link.isActive = true;
+      } else {
+        link.isActive = link.link === url;
+      }
     });
 
     this.cdr.detectChanges();
@@ -186,9 +200,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   async logout() {
-    await this.auth.signOut();
-    this.isAuthenticate = false;
-    this.updateMenuAuthorization();
-    this.cdr.detectChanges();
+    try {
+      await this.auth.signOut();
+      this.isAuthenticate = false;
+      this.updateMenuAuthorization();
+      this.cdr.detectChanges();
+
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Logout failed', error);
+    }
   }
 }

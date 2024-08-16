@@ -1,8 +1,8 @@
+import { SharedModule } from './services/shared/shared.module';
 import { AuthGuard } from './AuthGuard';
 import { RequestService } from './services/request.service';
 import { StoreService } from './services/store.service';
-import { AuthService } from './services/auth.service';
-import { AllProductsComponent } from './products/all-products/all-products.component';
+import { AuthService } from './services/auth.service'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { SupabaseService } from './services/supabase.service';
@@ -26,6 +26,12 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
 import { UsersComponent } from './users/users.component';
 import { AdminUserComponent } from './users/admin-user/admin-user.component';
 import { AllUserComponent } from './users/all-user/all-user.component';
+import { MyProductsComponent } from './products/my-products/my-products.component';
+import { EditMyProductsComponent } from './products/edit-my-products/edit-my-products.component';
+import { FavouriteComponent } from './favourite/favourite.component';
+import { AllProductsComponent } from './products/all-products/all-products.component';
+import { SingleProductComponent } from './products/single-product/single-product.component'; 
+import { AdminProductsComponent } from './products/admin-products/admin-products.component';
 
  
  
@@ -45,15 +51,20 @@ import { AllUserComponent } from './users/all-user/all-user.component';
     UsersComponent,
     AdminUserComponent,
     AllUserComponent,
+    MyProductsComponent,
+    EditMyProductsComponent,
+    FavouriteComponent,
+    SingleProductComponent, 
+    AdminProductsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
+    HttpClientModule
   ],
-  providers: [RouteService, RouterLinkService, SupabaseService,AuthService,StoreService, RequestService,AuthGuard],
+  providers: [RouteService, RouterLinkService, SupabaseService,AuthService,StoreService, RequestService,AuthGuard,SharedModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
