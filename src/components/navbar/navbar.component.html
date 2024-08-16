@@ -69,7 +69,7 @@
                     <li *ngFor="let item of searchedResult; let i = index" [routerLink]="'/product/' + item.id"
                         class="px-6 py-1 text-gray-400 hover:text-gray-800 hover:bg-gray-100 cursor-pointer rounded-sm hover:shadow-sm"
                         [class.bg-gray-100]="i === selectedIndex" (click)="onEnter($event)">
-                        {{item.name}}
+                        {{item.title}}
                     </li>
                 </ul>
                 <p class="px-6" *ngIf="searchedResult.length < 1">No item found</p>

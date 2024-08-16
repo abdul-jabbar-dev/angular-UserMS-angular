@@ -120,6 +120,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
           },
         ],
       },
+      {
+        title: 'Products',
+        id: 'products',
+        isActive: false,
+        icon: '/assets/icon/nav/ListProducts.svg',
+        link: '/prduct_list',
+        forAdmin: true,
+      },
     ];
   }
 
@@ -192,9 +200,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   async logout() {
-    await this.auth.signOut();
-    this.isAuthenticate = false;
-    this.updateMenuAuthorization();
-    this.cdr.detectChanges();
+    try {
+      await this.auth.signOut();
+      this.isAuthenticate = false;
+      this.updateMenuAuthorization();
+      this.cdr.detectChanges();
+
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Logout failed', error);
+    }
   }
 }

@@ -1,44 +1,40 @@
-<h1 class="my-6 text-2xl text-center text-gray-600">Admin Managment </h1>
-<section class="container mt-10 px-4 relative overflow-hidden   mx-auto">
+<h1 class="my-6 text-2xl text-center w-full overflow-hidden text-gray-600">Products List </h1>
+<section class="container mt-10 px-4 w-full relative overflow-hidden   mx-auto">
     <div class="flex flex-col">
         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                    <table *ngIf="users;else loding" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <table *ngIf="products; else loding" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                        style="table-layout: fixed;">
                         <thead class="bg-gray-50 dark:bg-gray-800">
                             <tr>
                                 <th scope="col"
                                     class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     <div class="flex items-center gap-x-3">
                                         <button class="flex items-center gap-x-2">
-                                            <span>User ID</span>
+                                            <span>Product ID</span>
                                         </button>
                                     </div>
                                 </th>
 
                                 <th scope="col"
                                     class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Username
+                                    Seller Id
                                 </th>
 
                                 <th scope="col"
                                     class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Full Name
+                                    Title
+                                </th>
+
+                                <th scope="col"
+                                    class="px-4  w-16  py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    Description
                                 </th>
 
                                 <th scope="col"
                                     class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Email
-                                </th>
-
-                                <th scope="col"
-                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Age
-                                </th>
-
-                                <th scope="col"
-                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Role
+                                    Price
                                 </th>
 
                                 <th scope="col"
@@ -47,176 +43,52 @@
                                 </th>
                                 <th scope="col"
                                     class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Register in
+                                    Created At
                                 </th>
 
 
-                                <th scope="col"
-                                    class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    Update Status & Role
-                                </th>
+
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                            <tr *ngFor="let user of users?.data">
+                            <tr *ngFor="let product of products?.data">
 
                                 <td
                                     class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
                                     <div class="inline-flex items-center gap-x-3">
-                                        <span>{{user.id}}</span>
+                                        <span>{{product.id}}</span>
                                     </div>
                                 </td>
 
                                 <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                    {{user.username}}</td>
-                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                    {{user.first_name+" "+user.last_name}}
+                                    {{product.user_id}}</td>
+                                <td class="px-4 py-4 text-xl text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                                    {{product.title}}
                                 </td>
-                                <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                    {{user.email}}
+                                <td class="px-4 py-4 text-sm text-gray-400 dark:text-gray-300">
+                                    <div class="overflow-y-auto text-gray-400 dark:text-gray-300"
+                                        style="width: 800px; height: 5rem;    text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                                        {{product.desc}}
+                                    </div>
                                 </td>
+
+
+
+
+
                                 <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                    {{user.age?user.age:"---"}}</td>
-                                <td
-                                    class="px-4 uppercase py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                    {{user.role}}</td>
+                                    {{product.price}}</td>
+
                                 <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                     <div
-                                        [className]="user.status==='active'?'inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800':
+                                        [className]="product.status==='available'?'inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800':
                                         'inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-white bg-emerald-100/60 dark:bg-red-800'">
-                                        <h2 class="text-sm font-normal">{{user.status}}</h2>
+                                        <h2 class="text-sm font-normal">{{product.status}}</h2>
                                     </div>
                                 </td>
                                 <td class="px-4   py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                    {{ getDay(user.created_at ) }}</td>
-                                <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                    {{ getDay(product.created_at ) }}</td>
 
-                                    <div class="flex items-center gap-x-6 w-full justify-between">
-
-                                        <button (click)="toggleStatus(user.id)">
-
-                                            <span *ngIf="user.status==='active'; else icon ">
-
-                                                <span class="group relative">
-                                                    <div
-                                                        class="absolute bottom-[calc(100%+0.5rem)] left-[50%] -translate-x-[50%] hidden group-hover:block w-auto">
-                                                        <div
-                                                            class="bottom-full right-0 rounded bg-black px-4 py-1 text-xs text-white whitespace-nowrap">
-                                                            Deactive User
-                                                            <svg class="absolute left-0 top-full h-2 w-full text-black"
-                                                                x="0px" y="0px" viewBox="0 0 255 255"
-                                                                xml:space="preserve">
-                                                                <polygon class="fill-current"
-                                                                    points="0,0 127.5,127.5 255,0" />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                    <svg class=" bg-transparent fill-none stroke-2 hover:stroke-red-600 stroke-white"
-                                                        width="25px" height="25px" viewBox="0 0 24 24" id="Layer_1"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <g id="SVGRepo_iconCarrier">
-                                                            <circle cx="12" cy="12" r="10.5"></circle>
-                                                            <line x1="19.64" y1="4.36" x2="4.36" y2="19.64"></line>
-                                                        </g>
-                                                    </svg>
-                                                </span>
-                                            </span>
-                                            <ng-template #icon>
-                                                <span class="group relative">
-                                                    <div
-                                                        class="absolute bottom-[calc(100%+0.5rem)] left-[50%] -translate-x-[50%] hidden group-hover:block w-auto">
-                                                        <div
-                                                            class="bottom-full right-0 rounded bg-black px-4 py-1 text-xs text-white whitespace-nowrap">
-                                                            Make Active User
-                                                            <svg class="absolute left-0 top-full h-2 w-full text-black"
-                                                                x="0px" y="0px" viewBox="0 0 255 255"
-                                                                xml:space="preserve">
-                                                                <polygon class="fill-current"
-                                                                    points="0,0 127.5,127.5 255,0" />
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                    <svg class="bg-transparent fill-none stroke-2 hover:stroke-green-600 stroke-white"
-                                                        fill="#4b5563" height="25px" width="25px" version="1.1"
-                                                        xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"
-                                                        xml:space="preserve">
-                                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                            stroke-linejoin="round"></g>
-                                                        <g id="SVGRepo_iconCarrier">
-                                                            <g id="active">
-                                                                <path
-                                                                    d="M8.6,20.1l-7.8-8l1.4-1.4l6.4,6.5L21.8,3.9l1.4,1.4L8.6,20.1z">
-                                                                </path>
-                                                            </g>
-                                                        </g>
-                                                    </svg>
-                                                </span>
-                                            </ng-template>
-
-                                        </button>
-
-                                        <button>
-
-                                            <button class="text-sm" (click)="toggleRole(user.id)">
-                                                <span *ngIf="user.role==='subscriber'; else roletemp "
-                                                    class=" uppercase hover:underline text-white hover:text-green-700 ">
-                                                    Make Admin
-
-                                                </span>
-
-                                                <ng-template #roletemp>
-                                                    <span
-                                                        class=" uppercase hover:underline text-white hover:text-red-700 ">Remove
-                                                        Admin</span>
-                                                </ng-template>
-                                            </button>
-
-                                        </button>
-                                        <button (click)="deleteItem(user.id)">
-
-
-
-                                            <span class="group relative ">
-                                                <div
-                                                    class="absolute bottom-[calc(100%+0.5rem)] left-[50%] -translate-x-[50%] hidden group-hover:block w-auto">
-                                                    <div
-                                                        class="bottom-full right-0 rounded bg-black px-4 py-1 text-xs text-white whitespace-nowrap">
-                                                        Delete User
-                                                        <svg class="absolute left-0 top-full h-2 w-full text-black"
-                                                            x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve">
-                                                            <polygon class="fill-current"
-                                                                points="0,0 127.5,127.5 255,0" />
-                                                        </svg>
-                                                    </div>
-                                                </div><svg class="stroke-gray-500 hover:stroke-red-700 fill-none"
-                                                    width="26px" height="26px" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                        stroke-linejoin="round"></g>
-                                                    <g id="SVGRepo_iconCarrier">
-                                                        <path d="M4 7H20" stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round"></path>
-                                                        <path
-                                                            d="M6 7V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V7"
-                                                            stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round">
-                                                        </path>
-                                                        <path
-                                                            d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
-                                                            stroke-width="2" stroke-linecap="round"
-                                                            stroke-linejoin="round">
-                                                        </path>
-                                                    </g>
-                                                </svg>
-                                            </span>
-                                        </button>
-                                    </div>
-
-                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -256,7 +128,7 @@
         </div>
     </div>
 
-    <div *ngIf="users;" class="flex items-center justify-between mt-6">
+    <div *ngIf="products;" class="flex items-center justify-between mt-6">
         <button [disabled]="currentPage===1" (click)="prevPage()" class=" flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200
             bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200
             dark:border-gray-700 dark:hover:bg-gray-800">
@@ -273,13 +145,13 @@
 
 
         <div class="items-center hidden md:flex gap-x-3">
-            <button *ngFor="let num of users?.totalPage" (click)="goToPage(num)"
+            <button *ngFor="let num of products?.totalPage" (click)="goToPage(num)"
                 [class]="currentPage === num ? 'px-2 py-1 text-sm text-white rounded-md dark:bg-gray-800 bg-blue-100/60' : 'px-2 py-1 text-sm bg-gray-500 rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100'">{{num}}</button>
         </div>
 
 
 
-        <button [disabled]="currentPage===users?.maxPage" (click)="nextPage()"
+        <button [disabled]="currentPage===products?.maxPage" (click)="nextPage()"
             class="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
             <span>
                 Next

@@ -30,7 +30,8 @@ import { MyProductsComponent } from './products/my-products/my-products.componen
 import { EditMyProductsComponent } from './products/edit-my-products/edit-my-products.component';
 import { FavouriteComponent } from './favourite/favourite.component';
 import { AllProductsComponent } from './products/all-products/all-products.component';
-import { SingleProductComponent } from './products/single-product/single-product.component';
+import { SingleProductComponent } from './products/single-product/single-product.component'; 
+import { AdminProductsComponent } from './products/admin-products/admin-products.component';
 
  
  
@@ -53,7 +54,8 @@ import { SingleProductComponent } from './products/single-product/single-product
     MyProductsComponent,
     EditMyProductsComponent,
     FavouriteComponent,
-    SingleProductComponent,
+    SingleProductComponent, 
+    AdminProductsComponent,
   ],
   imports: [
     BrowserModule,

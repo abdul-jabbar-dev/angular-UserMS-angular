@@ -1,5 +1,5 @@
-import { FavouriteComponent } from './favourite/favourite.component';
-import { EditMyProductsComponent } from './products/edit-my-products/edit-my-products.component';
+import { AdminProductsComponent } from './products/admin-products/admin-products.component'; 
+import { FavouriteComponent } from './favourite/favourite.component'; 
 import { AllUserComponent } from './users/all-user/all-user.component';
 import { UsersComponent } from './users/users.component';
 import { ContactusComponent } from './contactus/contactus.component';
@@ -35,6 +35,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'prduct_list',
+    component: AdminProductsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'users',
     component: UsersComponent,
     children: [
@@ -55,15 +60,15 @@ const routes: Routes = [
     path: 'favourite',
     component: FavouriteComponent,
     canActivate: [AuthGuard],
-  },  {
+  },
+  {
     path: 'product/:id',
-    component: SingleProductComponent, 
+    component: SingleProductComponent,
   },
   {
     path: 'my_products',
     component: MyProductsComponent,
     canActivate: [AuthGuard],
-   
   },
   { path: '', component: AllProductsComponent },
 ];
