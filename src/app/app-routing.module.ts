@@ -1,3 +1,4 @@
+import { ShippingComponent } from './shipping/shipping.component';
 import { AdminProductsComponent } from './products/admin-products/admin-products.component'; 
 import { FavouriteComponent } from './favourite/favourite.component'; 
 import { AllUserComponent } from './users/all-user/all-user.component';
@@ -64,6 +65,11 @@ const routes: Routes = [
   {
     path: 'product/:id',
     component: SingleProductComponent,
+  },
+  {
+    path: 'shipping/:id',
+    component: ShippingComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'my_products',

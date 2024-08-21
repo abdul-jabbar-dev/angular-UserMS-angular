@@ -7,10 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RequestService {
-  private apiUrl =
-    'https://angular-userms-nest-knex-production.up.railway.app';
+  //private apiUrl = 'https://angular-userms-nest-knex-production.up.railway.app';
   // private apiUrl = 'https://angular-userms-nest-knex.onrender.com';
-  // private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient, public store: StoreService) {}
 
@@ -81,9 +80,9 @@ export class RequestService {
 
     if (token) {
       headers = headers.append('Authorization', `Bearer ${token}`);
-    }
+    }  
 
-    const body = JSON.stringify(data);
+    const body = JSON.stringify(data); 
     return this.http.post(this.apiUrl + pref, body, { headers });
   }
 }

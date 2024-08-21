@@ -26,8 +26,8 @@
             <div class="flex-1 min-w-0">
 
                 <p class="text-sm text-gray-500 ">
-                    <label *ngIf="isEditable; else netitle" class="font-semibold py-2" for="desc"> Product Name:
-                        <input formControlName="title" [value]="item.title" id="desc" type="text"
+                    <label *ngIf="isEditable; else netitle" class="font-semibold py-2" for="title"> Product Name:
+                        <input formControlName="title" [value]="item.title" id="title" type="text"
                             class="border text-gray-900 font-normal px-3 py-3 mt-2 rounded-md w-full" />
                         <div class="text-red-800 m-0 p-0 text-sm"
                             *ngIf="productEdit.get('title')?.touched && productEdit.get('title')?.invalid">
@@ -44,8 +44,8 @@
 
                 <div class="text-sm font-semibold items-center text-gray-500 my-2 flex justify-between gap-x-3">
                     <div>
-                        <label *ngIf="isEditable; else neprice" for="desc"> Product Price:
-                            <input formControlName="price" id="desc" type="number"
+                        <label *ngIf="isEditable; else neprice" for="price"> Product Price:
+                            <input formControlName="price" id="price" type="number"
                                 class="border text-gray-900 font-normal p-3 my-3 rounded-md w-full" />
                             <div class="text-red-800 m-0 p-0 text-sm"
                                 *ngIf="productEdit.get('price')?.touched && productEdit.get('price')?.invalid">
@@ -81,28 +81,54 @@
 
                 <p class="text-sm text-gray-500 ">
                     <label *ngIf="isEditable; else nedesc" class="font-semibold " for="desc"> Product Description:
-                        <textarea formControlName="desc" id="desc" type="text"
-                            class="border text-gray-900 font-normal mt-2 p-3 rounded-md w-full" cols="7" rows="5"
-                            [value]="item.desc"></textarea>
+
+                        <div>
+                            <div class="main-container">
+                                <div class="editor-container editor-container_classic-editor w-full "
+                                    >
+                                    <div class="editor-container__editor w-full ">
+                                        <div>
+                                            <ckeditor
+                                                class="border text-gray-900 font-normal mt-2 p-3 rounded-md w-full"
+                                                formControlName="desc" id="desc" [editor]="Editor" [config]="config"
+                                                *ngIf="isLayoutReady" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </label>
 
-                    <ng-template #nedesc> <span class="">{{ item.desc }}</span> </ng-template>
+                    <ng-template #nedesc> <span [innerHTML]="item.desc" class="ckeditor_style_output"></span> </ng-template>
                 </p>
             </div>
+            <div *ngIf="item.status!=='sold'">
 
-            <span *ngIf="!isEditable" (click)="IsEditable()"
-                class="hover:underline hover:text-blue-900 active:text-red-700">Edit</span>
+                <span *ngIf="!isEditable" (click)="IsEditable()"
+                    class="hover:underline hover:text-blue-900 active:text-red-700">Edit</span>
 
 
 
-            <span *ngIf="isEditable" class="flex flex-col gap-y-4">
-                <span class="hover:underline hover:text-green-900 active:text-red-700"
-                    (click)="closeUpdate()">Close</span>
-                <button type="submit" class="hover:underline hover:text-green-900 active:text-red-700">Confirm</button>
+                <span *ngIf="isEditable" class="flex flex-col gap-y-4">
+                    <span class="hover:underline hover:text-green-900 active:text-red-700"
+                        (click)="closeUpdate()">Close</span>
+                    <button type="submit"
+                        class="hover:underline hover:text-green-900 active:text-red-700">Confirm</button>
 
-            </span>
-
+                </span>
+            </div>
         </form>
+        <div *ngIf="item.status==='sold'">
+            <div class="pt-8 px-2 text-gray-600">
+                <span class="block ">Order Id: {{item.order_number}}</span>
+                <div>
+                    Buyer User Name: {{item.order_user_name}}<br>
+                    Buyer Id: {{item.order_user_id}}
+                </div>
+            </div>
+        </div>
 
 
         <div *ngIf="isUpdating" style="border-top-color:transparent "

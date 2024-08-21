@@ -7,13 +7,13 @@
             <div *ngIf="!tabs.isAuthorization || isAuthenticate">
                 <a [routerLink]="tabs.link" class="w-full flex items-center gap-x-1.5 group select-none">
                     <div
-                        class="w-1 rounded-xl h-8 bg-transparent transition-colors duration-200 relative overflow-hidden">
+                        class="w-1  h-8 bg-transparent transition-colors duration-200 relative overflow-hidden">
                         <div [ngClass]="tabs.isActive?'':'translate-y-full'"
                             class="absolute top-0 left-0 w-full h-[102%]  group-hover:translate-y-0 bg-teal-600 transition-all duration-300">
                         </div>
                     </div>
                     <div [ngClass]="tabs.isActive?'bg-white/10 text-white':''"
-                        class="group-hover:bg-white/10 w-full group-active:scale-95 self-stretch pl-2 rounded flex items-center space-x-2 transition-all duration-200 dark:group-hover:text-white dark:hover:text-white text-sm"
+                        class="group-hover:bg-white/10 w-full group-active:scale-95 self-stretch pl-2  flex items-center space-x-2 transition-all duration-200 dark:group-hover:text-white dark:hover:text-white text-sm"
                         href="#">
                         <img [src]="tabs.icon" class="w-6 text-teal-600">
 
@@ -34,13 +34,13 @@
             <div *ngIf="(!tabs.forAdmin||tabs.forAdmin && user?.role==='admin')">
                 <a [routerLink]="tabs.link" class="w-full flex items-center gap-x-1.5 group select-none">
                     <div
-                        class="w-1 rounded-xl h-8 bg-transparent transition-colors duration-200 relative overflow-hidden">
+                        class="w-1  h-8 bg-transparent transition-colors duration-200 relative overflow-hidden">
                         <div [ngClass]="tabs.isActive?'':'translate-y-full '"
                             class="absolute top-0 left-0 w-full h-[102%]  group-hover:translate-y-0 bg-teal-600 transition-all duration-300">
                         </div>
                     </div>
                     <div [ngClass]="tabs.isActive?'bg-white/10 text-white':''"
-                        class="group-hover:bg-white/10 w-full group-active:scale-95 self-stretch pl-2 rounded flex items-center space-x-2 transition-all duration-200 dark:group-hover:text-white dark:hover:text-white text-sm"
+                        class="group-hover:bg-white/10 w-full group-active:scale-95 self-stretch pl-2  flex items-center space-x-2 transition-all duration-200 dark:group-hover:text-white dark:hover:text-white text-sm"
                         href="#">
                         <img [src]="tabs.icon" class="w-6 text-teal-600">
 
@@ -76,13 +76,13 @@
                 <ng-container *ngFor="let tab of tabs?.chield"> 
                     <a [routerLink]="tab.link" class="w-full my-1 flex ml-5 items-center gap-x-1.5 group select-none ">
                         <div
-                            class="w-1 rounded-xl h-8 bg-transparent  transition-colors duration-200 relative overflow-hidden">
+                            class="w-1  h-8 bg-transparent  transition-colors duration-200 relative overflow-hidden">
                             <div [ngClass]="tab.isActive?'':'translate-y-full'"
                                 class="absolute top-0 left-0 w-full h-[102%]  group-hover:translate-y-0 bg-teal-900 opacity-50 transition-all duration-300">
                             </div>
                         </div>
                         <div [ngClass]="tab.isActive?'bg-white/10 text-white':''"
-                            class="group-hover:bg-white/10   w-full group-active:scale-95 self-stretch pl-2 rounded flex items-center space-x-2 transition-all duration-200 dark:group-hover:text-white dark:hover:text-white text-sm"
+                            class="group-hover:bg-white/10   w-full group-active:scale-95 self-stretch pl-2   flex items-center space-x-2 transition-all duration-200 dark:group-hover:text-white dark:hover:text-white text-sm"
                             href="#">
                             <img [src]="tab.icon" class="w-6 text-teal-600">
 
@@ -94,12 +94,12 @@
             </div>
         </ng-container> 
         <div class="w-full group relative cursor-pointer flex items-center gap-x-1.5 group select-none">    
-            <div class="w-1 rounded-xl h-8 bg-transparent transition-colors duration-200 relative overflow-hidden">
+            <div class="w-1  h-8 bg-transparent transition-colors duration-200 relative overflow-hidden">
                 <div
                     class="absolute top-0 left-0 w-full h-[102%] translate-y-full group-hover:translate-y-0 bg-teal-600 transition-all duration-300">
                 </div>
             </div>
-            <div class="group-hover:bg-white/10 w-full group-active:scale-95 self-stretch pl-2 rounded flex items-center space-x-2 transition-all duration-200 dark:group-hover:text-white dark:hover:text-white text-sm"
+            <div class="group-hover:bg-white/10 w-full group-active:scale-95 self-stretch pl-2   flex items-center space-x-2 transition-all duration-200 dark:group-hover:text-white dark:hover:text-white text-sm"
                 href="#">
                 <svg class="h-5 w-5 group-hover:stroke-teal-600 dark:  transition-colors duration-200"
                     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#4b5563">
@@ -115,13 +115,13 @@
                 <span class="font-QuicksandMedium">Logout</span>
             </div>
             <div
-                class="  group-hover:[transform:perspective(0px)_translateZ(0)_rotateX(0deg)] absolute bottom-0 right-0 mb-6 origin-bottom transform rounded text-white opacity-0 transition-all group-hover:opacity-100">
-                <div class="flex max-w-xs flex-col items-center rounded-lg">
+                class="  group-hover:[transform:perspective(0px)_translateZ(0)_rotateX(0deg)] absolute bottom-0 right-0 mb-6 origin-bottom transform   text-white opacity-0 transition-all group-hover:opacity-100">
+                <div class="flex max-w-xs flex-col items-center ">
                     <div (click)="logout()"
-                        class=" bg-teal-900 hover:bg-red-900 p-2 text-base text-center shadow-lg  rounded-lg">Confirm?
+                        class=" bg-teal-900 hover:bg-red-900 p-2 text-base text-center shadow-lg  ">Confirm?
 
                     </div>
-                    <div class="clip-bottom h-2 w-4     rounded-ee-full rounded-es-full"></div>
+                    <div class="clip-bottom h-2 w-4   "></div>
                 </div>
             </div>
         </div>
