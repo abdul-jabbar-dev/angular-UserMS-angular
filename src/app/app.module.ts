@@ -1,3 +1,4 @@
+import { FilterSelectButtonComponent } from './../components/common/filter-select-button/filter-select-button.component';
 import { StaticModalComponent } from './../components/common/static-modal/static-modal.component';
 import { ShippingService } from './services/shipping.service';
 import { ShippingSummaryComponent } from './shipping/shipping-summary/shipping-summary.component';
@@ -70,6 +71,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     ShippingSummaryComponent,
     ShippingDeliveryComponent,
     StaticModalComponent,
+    FilterSelectButtonComponent
   ],
   imports: [
     BrowserModule,

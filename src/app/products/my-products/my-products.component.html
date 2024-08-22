@@ -10,11 +10,12 @@
             <p class="ml-4 text-gray-500">Loading products...</p>
         </div>
 
+        <app-filter-select-button [productGroup]="group"  [allMyProducts]="allMyProducts"  (inputFil)="onFilterChange($event)"></app-filter-select-button>
         <div *ngIf="noData && !allMyProducts.length" class="text-center text-gray-500 mt-6">
             <p>No products found.</p>
         </div>
 
-        <ul *ngIf="allMyProducts.length > 0" class="divide-y divide-gray-200">
+        <ul *ngIf="allMyProducts.length > 0" class="divide-y divide-gray-200 relative">
             <li *ngFor="let item of allMyProducts" class="py-3 sm:py-4">
                 <app-edit-my-products (updatedProduct)="handleProductUpdate($event)" [item]="item">
                 </app-edit-my-products>

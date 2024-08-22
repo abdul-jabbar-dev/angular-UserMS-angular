@@ -1,0 +1,33 @@
+<div class="my-3 w-full h-max sticky top-0 bg-white z-[9999999] py-8 px-5">
+
+    <form class="flex space-x-2">
+        Filter: <div>
+            <input (change)="addOrRemove($event)" #option1 class="  hidden " type="checkbox" name="status" id="option1"
+                value="available">
+            <label [ngClass]="option1.checked ?'hover:bg-gray-800 bg-zinc-800 text-white':'border border-gray-800'"
+                class="px-4 rounded bg-gray-100 border-none cursor-pointer py-2 border hover:bg-gray-200 active:bg-gray-300"
+                for="option1">
+                Active <span>{{productGroup.available||0}}</span>
+            </label>
+        </div>
+        <div>
+            <input (change)="addOrRemove($event)" #option2 class="  hidden " type="checkbox" name="status" id="option2"
+                value="hide">
+            <label [ngClass]="option2.checked ?'hover:bg-gray-800 bg-zinc-800 text-white':'border border-gray-800'"
+                class="px-4 rounded bg-gray-100 border-none cursor-pointer py-2 border hover:bg-gray-200 active:bg-gray-300"
+                for="option2">
+                Hiden <span>{{productGroup.hide||0}}</span>
+            </label>
+        </div>
+        <div>
+            <input (change)="addOrRemove($event)" #option3 class="  hidden " type="checkbox" name="status" id="option3"
+                value="sold">
+            <label [ngClass]="option3.checked ?'hover:bg-gray-800 bg-zinc-800 text-white':'border border-gray-800'"
+                class="px-4 rounded bg-gray-100 border-none cursor-pointer py-2 border hover:bg-gray-200 active:bg-gray-300"
+                for="option3">
+                Sold <span>{{productGroup.sold||0}}</span>
+            </label>
+        </div>
+    </form>
+
+</div>
