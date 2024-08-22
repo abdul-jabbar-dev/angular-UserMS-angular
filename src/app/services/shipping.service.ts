@@ -1,7 +1,8 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, catchError, firstValueFrom, throwError } from 'rxjs';
 import { RequestService } from './request.service';
 import { FormGroup } from '@angular/forms';
+import { AuthService } from './auth.service';
 interface TProduct {
   price: number;
   id: string;
@@ -30,7 +31,9 @@ interface TOrder {
   providedIn: 'root',
 })
 export class ShippingService {
-  constructor(public request: RequestService) {}
+
+  constructor(public request: RequestService, public auth: AuthService) {}
+ 
   shippingOrder: BehaviorSubject<TOrder> = new BehaviorSubject<TOrder>({
     shippingSpot: { cost: '', time: '', spot: '' },
     coupon: '',
@@ -68,26 +71,51 @@ export class ShippingService {
   addOrder(product: TOrder) {
     this.shippingOrder.next(product);
   }
-  async orderPlaced(user: any, billingForm: FormGroup<any>) {
-    try {
-      let shippingSummary: Record<string, any> = {};
-      this.shippingOrder$.subscribe(
-        (data) => (shippingSummary = data.shippingSpot)
-      );
-      const result = await firstValueFrom(
-        await this.request.create('/shipping', {
-          bill: shippingSummary,
-          user: user,
-          address: billingForm.getRawValue(),
-          product: this.product.value,
-        })
-      ); 
-      this.shippingOrder.unsubscribe();
-      this.shippingAddress.unsubscribe();
-      this.product.unsubscribe();
-      return result;
-    } catch (error) {
-      throw error;
+  async orderPlaced() {
+     let user = await this.auth.getProfile();
+    let address;
+    let shippingSummary: Record<string, any> = {};
+
+    this.shippingOrder$.subscribe(
+      (data) => (shippingSummary = data.shippingSpot)
+    );
+    this.shippingAddress.subscribe((e) => (address = e));
+    if (!address) {
+      alert('Shiping address not included');
+    } else {
+      try {
+        const result = await firstValueFrom(
+          await this.request.create('/shipping', {
+            bill: shippingSummary,
+            user: user,
+            address: address,
+            product: this.product.value,
+          })
+        );
+        this.shippingOrder.unsubscribe();
+        this.shippingAddress.unsubscribe();
+        this.product.unsubscribe();
+        return result;
+      } catch (error) {
+        throw error;
+      }
     }
+  }
+  async getOrderInfo() {
+    let shippingSummary;
+    let address;
+    let product;
+ let user = await this.auth.getProfile();
+
+    
+    this.shippingOrder$.subscribe((data) => (shippingSummary = data));
+    this.product$.subscribe((data) => (product = data));
+    this.shippingAddress.subscribe((e) => (address = e));
+    return {
+      user: user,
+      product,
+      address,
+      shippingSummary,
+    };
   }
 }

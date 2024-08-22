@@ -42,6 +42,7 @@ import { ShippingProductComponent } from './shipping/shipping-product/shipping-p
 import { ShippingPromoComponent } from './shipping/shipping-promo/shipping-promo.component';
 import { ShippingDeliveryComponent } from './shipping/shipping-delivery/shipping-delivery.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { PaymentComponent } from './shipping/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     ShippingSummaryComponent,
     ShippingDeliveryComponent,
     StaticModalComponent,
-    FilterSelectButtonComponent
+    FilterSelectButtonComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,

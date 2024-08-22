@@ -1,6 +1,6 @@
 import { ShippingComponent } from './shipping/shipping.component';
-import { AdminProductsComponent } from './products/admin-products/admin-products.component'; 
-import { FavouriteComponent } from './favourite/favourite.component'; 
+import { AdminProductsComponent } from './products/admin-products/admin-products.component';
+import { FavouriteComponent } from './favourite/favourite.component';
 import { AllUserComponent } from './users/all-user/all-user.component';
 import { UsersComponent } from './users/users.component';
 import { ContactusComponent } from './contactus/contactus.component';
@@ -16,6 +16,7 @@ import { AdminUserComponent } from './users/admin-user/admin-user.component';
 import { AuthGuard } from './AuthGuard';
 import { MyProductsComponent } from './products/my-products/my-products.component';
 import { SingleProductComponent } from './products/single-product/single-product.component';
+import { PaymentComponent } from './shipping/payment/payment.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
@@ -60,6 +61,11 @@ const routes: Routes = [
   {
     path: 'favourite',
     component: FavouriteComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'payment',
+    component: PaymentComponent,
     canActivate: [AuthGuard],
   },
   {

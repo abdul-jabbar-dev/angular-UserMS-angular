@@ -20,9 +20,7 @@ import { RequestService } from 'src/app/services/request.service';
   templateUrl: './shipping-address.component.html',
   styleUrls: ['./shipping-address.component.css'],
 })
-export class ShippingAddressComponent
-  implements OnInit, AfterViewInit, OnChanges
-{
+export class ShippingAddressComponent implements OnInit, AfterViewInit {
   @Output() orderStatus = new EventEmitter<string>();
   @Input() product: {
     price: number;
@@ -57,7 +55,7 @@ export class ShippingAddressComponent
     private http: HttpClient,
     public shipping: ShippingService,
     public request: RequestService,
-    public router:Router
+    public router: Router
   ) {
     this.billingForm = new FormGroup({
       phone: new FormControl('', [Validators.required]),
@@ -73,11 +71,7 @@ export class ShippingAddressComponent
       ]),
     });
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes) {
-      console.log(changes);
-    }
-  }
+
   async ngOnInit() {
     try {
       this.user = await this.auth.getProfile();
@@ -108,32 +102,28 @@ export class ShippingAddressComponent
     }
   }
   async makeOrder() {
-    this.shipping.setAddress(this.billingForm.value);
-
-    try {
-      const result = await this.shipping.orderPlaced(
-        this.user,
-        this.billingForm
-      );
-      if (result) {
-        this.displayErrorMessage('Product placed Successfully');
-      }
-    } catch (error) {
-      if ((error as any).error.message === 'Product Already Placed') {
-        this.displayErrorMessage('Product has already been placed.');
-      }
-    }
+    this.router.navigateByUrl('/payment');
+    // try {
+    //   const result = await this.shipping.orderPlaced();
+    //   if (result) {
+    //     this.displayErrorMessage('Product placed Successfully');
+    //   }
+    // } catch (error) {
+    //   if ((error as any).error.message === 'Product Already Placed') {
+    //     this.displayErrorMessage('Product has already been placed.');
+    //   }
+    // }
   }
   displayErrorMessage(message: string) {
-    console.log(message);
     this.orderStatus.emit(message);
     setTimeout(() => {
       this.orderStatus.unsubscribe();
-      this.router.navigateByUrl('/')
+      this.router.navigateByUrl('/');
     }, 3000);
   }
   async onSubmit() {
     if (this.billingForm.valid) {
+      this.shipping.setAddress(this.billingForm.value);
       this.isSubmit = true;
       await this.makeOrder();
     } else {
