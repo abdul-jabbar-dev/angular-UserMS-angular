@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { ShippingService } from 'src/app/services/shipping.service';
 
 @Component({
@@ -53,10 +53,10 @@ export class ShippingDeliveryComponent implements OnInit {
         img: 'https://img.icons8.com/?size=80&id=Hpu4wppBX1Wq&format=png',
         selected: false,
       },
-    ];
+    ]; 
   }
+
   ngOnInit(): void {
-    this.shipping.product$.subscribe((data) => (this.product = data));
     this.value = this.availibleSpot?.find((data) => data.selected)?.key;
     this.shipping.addOrder({
       shippingSpot: {

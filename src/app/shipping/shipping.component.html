@@ -14,7 +14,7 @@
                 <app-shipping-summary></app-shipping-summary>
             </div>
         </div>
-        <app-shipping-address (orderStatus)="handleOrderStatus($event)" [product]="product"></app-shipping-address>
+        <app-shipping-address [exist]="exist" (orderStatus)="handleOrderStatus($event)" [product]="product"></app-shipping-address>
     </div>
 </div>
 

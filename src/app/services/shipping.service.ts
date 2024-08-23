@@ -1,8 +1,9 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, catchError, firstValueFrom, throwError } from 'rxjs';
 import { RequestService } from './request.service';
-import { FormGroup } from '@angular/forms';
+
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 interface TProduct {
   price: number;
   id: string;
@@ -26,18 +27,41 @@ interface TOrder {
   shippingSpot: { cost: string | number; time: string; spot: string };
   coupon?: string;
 }
-
+interface ShippingType {
+  id: number;
+  user_id: number;
+  product_id: number;
+  order_number: string;
+  shipping_email: string;
+  shipping_phone: string;
+  shipping_zone: string;
+  shipping_cost: number;
+  address_line1: string;
+  address_line2?: string;
+  city: string;
+  stat: string;
+  country: string;
+  zip: string;
+  created_at: Date;
+  order_status: 'pending' | 'expired' | 'paid';
+}
 @Injectable({
   providedIn: 'root',
 })
 export class ShippingService {
+  constructor(
+    public request: RequestService,
+    public auth: AuthService,
+    public router: Router
+  ) {}
 
-  constructor(public request: RequestService, public auth: AuthService) {}
- 
   shippingOrder: BehaviorSubject<TOrder> = new BehaviorSubject<TOrder>({
     shippingSpot: { cost: '', time: '', spot: '' },
     coupon: '',
   });
+  orderDetailsDB: BehaviorSubject<ShippingType | null> =
+    new BehaviorSubject<ShippingType | null>(null);
+
   shippingAddress: BehaviorSubject<TAddress> = new BehaviorSubject<TAddress>({
     addressLine1: '',
     city: '',
@@ -59,6 +83,7 @@ export class ShippingService {
   });
 
   product$ = this.product.asObservable();
+  orderDetailsDB$ = this.orderDetailsDB.asObservable();
   shippingOrder$ = this.shippingOrder.asObservable();
   shippingAddress$ = this.shippingAddress.asObservable();
 
@@ -71,8 +96,11 @@ export class ShippingService {
   addOrder(product: TOrder) {
     this.shippingOrder.next(product);
   }
+  setShippingDetailsFroDB(product: ShippingType) {
+    this.orderDetailsDB.next(product);
+  }
   async orderPlaced() {
-     let user = await this.auth.getProfile();
+    let user = await this.auth.getProfile();
     let address;
     let shippingSummary: Record<string, any> = {};
 
@@ -92,12 +120,26 @@ export class ShippingService {
             product: this.product.value,
           })
         );
-        this.shippingOrder.unsubscribe();
-        this.shippingAddress.unsubscribe();
-        this.product.unsubscribe();
+        if (result) {
+          this.getOrderFromDB(result);
+        }
+
         return result;
       } catch (error) {
         throw error;
+      }
+    }
+  }
+  getOrderFromDB(orderInfoDB: ShippingType): any {
+    this.setShippingDetailsFroDB(orderInfoDB);
+    if (orderInfoDB['order_number']) {
+      if (orderInfoDB['order_status'] === 'pending') {
+        this.router.navigateByUrl('/payment');
+        this.shippingOrder.unsubscribe();
+        this.shippingAddress.unsubscribe();
+        this.product.unsubscribe();
+      } else {
+        throw new Error('Product placed Successfully');
       }
     }
   }
@@ -105,9 +147,8 @@ export class ShippingService {
     let shippingSummary;
     let address;
     let product;
- let user = await this.auth.getProfile();
+    let user = await this.auth.getProfile();
 
-    
     this.shippingOrder$.subscribe((data) => (shippingSummary = data));
     this.product$.subscribe((data) => (product = data));
     this.shippingAddress.subscribe((e) => (address = e));
@@ -117,5 +158,30 @@ export class ShippingService {
       address,
       shippingSummary,
     };
+  }
+  async getExistingOrder(data?: TProduct): Promise<Record<string, any>> {
+    try {
+      let product = data;
+
+      this.product$.subscribe((p) => {
+        if (p.id) {
+          product = p;
+        } else {
+          product = data;
+        }
+      });
+      if (product && product['id']) {
+        const result: ShippingType = await firstValueFrom(
+          await this.request.get('/shipping/' + (product as any).id)
+        );
+        
+        this.setShippingDetailsFroDB(result);
+        
+        console.log(result);
+        return result;
+      } else return {};
+    } catch (error) {
+      throw error;
+    }
   }
 }

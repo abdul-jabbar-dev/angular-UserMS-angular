@@ -24,7 +24,7 @@ export class SupabaseService {
 
   async insertData(table: string, newData: any) {
     let data = await this.supabase.from(table).insert(newData);
-    console.log(data);
+ 
     if (data?.error) {
       console.error('Error inserting data:', data?.error);
     } else {

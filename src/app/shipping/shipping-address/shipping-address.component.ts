@@ -20,8 +20,11 @@ import { RequestService } from 'src/app/services/request.service';
   templateUrl: './shipping-address.component.html',
   styleUrls: ['./shipping-address.component.css'],
 })
-export class ShippingAddressComponent implements OnInit, AfterViewInit {
+export class ShippingAddressComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   @Output() orderStatus = new EventEmitter<string>();
+  @Input() exist: any;
   @Input() product: {
     price: number;
     id: string;
@@ -71,6 +74,21 @@ export class ShippingAddressComponent implements OnInit, AfterViewInit {
       ]),
     });
   }
+  ngOnChanges(changes: SimpleChanges): void { 
+    if (changes['exist'].currentValue.id) {
+      this.billingForm.patchValue({
+        phone: this.exist.shipping_phone,
+        email: this.exist.shipping_email,
+        addressLine1: this.exist.address_line1,
+        addressLine2: this.exist.address_line2,
+        city: this.exist.city,
+        state: this.exist.state,
+        country: this.exist.country,
+        zip: this.exist.zip,
+      });
+      this.isSubmit = true;
+    }
+  }
 
   async ngOnInit() {
     try {
@@ -103,16 +121,17 @@ export class ShippingAddressComponent implements OnInit, AfterViewInit {
   }
   async makeOrder() {
     this.router.navigateByUrl('/payment');
-    // try {
-    //   const result = await this.shipping.orderPlaced();
-    //   if (result) {
-    //     this.displayErrorMessage('Product placed Successfully');
-    //   }
-    // } catch (error) {
-    //   if ((error as any).error.message === 'Product Already Placed') {
-    //     this.displayErrorMessage('Product has already been placed.');
-    //   }
-    // }
+    try {
+      const result = await this.shipping.orderPlaced();
+
+      if (result) {
+        // this.displayErrorMessage('Product placed Successfully');
+      }
+    } catch (error) {
+      if ((error as any).error.message === 'Product Already Placed') {
+        this.displayErrorMessage('Product has already been placed.');
+      }
+    }
   }
   displayErrorMessage(message: string) {
     this.orderStatus.emit(message);

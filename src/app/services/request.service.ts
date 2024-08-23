@@ -39,8 +39,7 @@ export class RequestService {
         headers: options.headers,
         params: options.params,
       });
-    } catch (error) {
-      console.log(error);
+    } catch (error) { 
       throw new Error(JSON.stringify(error));
     }
   }

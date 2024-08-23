@@ -23,7 +23,6 @@ export class ShippingComponent implements OnInit, OnDestroy {
   time: string;
   param: string | null = null;
   private intervalId: any;
-  data: any;
 
   @Output() product: {
     price: number;
@@ -35,6 +34,8 @@ export class ShippingComponent implements OnInit, OnDestroy {
     created_at: Date;
   } | null = null;
 
+  @Output() exist: any;
+
   constructor(
     protected route: ActivatedRoute,
     public request: RequestService,
@@ -45,19 +46,23 @@ export class ShippingComponent implements OnInit, OnDestroy {
   handleOrderStatus(message: string): void {
     this.isMessage = message;
   }
-  async getProducts(): Promise<void> {
-    if (!this.param) {
+  async getProducts(params: any): Promise<void> {
+    if (!params) {
       console.error('No product ID found');
       return;
     }
 
     try {
       this.product = await firstValueFrom(
-        await this.request.get('/product/get_product/' + this.param)
+        await this.request.get('/product/get_product/' + params)
       );
       if (this.product) {
         this.shipping.setProduct(this.product);
       }
+      const result = await firstValueFrom(
+        await this.request.get('/shipping/' + (this.product as any).id)
+      );
+      this.exist = result;
     } catch (error) {
       console.error('Failed to fetch product:', error);
     }
@@ -66,12 +71,15 @@ export class ShippingComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.route.paramMap.subscribe(async (params) => {
       this.param = params.get('id');
-      await this.getProducts();
+
+      await this.getProducts(this.param);
+
+      const res = await this.shipping.getExistingOrder(this.product as any);
+      console.log(res);
     });
 
     this.updateDate();
     this.startAutoUpdate();
-    this.shipping.shippingOrder$.subscribe((data) => console.log(data));
   }
 
   ngOnDestroy(): void {

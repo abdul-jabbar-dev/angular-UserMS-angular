@@ -177,8 +177,7 @@ export class CreateProductsComponent {
       reader.readAsDataURL(file);
     }
   }
-  async onSubmit() {
-    console.log(this.createProductForm.getRawValue());
+  async onSubmit() { 
     this.isCreateing = true;
     try {
       this.isError = '';
@@ -203,11 +202,9 @@ export class CreateProductsComponent {
           // this.createProductForm.getRawValue()
           // );
 
-          if (result?.error) {
-            console.log(result?.error);
+          if (result?.error) { 
             this.isCreateing = false;
-          } else {
-            console.log(result);
+          } else { 
             this.isCreateing = false;
           }
           this.createProductForm.reset();
@@ -217,8 +214,7 @@ export class CreateProductsComponent {
         this.createProductForm.markAllAsTouched();
       }
       this.isCreateing = false;
-    } catch (error) {
-      console.log(error);
+    } catch (error) { 
       this.isCreateing = false;
       if (typeof error === 'string') {
         this.isError = error;
