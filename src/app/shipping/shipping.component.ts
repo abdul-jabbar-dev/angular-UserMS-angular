@@ -75,7 +75,7 @@ export class ShippingComponent implements OnInit, OnDestroy {
       await this.getProducts(this.param);
 
       const res = await this.shipping.getExistingOrder(this.product as any);
-      console.log(res);
+ 
     });
 
     this.updateDate();

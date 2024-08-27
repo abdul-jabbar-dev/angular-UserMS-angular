@@ -1,269 +1,316 @@
-<div class="w-full flex flex-col items-center py-16 ">
-    <div class="w-[500px] h-[300px] relative">
-        <div class="credit-card w-max h-max relative select-none pointer-events-none">
-            <!-- Card verso -->
-            <div style="background-position:-197px 223px; background-size: 131%; background-image: url('https://i.ibb.co/LPLv5MD/Payment-Card-01.jpg');"
-                [ngClass]="isCVVShow?'z-10 ':' opacity-80'"
-                class="verso absolute overflow-hidden transform translate-y-12 left-16 w-96 h-56 rounded-2xl bg-gray-100 shadow-2xl">
-                <div class="w-full h-12 bg-gray-900 absolute top-10">&nbsp;</div>
-                <div
-                    class="cursor-pointer w-[40%] h-8 mx-auto bg-gray-200 absolute top-28 right-5 text-end px-2 italic">
-                    &nbsp;{{cvvValue||000}}
-                </div>
-            </div>
-            <div style="background-position: -60px -10px; background-size: 131%; background-image: url('https://i.ibb.co/LPLv5MD/Payment-Card-01.jpg');"
-                class="z-1 absolute overflow-hidden w-96 h-56 rounded-2xl px-8 py-6 bg-opacity-70 bg-black text-white shadow-2xl flex flex-col justify-end gap-6"
-                [ngClass]="!isCVVShow?' opacity-100':' opacity-80'">
-                <!-- Visa logo -->
-
-                <div class="logo absolute top-6 right-8 w-16 h-8 flex justify-items-center items-center">
-                    <svg *ngIf="cardSelect==='visa'" viewBox="0 0 1000 324.68">
-                        <path
-                            d="m651.19 0.5c-70.933 0-134.32 36.766-134.32 104.69 0 77.9 112.42 83.281 112.42 122.42 0 16.478-18.884 31.229-51.137 31.229-45.773 0-79.984-20.611-79.984-20.611l-14.638 68.547s39.41 17.41 91.734 17.41c77.552 0 138.58-38.571 138.58-107.66 0-82.316-112.89-87.536-112.89-123.86 0-12.908 15.502-27.052 47.663-27.052 36.287 0 65.892 14.99 65.892 14.99l14.326-66.204s-32.213-13.897-77.642-13.897zm-648.97 4.9966-1.7176 9.9931s29.842 5.4615 56.719 16.356c34.607 12.493 37.072 19.765 42.9 42.354l63.511 244.83h85.137l131.16-313.53h-84.942l-84.278 213.17-34.39-180.7c-3.1539-20.681-19.129-32.478-38.684-32.478h-135.41zm411.87 0-66.634 313.53h80.999l66.4-313.53h-80.765zm451.76 0c-19.532 0-29.88 10.457-37.474 28.73l-118.67 284.8h84.942l16.434-47.467h103.48l9.9931 47.467h74.948l-65.385-313.53h-68.273zm11.047 84.707 25.178 117.65h-67.454l42.276-117.65z"
-                            fill="#fff" />
-                    </svg>
-                    <div *ngIf="cardSelect==='msc'" class="w-[64px] h-[64px]">
-                        <img class="w-full h-full"
-                            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/mastercard.svg"
-                            alt="" />
+<div *ngIf="productDetails">
+    <div *ngIf="!isMessage; else showError" class="w-full flex flex-col items-center py-16 ">
+        <div class="w-[500px] h-[300px] relative">
+            <div class="credit-card w-max h-max relative select-none pointer-events-none">
+                <!-- Card verso -->
+                <div style="background-position:-197px 223px; background-size: 131%; background-image: url('https://i.ibb.co/LPLv5MD/Payment-Card-01.jpg');"
+                    [ngClass]="isCVVShow?'z-10 ':' opacity-80'"
+                    class="verso absolute overflow-hidden transform translate-y-12 left-16 w-96 h-56 rounded-2xl bg-gray-100 shadow-2xl">
+                    <div class="w-full h-12 bg-gray-900 absolute top-10">&nbsp;</div>
+                    <div
+                        class="cursor-pointer w-[40%] h-8 mx-auto bg-gray-200 absolute top-28 right-5 text-end px-2 italic">
+                        &nbsp;{{cvvValue||000}}
                     </div>
-                    <div *ngIf="cardSelect==='amx'" class="w-[64px] h-[64px]">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-[64px] h-[64px]" id="american-express"
-                            viewBox="-150 -249.37925 1300 1496.2755">
+                </div>
+                <div style="background-position: -60px -10px; background-size: 131%; background-image: url('https://i.ibb.co/LPLv5MD/Payment-Card-01.jpg');"
+                    class="z-1 absolute overflow-hidden w-96 h-56 rounded-2xl px-8 py-6 bg-opacity-70 bg-black text-white shadow-2xl flex flex-col justify-end gap-6"
+                    [ngClass]="!isCVVShow?' opacity-100':' opacity-80'">
+                    <!-- Visa logo -->
+
+                    <div class="logo absolute top-6 right-8 w-16 h-8 flex justify-items-center items-center">
+                        <svg *ngIf="cardSelect==='visa'" viewBox="0 0 1000 324.68">
                             <path
-                                d="M0 0h997.517v538.49l-49.375 77.147 49.375 68.661v313.219H0v-507.63l30.859-35.488L0 420.454z"
-                                fill="#016fd0" />
-                            <path
-                                d="M193.64 695.099v-156.61h165.82l17.791 23.193 18.38-23.193h601.886V684.3s-15.74 10.643-33.945 10.8H630.295l-20.058-24.688V695.1h-65.73v-42.142s-8.979 5.882-28.39 5.882h-22.373v36.26h-99.52l-17.766-23.69-18.038 23.69zM0 420.454l37.393-87.177h64.668l21.22 48.833v-48.833h80.388l12.633 35.295 12.247-35.295h360.858v17.744s18.97-17.744 50.146-17.744l117.085.41 20.854 48.193v-48.603h67.273l18.515 27.683v-27.683h67.89v156.61h-67.89l-17.744-27.774v27.773h-98.838l-9.94-24.687h-26.57l-9.779 24.687h-67.028c-26.826 0-43.974-17.381-43.974-17.381v17.381H488.343L468.285 465.2v24.687H92.481L82.548 465.2H56.06l-9.86 24.686H0z"
+                                d="m651.19 0.5c-70.933 0-134.32 36.766-134.32 104.69 0 77.9 112.42 83.281 112.42 122.42 0 16.478-18.884 31.229-51.137 31.229-45.773 0-79.984-20.611-79.984-20.611l-14.638 68.547s39.41 17.41 91.734 17.41c77.552 0 138.58-38.571 138.58-107.66 0-82.316-112.89-87.536-112.89-123.86 0-12.908 15.502-27.052 47.663-27.052 36.287 0 65.892 14.99 65.892 14.99l14.326-66.204s-32.213-13.897-77.642-13.897zm-648.97 4.9966-1.7176 9.9931s29.842 5.4615 56.719 16.356c34.607 12.493 37.072 19.765 42.9 42.354l63.511 244.83h85.137l131.16-313.53h-84.942l-84.278 213.17-34.39-180.7c-3.1539-20.681-19.129-32.478-38.684-32.478h-135.41zm411.87 0-66.634 313.53h80.999l66.4-313.53h-80.765zm451.76 0c-19.532 0-29.88 10.457-37.474 28.73l-118.67 284.8h84.942l16.434-47.467h103.48l9.9931 47.467h74.948l-65.385-313.53h-68.273zm11.047 84.707 25.178 117.65h-67.454l42.276-117.65z"
                                 fill="#fff" />
-                            <path
-                                d="M50.628 352.584L.193 469.848h32.836l9.306-23.482h54.1l9.257 23.482h33.56L88.863 352.584zm18.66 27.29l16.49 41.034H52.75zm73.435 89.954V352.564l46.661.173 27.14 75.605 26.49-75.778h46.289v117.264h-29.316v-86.405l-31.076 86.405h-25.71l-31.162-86.405v86.405zm166.638 0V352.564h95.663v26.23h-66.038v20.058h64.495v24.688h-64.495v20.83h66.038v25.458zm112.636-117.244v117.264h29.316v-41.66h12.343l35.15 41.66h35.826l-38.574-43.203c15.831-1.336 32.161-14.923 32.161-36.018 0-24.676-19.368-38.043-40.984-38.043zm29.316 26.23h33.51c8.04 0 13.887 6.288 13.887 12.343 0 7.79-7.577 12.344-13.452 12.344h-33.945zm118.807 91.014h-29.933V352.564h29.933zm70.975 0h-6.46c-31.262 0-50.243-24.63-50.243-58.15 0-34.349 18.768-59.114 58.246-59.114h32.402v27.773h-33.586c-16.026 0-27.36 12.507-27.36 31.63 0 22.71 12.96 32.248 31.63 32.248h7.715zm63.792-117.244l-50.435 117.264h32.836l9.305-23.482h54.1l9.258 23.482h33.559l-50.387-117.264zm18.66 27.29l16.49 41.034h-33.029zm73.386 89.954V352.564h37.272l47.59 73.676v-73.676h29.317v117.264h-36.067l-48.796-75.604v75.604zM213.699 675.04V557.776h95.662v26.23h-66.038v20.059h64.495v24.687h-64.495v20.83h66.038v25.458zm468.748 0V557.776h95.662v26.23h-66.038v20.059h64.187v24.687H712.07v20.83h66.038v25.458zm-369.373 0l46.578-57.908-47.687-59.356H348.9l28.4 36.693 28.497-36.693h35.488l-47.06 58.632 46.663 58.632H403.96l-27.576-36.114-26.905 36.114zM444.37 557.796V675.06h30.087v-37.03h30.859c26.111 0 45.903-13.853 45.903-40.792 0-22.317-15.523-39.442-42.094-39.442zm30.087 26.52h32.498c8.436 0 14.465 5.17 14.465 13.5 0 7.826-5.999 13.501-14.561 13.501h-32.402zm89.491-26.54V675.04h29.316v-41.66h12.344l35.15 41.66h35.825l-38.573-43.202c15.83-1.336 32.16-14.924 32.16-36.019 0-24.676-19.368-38.043-40.984-38.043zm29.316 26.23h33.511c8.039 0 13.887 6.288 13.887 12.344 0 7.79-7.577 12.343-13.453 12.343h-33.945zm198.423 91.034v-25.458h58.671c8.681 0 12.44-4.692 12.44-9.837 0-4.93-3.747-9.913-12.44-9.913h-26.513c-23.045 0-35.88-14.04-35.88-35.121 0-18.803 11.753-36.935 46-36.935h57.088l-12.343 26.385h-49.375c-9.438 0-12.343 4.952-12.343 9.682 0 4.86 3.59 10.222 10.8 10.222h27.773c25.69 0 36.838 14.572 36.838 33.655 0 20.517-12.422 37.32-38.236 37.32zm107.597 0v-25.458h58.67c8.682 0 12.44-4.692 12.44-9.837 0-4.93-3.746-9.913-12.44-9.913h-26.512c-23.046 0-35.88-14.04-35.88-35.121 0-18.803 11.753-36.935 45.999-36.935h57.089l-12.344 26.385h-49.374c-9.438 0-12.344 4.952-12.344 9.682 0 4.86 3.59 10.222 10.801 10.222h27.773c25.69 0 36.838 14.572 36.838 33.655 0 20.517-12.422 37.32-38.236 37.32z"
-                                fill="#016fd0" />
                         </svg>
-                    </div>
-                </div>
-
-                <!-- PIN -->
-                <div class="pin w-11 h-7 rounded bg-yellow-200 relative">&nbsp;
-                    <span
-                        class="absolute -left-4 top-[6px] w-0 h-0 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-white"></span>
-                </div>
-
-                <!-- Card number -->
-                <div class="whitespace-nowrap text-2xl font-semibold" style="font-family:Courier new, mono;">
-                    {{cardNum||"0000 0000 0000 0000"}}
-                </div>
-
-                <!-- Card infos -->
-                <div class="credentials flex gap-8">
-                    <div class="owner flex flex-col w-full">
-                        <span class="text-xs uppercase">Card holder</span>
-                        <span class="whitespace-nowrap text-lg">{{fullName || 'Jone Duo'}}</span>
-                    </div>
-                    <div class="expires flex flex-col w-max">
-                        <span class="text-xs uppercase">Expires&nbsp;</span>
-                        <span class="whitespace-nowrap text-lg">{{expiryDate||"MM/YY "}}</span>
+                        <div *ngIf="cardSelect==='msc'" class="w-[64px] h-[64px]">
+                            <img class="w-full h-full"
+                                src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/mastercard.svg"
+                                alt="" />
+                        </div>
+                        <div *ngIf="cardSelect==='amx'" class="w-[64px] h-[64px]">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-[64px] h-[64px]" id="american-express"
+                                viewBox="-150 -249.37925 1300 1496.2755">
+                                <path
+                                    d="M0 0h997.517v538.49l-49.375 77.147 49.375 68.661v313.219H0v-507.63l30.859-35.488L0 420.454z"
+                                    fill="#016fd0" />
+                                <path
+                                    d="M193.64 695.099v-156.61h165.82l17.791 23.193 18.38-23.193h601.886V684.3s-15.74 10.643-33.945 10.8H630.295l-20.058-24.688V695.1h-65.73v-42.142s-8.979 5.882-28.39 5.882h-22.373v36.26h-99.52l-17.766-23.69-18.038 23.69zM0 420.454l37.393-87.177h64.668l21.22 48.833v-48.833h80.388l12.633 35.295 12.247-35.295h360.858v17.744s18.97-17.744 50.146-17.744l117.085.41 20.854 48.193v-48.603h67.273l18.515 27.683v-27.683h67.89v156.61h-67.89l-17.744-27.774v27.773h-98.838l-9.94-24.687h-26.57l-9.779 24.687h-67.028c-26.826 0-43.974-17.381-43.974-17.381v17.381H488.343L468.285 465.2v24.687H92.481L82.548 465.2H56.06l-9.86 24.686H0z"
+                                    fill="#fff" />
+                                <path
+                                    d="M50.628 352.584L.193 469.848h32.836l9.306-23.482h54.1l9.257 23.482h33.56L88.863 352.584zm18.66 27.29l16.49 41.034H52.75zm73.435 89.954V352.564l46.661.173 27.14 75.605 26.49-75.778h46.289v117.264h-29.316v-86.405l-31.076 86.405h-25.71l-31.162-86.405v86.405zm166.638 0V352.564h95.663v26.23h-66.038v20.058h64.495v24.688h-64.495v20.83h66.038v25.458zm112.636-117.244v117.264h29.316v-41.66h12.343l35.15 41.66h35.826l-38.574-43.203c15.831-1.336 32.161-14.923 32.161-36.018 0-24.676-19.368-38.043-40.984-38.043zm29.316 26.23h33.51c8.04 0 13.887 6.288 13.887 12.343 0 7.79-7.577 12.344-13.452 12.344h-33.945zm118.807 91.014h-29.933V352.564h29.933zm70.975 0h-6.46c-31.262 0-50.243-24.63-50.243-58.15 0-34.349 18.768-59.114 58.246-59.114h32.402v27.773h-33.586c-16.026 0-27.36 12.507-27.36 31.63 0 22.71 12.96 32.248 31.63 32.248h7.715zm63.792-117.244l-50.435 117.264h32.836l9.305-23.482h54.1l9.258 23.482h33.559l-50.387-117.264zm18.66 27.29l16.49 41.034h-33.029zm73.386 89.954V352.564h37.272l47.59 73.676v-73.676h29.317v117.264h-36.067l-48.796-75.604v75.604zM213.699 675.04V557.776h95.662v26.23h-66.038v20.059h64.495v24.687h-64.495v20.83h66.038v25.458zm468.748 0V557.776h95.662v26.23h-66.038v20.059h64.187v24.687H712.07v20.83h66.038v25.458zm-369.373 0l46.578-57.908-47.687-59.356H348.9l28.4 36.693 28.497-36.693h35.488l-47.06 58.632 46.663 58.632H403.96l-27.576-36.114-26.905 36.114zM444.37 557.796V675.06h30.087v-37.03h30.859c26.111 0 45.903-13.853 45.903-40.792 0-22.317-15.523-39.442-42.094-39.442zm30.087 26.52h32.498c8.436 0 14.465 5.17 14.465 13.5 0 7.826-5.999 13.501-14.561 13.501h-32.402zm89.491-26.54V675.04h29.316v-41.66h12.344l35.15 41.66h35.825l-38.573-43.202c15.83-1.336 32.16-14.924 32.16-36.019 0-24.676-19.368-38.043-40.984-38.043zm29.316 26.23h33.511c8.039 0 13.887 6.288 13.887 12.344 0 7.79-7.577 12.343-13.453 12.343h-33.945zm198.423 91.034v-25.458h58.671c8.681 0 12.44-4.692 12.44-9.837 0-4.93-3.747-9.913-12.44-9.913h-26.513c-23.045 0-35.88-14.04-35.88-35.121 0-18.803 11.753-36.935 46-36.935h57.088l-12.343 26.385h-49.375c-9.438 0-12.343 4.952-12.343 9.682 0 4.86 3.59 10.222 10.8 10.222h27.773c25.69 0 36.838 14.572 36.838 33.655 0 20.517-12.422 37.32-38.236 37.32zm107.597 0v-25.458h58.67c8.682 0 12.44-4.692 12.44-9.837 0-4.93-3.746-9.913-12.44-9.913h-26.512c-23.046 0-35.88-14.04-35.88-35.121 0-18.803 11.753-36.935 45.999-36.935h57.089l-12.344 26.385h-49.374c-9.438 0-12.344 4.952-12.344 9.682 0 4.86 3.59 10.222 10.801 10.222h27.773c25.69 0 36.838 14.572 36.838 33.655 0 20.517-12.422 37.32-38.236 37.32z"
+                                    fill="#016fd0" />
+                            </svg>
+                        </div>
                     </div>
 
+                    <!-- PIN -->
+                    <div class="pin w-11 h-7 rounded bg-yellow-200 relative">&nbsp;
+                        <span
+                            class="absolute -left-4 top-[6px] w-0 h-0 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-white"></span>
+                    </div>
+
+                    <!-- Card number -->
+                    <div class="whitespace-nowrap text-2xl font-semibold" style="font-family:Courier new, mono;">
+                        {{cardNum||"0000 0000 0000 0000"}}
+                    </div>
+
+                    <!-- Card infos -->
+                    <div class="credentials flex gap-8">
+                        <div class="owner flex flex-col w-full">
+                            <span class="text-xs uppercase">Card holder</span>
+                            <span class="whitespace-nowrap text-lg">{{fullName || 'Jone Duo'}}</span>
+                        </div>
+                        <div class="expires flex flex-col w-max">
+                            <span class="text-xs uppercase">Expires&nbsp;</span>
+                            <span class="whitespace-nowrap text-lg">{{expiryDate||"MM/YY "}}</span>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="bg-white py-8 antialiased md:py-16">
-        <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-            <div class="mx-auto max-w-5xl">
-                <h2 class="text-xl font-semibold text-gray-900 ">Payment</h2>
+        <div class="bg-white py-8 antialiased md:py-16">
+            <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+                <div class="mx-auto max-w-5xl">
+                    <h2 class="text-xl font-semibold text-gray-900 ">Payment</h2>
 
-                <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12">
-                    <form action="#"
-                        class="w-full border border-gray-200 bg-white p-4 shadow-sm   sm:p-6 lg:max-w-xl lg:p-8">
-                        <div class="mb-6 grid grid-cols-2 gap-4">
-                            <div class="col-span-2 sm:col-span-1">
-                                <label for="full_name" class="mb-2 block text-sm font-medium text-gray-900  ">
-                                    Full name* </label>
-                                <input [(ngModel)]="fullName" [ngModelOptions]="{standalone: true}" type="text"
-                                    id="full_name"
-                                    class="block w-full border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                                    placeholder="Card Holder" required />
+                    <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12">
+                        <form action="#"
+                            class="w-full border border-gray-200 bg-white p-4 shadow-sm   sm:p-6 lg:max-w-xl lg:p-8">
+                            <div class="mb-6 grid grid-cols-2 gap-4">
+                                <div class="col-span-2 sm:col-span-1">
+                                    <label for="full_name" class="mb-2 block text-sm font-medium text-gray-900  ">
+                                        Full name* </label>
+                                    <input [(ngModel)]="fullName" [ngModelOptions]="{standalone: true}" type="text"
+                                        id="full_name"
+                                        class="block w-full border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+                                        placeholder="Card Holder" required />
+                                </div>
+
+                                <div class="col-span-2 sm:col-span-1">
+                                    <label for="card-number-input"
+                                        class="mb-2 block text-sm font-medium text-gray-900  ">
+                                        Card number*
+                                    </label>
+                                    <input [ngModelOptions]="{standalone: true}" [(ngModel)]="cardNum"
+                                        (input)="addCardNum($event)" type="text" id="card-number-input"
+                                        class="block w-full border border-gray-300 bg-gray-50 p-2.5 pe-10 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
+                                        placeholder="xxxx xxxx xxxx xxxx" pattern="^4[0-9]{12}(?:[0-9]{3})?$"
+                                        required />
+                                </div>
+
+                                <div>
+                                    <label for="card-expiration-input"
+                                        class="mb-2 block text-sm font-medium text-gray-900 ">Card expiration*
+                                    </label>
+                                    <div class="relative">
+                                        <div
+                                            class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
+                                            <svg class="h-4 w-4 text-gray-500  " aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                fill="currentColor" viewBox="0 0 24 24">
+                                                <path fill-rule="evenodd"
+                                                    d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                        <input [(ngModel)]="expiryDate" name="expiryDate"
+                                            (input)="formatExpiryDate($event)" id="card-expiration-input" type="text"
+                                            class="block w-full border border-gray-300 bg-gray-50 p-2.5 ps-9 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                                            placeholder="MM/YY" required />
+
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="cvv-input"
+                                        class="mb-2 flex items-center gap-1 text-sm font-medium text-gray-900 ">
+                                        CVV*
+                                        <button data-tooltip-target="cvv-desc" data-tooltip-trigger="hover"
+                                            class="text-gray-400 hover:text-gray-900 ">
+                                            <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                fill="currentColor" viewBox="0 0 24 24">
+                                                <path fill-rule="evenodd"
+                                                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm9.408-5.5a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2h-.01ZM10 10a1 1 0 1 0 0 2h1v3h-1a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-1v-4a1 1 0 0 0-1-1h-2Z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                        <div id="cvv-desc" role="tooltip"
+                                            class="tooltip invisible absolute z-10 inline-block bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 ">
+                                            The last 3 digits on back of card
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                    </label>
+                                    <input (blur)="isCVVShow=false" (click)="isCVVShow=true" [ngModel]="cvvValue"
+                                        (input)="cvv($event)" maxlength="3" type="number" id="cvv-input"
+                                        aria-describedby="helper-text-explanation"
+                                        class="block w-full border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
+                                        placeholder="•••" required />
+                                </div>
                             </div>
 
-                            <div class="col-span-2 sm:col-span-1">
-                                <label for="card-number-input" class="mb-2 block text-sm font-medium text-gray-900  ">
-                                    Card number*
-                                </label>
-                                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="cardNum"
-                                    (input)="addCardNum($event)" type="text" id="card-number-input"
-                                    class="block w-full border border-gray-300 bg-gray-50 p-2.5 pe-10 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
-                                    placeholder="xxxx xxxx xxxx xxxx" pattern="^4[0-9]{12}(?:[0-9]{3})?$" required />
-                            </div>
-
-                            <div>
-                                <label for="card-expiration-input"
-                                    class="mb-2 block text-sm font-medium text-gray-900 ">Card expiration*
-                                </label>
-                                <div class="relative">
+                            <button (click)="submit()" type="submit"
+                                class="border bg-gray-50 border-gray-300 flex w-full items-center text-gray-800 justify-center bg-primary-700 px-5 py-2.5 text-sm font-medium  hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 ">
+                                <span *ngIf="!isLoading">
+                                    Pay now
+                                </span>
+                                <span *ngIf="isLoading">
                                     <div
-                                        class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3.5">
-                                        <svg class="h-4 w-4 text-gray-500  " aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            fill="currentColor" viewBox="0 0 24 24">
-                                            <path fill-rule="evenodd"
-                                                d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
-                                                clip-rule="evenodd" />
-                                        </svg>
+                                        class="w-6 h-6 border-4 border-gray-400 border-t-transparent border-double rounded-full animate-spin">
                                     </div>
-                                    <input [(ngModel)]="expiryDate" name="expiryDate" (input)="formatExpiryDate($event)"
-                                        id="card-expiration-input" type="text"
-                                        class="block w-full border border-gray-300 bg-gray-50 p-2.5 ps-9 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                                        placeholder="MM/YY" required />
+                                </span>
 
-                                </div>
-                            </div>
-                            <div>
-                                <label for="cvv-input"
-                                    class="mb-2 flex items-center gap-1 text-sm font-medium text-gray-900 ">
-                                    CVV*
-                                    <button data-tooltip-target="cvv-desc" data-tooltip-trigger="hover"
-                                        class="text-gray-400 hover:text-gray-900 ">
-                                        <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                            fill="currentColor" viewBox="0 0 24 24">
-                                            <path fill-rule="evenodd"
-                                                d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm9.408-5.5a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2h-.01ZM10 10a1 1 0 1 0 0 2h1v3h-1a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-1v-4a1 1 0 0 0-1-1h-2Z"
-                                                clip-rule="evenodd" />
+                            </button>
+
+                        </form>
+
+                        <div class="mt-6 grow sm:mt-8 lg:mt-0">
+
+                            <div class=" flex items-center justify-center gap-8">
+
+                                <label for="amx">
+                                    <div class="w-[64px] h-[64px]">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-[64px] h-[64px]"
+                                            id="american-express">
+                                            <path fill="#2FABF7" d="M5.9 26.5h2.2L7 23.7z"></path>
+                                            <path fill="#228FE0"
+                                                d="M33.2 24.1c-.2-.1-.5-.1-.8-.1h-2v1.6h2c.3 0 .6 0 .8-.1.2-.1.3-.4.3-.7.1-.4-.1-.6-.3-.7z">
+                                            </path>
+                                            <path fill="#0571C1"
+                                                d="M54.6 21.1v1.2l-.6-1.2h-4.7v1.2l-.6-1.2h-6.4c-1.1 0-2 .2-2.8.6v-.6H35v.6c-.5-.4-1.1-.6-1.9-.6H17l-1.1 2.5-1.1-2.5H9.7v1.2l-.6-1.2H4.8l-2 4.7L.5 31h5.1l.6-1.6h1.4l.6 1.6H14v-1.2l.5 1.2h2.9l.5-1.2V31h13.9v-2.6h.2c.2 0 .2 0 .2.3v2.2h7.2v-.6c.6.3 1.5.6 2.7.6h3l.6-1.6h1.4l.6 1.6h5.8v-1.5l.9 1.5h4.7v-9.8h-4.5zm-33.8 8.4h-1.7V24l-2.4 5.5h-1.5L12.8 24v5.5H9.4L8.7 28H5.3l-.6 1.6H2.8l3-7.1h2.5l2.8 6.7v-6.7h2.7l2.2 4.8 2-4.8h2.8v7zm6.8-5.5h-3.9v1.3h3.8v1.4h-3.8v1.4h3.9v1.5H22v-7.1h5.6V24zm7.5 2.9c.2.4.3.7.3 1.3v1.4h-1.7v-.9c0-.4 0-1-.3-1.4-.3-.3-.6-.3-1.2-.3h-1.8v2.6h-1.7v-7.1h3.8c.9 0 1.5 0 2 .3s.8.8.8 1.6c0 1.1-.7 1.7-1.2 1.9.5.1.8.4 1 .6zm3 2.6h-1.7v-7.1h1.7v7.1zm19.7 0h-2.4l-3.2-5.3v5.3h-3.4l-.6-1.5h-3.5l-.6 1.6h-1.9c-.8 0-1.8-.2-2.4-.8-.6-.6-.9-1.4-.9-2.7 0-1 .2-2 .9-2.8.5-.6 1.4-.8 2.5-.8h1.6V24h-1.6c-.6 0-.9.1-1.3.4-.3.3-.5.9-.5 1.6 0 .8.1 1.3.5 1.7.3.3.7.4 1.2.4h.7l2.3-5.5h2.5l2.8 6.7v-6.7H53l2.9 4.9v-4.9h1.7v6.9z">
+                                            </path>
+                                            <path fill="#228FE0" d="M45.3 26.5h2.3l-1.1-2.8zM28.3 40.9v-5.7L25.7 38z">
+                                            </path>
+                                            <path fill="#2FABF7"
+                                                d="M17.6 35.9v1.3h3.7v1.4h-3.7v1.5h4.1l1.9-2.1-1.8-2.1z">
+                                            </path>
+                                            <path fill="#228FE0"
+                                                d="M32.1 35.9H30v1.8h2.2c.6 0 1-.3 1-.9-.1-.6-.5-.9-1.1-.9z">
+                                            </path>
+                                            <path fill="#0571C1"
+                                                d="M63 37.6v-4.5h-4.2c-.9 0-1.6.2-2.1.6v-.6h-4.6c-.7 0-1.6.2-2 .6v-.6H42v.6c-.6-.5-1.7-.6-2.2-.6h-5.4v.6c-.5-.5-1.7-.6-2.3-.6h-6l-1.4 1.5-1.3-1.5h-9v9.8h8.8l1.4-1.5 1.3 1.5h5.4v-2.3h.7c.7 0 1.6 0 2.3-.3V43h4.5v-2.6h.2c.3 0 .3 0 .3.3V43h13.6c.9 0 1.8-.2 2.3-.6v.6h4.3c.9 0 1.8-.1 2.4-.5 1-.6 1.6-1.7 1.6-3 0-.7-.2-1.4-.5-1.9zm-31 1.6h-2v2.4h-3.2l-2-2.3-2.1 2.3h-6.6v-7.1h6.7l2 2.3 2.1-2.3h5.3c1.3 0 2.8.4 2.8 2.3-.1 2-1.5 2.4-3 2.4zm10-.4c.2.3.3.7.3 1.3v1.4h-1.7v-.9c0-.4 0-1.1-.3-1.4-.2-.3-.6-.3-1.2-.3h-1.8v2.6h-1.7v-7.1h3.8c.8 0 1.5 0 2 .3s.9.8.9 1.6c0 1.1-.7 1.7-1.2 1.9.5.2.8.4.9.6zm6.9-2.9H45v1.3h3.8v1.4H45V40h3.9v1.5h-5.6v-7.1h5.6v1.5zm4.2 5.6h-3.2V40h3.2c.3 0 .5 0 .7-.2.1-.1.2-.3.2-.5s-.1-.4-.2-.5c-.1-.1-.3-.2-.6-.2-1.6-.1-3.5 0-3.5-2.2 0-1 .6-2.1 2.4-2.1h3.3V36h-3.1c-.3 0-.5 0-.7.1-.2.1-.2.3-.2.5 0 .3.2.4.4.5.2.1.4.1.6.1h.9c.9 0 1.5.2 1.9.6.3.3.5.8.5 1.5 0 1.5-.9 2.2-2.6 2.2zm8.6-.7c-.4.4-1.1.7-2.1.7h-3.2V40h3.2c.3 0 .5 0 .7-.2.1-.1.2-.3.2-.5s-.1-.4-.2-.5c-.1-.1-.3-.2-.6-.2-1.6-.1-3.5 0-3.5-2.2 0-1 .6-2.1 2.4-2.1h3.3V36h-3c-.3 0-.5 0-.7.1-.2.1-.2.3-.2.5 0 .3.1.4.4.5.2.1.4.1.6.1h.9c.9 0 1.5.2 1.9.6.1 0 .1.1.1.1.3.4.4.9.4 1.4 0 .6-.2 1.1-.6 1.5z">
+                                            </path>
+                                            <path fill="#228FE0"
+                                                d="M40.2 36.1c-.2-.1-.5-.1-.8-.1h-2v1.6h2c.3 0 .6 0 .8-.1.2-.1.3-.4.3-.7.1-.4-.1-.6-.3-.7z">
+                                            </path>
+                                            <g fill="#228FE0">
+                                                <path
+                                                    d="M33.2 24.1c-.2-.1-.5-.1-.8-.1h-2v1.6h2c.3 0 .6 0 .8-.1.2-.1.3-.4.3-.7.1-.4-.1-.6-.3-.7zM45.3 26.5h2.3l-1.1-2.8zM28.3 40.9v-5.7L25.7 38zM32.1 35.9H30v1.8h2.2c.6 0 1-.3 1-.9-.1-.6-.5-.9-1.1-.9zM40.2 36.1c-.2-.1-.5-.1-.8-.1h-2v1.6h2c.3 0 .6 0 .8-.1.2-.1.3-.4.3-.7.1-.4-.1-.6-.3-.7z">
+                                                </path>
+                                            </g>
+                                            <path fill="#2FABF7"
+                                                d="M31.4 41.3 30 39.8v1.7h-3.3l-2-2.3-2.2 2.3h-6.6v-7h6.7l2.1 2.3 1-1.2-2.5-2.5h-8.8v9.8h8.8l1.5-1.5 1.3 1.5h5.4z">
+                                            </path>
+                                            <g fill="#2FABF7">
+                                                <path
+                                                    d="m21 30.9-1.3-1.4h-.6v-.6l-1.5-1.5-1 2.1h-1.4L12.8 24v5.5H9.4L8.7 28H5.3l-.7 1.5H2.8l3-7h2.5l2.8 6.7v-6.7h1.5l-1.4-1.4H9.7v1.2l-.5-1.2H4.8l-2 4.7-2.3 5.1h5.2l.6-1.5h1.4l.7 1.5H14v-1.2l.5 1.2h2.9l.5-1.2v1.2z">
+                                                </path>
+                                                <path d="m16.4 26.3-1.6-1.6 1.2 2.6z"></path>
+                                            </g>
+                                            <g fill="#228FE0">
+                                                <path
+                                                    d="M61.9 42.4c.9-.6 1.5-1.6 1.6-2.7l-1.4-1.4c.1.3.2.6.2 1 0 .6-.2 1.1-.6 1.5-.4.4-1.1.7-2.1.7h-3.2V40h3.2c.3 0 .5 0 .7-.2.1-.1.2-.3.2-.5s-.1-.4-.2-.5c-.1-.1-.3-.2-.6-.2-1.6-.1-3.5 0-3.5-2.2 0-1 .6-1.9 2.1-2.1l-1.1-1.1c-.2.1-.3.2-.4.2v-.6h-4.6c-.7 0-1.6.2-2 .6v-.6H42v.6c-.6-.5-1.7-.6-2.2-.6h-5.4v.6c-.5-.5-1.7-.6-2.3-.6h-6l-1.4 1.5-1.3-1.5h-1.1l3 3 1.5-1.6h5.3c1.3 0 2.8.4 2.8 2.3 0 2-1.4 2.4-2.9 2.4h-2v1.5l1.5 1.5v-1.5h.5c.7 0 1.6 0 2.3-.3v2.7h4.5v-2.6h.2c.3 0 .3 0 .3.3v2.3h13.6c.9 0 1.8-.2 2.3-.6v.6h4.3c.8.1 1.7 0 2.4-.4zM42 38.8c.2.3.3.7.3 1.3v1.4h-1.7v-.9c0-.4 0-1.1-.3-1.4-.2-.3-.6-.3-1.2-.3h-1.8v2.6h-1.7v-7.1h3.8c.8 0 1.5 0 2 .3s.9.8.9 1.6c0 1.1-.7 1.7-1.2 1.9.5.2.8.4.9.6zm6.9-2.9H45v1.3h3.8v1.4H45V40h3.9v1.5h-5.6v-7.1h5.6v1.5zm4.2 5.6h-3.2V40h3.2c.3 0 .5 0 .7-.2.1-.1.2-.3.2-.5s-.1-.4-.2-.5c-.1-.1-.3-.2-.6-.2-1.6-.1-3.5 0-3.5-2.2 0-1 .6-2.1 2.4-2.1h3.3V36h-3.1c-.3 0-.5 0-.7.1-.2.1-.2.3-.2.5 0 .3.2.4.4.5.2.1.4.1.6.1h.9c.9 0 1.5.2 1.9.6.3.3.5.8.5 1.5 0 1.5-.9 2.2-2.6 2.2z">
+                                                </path>
+                                                <path
+                                                    d="M57.9 36.6c0 .3.1.4.4.5.2.1.4.1.6.1h.9c.6 0 1 .1 1.4.3L59.7 36h-.9c-.3 0-.5 0-.7.1-.1.1-.2.3-.2.5z">
+                                                </path>
+                                            </g>
+                                            <g fill="#228FE0">
+                                                <path d="m54.4 30.6.2.3h.1zM48.9 25.1l1.7 4.1v-2.4z"></path>
+                                                <path
+                                                    d="M31.8 28.4h.2c.2 0 .2 0 .2.3v2.2h7.2v-.6c.6.3 1.5.6 2.7.6h3l.6-1.6h1.4l.6 1.6h5.8v-1l-1.4-1.4v1.1h-3.4l-.5-1.6h-3.5l-.6 1.6h-1.9c-.8 0-1.8-.2-2.4-.8-.6-.6-.9-1.4-.9-2.7 0-1 .2-2 .9-2.8.5-.6 1.4-.8 2.5-.8h1.6V24h-1.6c-.6 0-.9.1-1.3.4-.3.3-.5.9-.5 1.6 0 .8.1 1.3.5 1.7.3.3.7.4 1.2.4h.7l2.3-5.5h1l-1.4-1.4h-2.6c-1.1 0-2 .2-2.8.6v-.6H35v.6c-.5-.4-1.1-.6-1.9-.6H17l-1.1 2.5-1.1-2.5h-4.4l1.4 1.4h2l1.7 3.7.6.6 1.8-4.4h2.8v7.1H19v-5.5l-1.7 4 2.9 2.9h11.5l.1-2.6zm4.6-5.9h1.7v7.1h-1.7v-7.1zM27.6 24h-3.9v1.3h3.8v1.4h-3.8v1.4h3.9v1.5H22v-7.1h5.6V24zm2.8 5.5h-1.7v-7.1h3.8c.9 0 1.5 0 2 .3s.8.8.8 1.6c0 1.1-.7 1.7-1.2 1.9.4.1.7.4.8.6.2.4.3.7.3 1.3v1.4h-1.7v-.9c0-.4 0-1-.3-1.4-.1-.2-.4-.2-1-.2h-1.8v2.5z">
+                                                </path>
+                                            </g>
                                         </svg>
-                                    </button>
-                                    <div id="cvv-desc" role="tooltip"
-                                        class="tooltip invisible absolute z-10 inline-block bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 ">
-                                        The last 3 digits on back of card
-                                        <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
                                 </label>
-                                <input (blur)="isCVVShow=false" (click)="isCVVShow=true" [ngModel]="cvvValue"
-                                    (input)="cvv($event)" maxlength="3" type="number" id="cvv-input"
-                                    aria-describedby="helper-text-explanation"
-                                    class="block w-full border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 "
-                                    placeholder="•••" required />
+                                <input [checked]="cardSelect==='amx'" (change)="changeCard($event)" value="amx"
+                                    type="radio" id="amx" name="selectCard" />
+
+                                <label for="visa">
+                                    <div class="w-[64px] h-[64px]">
+                                        <img class="w-full h-full"
+                                            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa.svg"
+                                            alt="" />
+                                    </div>
+                                </label>
+                                <input [checked]="cardSelect==='visa'" (change)="changeCard($event)" type="radio"
+                                    value="visa" id="visa" name="selectCard" />
+
+                                <label for="msc">
+                                    <div class="w-[64px] h-[64px]">
+                                        <img class="w-full h-full"
+                                            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/mastercard.svg"
+                                            alt="" />
+                                    </div>
+                                </label>
+                                <input [checked]="cardSelect==='msc'" (change)="changeCard($event)" value="msc"
+                                    type="radio" id="msc" name="selectCard" />
                             </div>
-                        </div>
+                            <div class="space-y-4 border border-gray-100 bg-gray-50 p-6 ">
+                                <div class="space-y-2">
+                                    <dl class="flex items-center justify-between gap-4">
+                                        <dt class="text-base font-normal text-gray-500 ">Product price</dt>
+                                        <dd class="text-base font-medium text-gray-900 ">
+                                            {{+(productDetails?.product_price)||0}}
+                                            TK</dd>
+                                    </dl>
 
-                        <button type="submit"
-                            class="border bg-gray-50 border-gray-300 flex w-full items-center text-gray-800 justify-center bg-primary-700 px-5 py-2.5 text-sm font-medium  hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 ">Pay
-                            now</button>
-                    </form>
+                                    <dl class="flex items-center justify-between gap-4">
+                                        <dt class="text-base font-normal text-gray-500 ">Shipping cost</dt>
+                                        <dd class="text-base font-medium text-gray-900 ">
+                                            {{(productDetails?.shipping_cost)||0}} TK</dd>
+                                    </dl>
+                                    <dl class="flex items-center justify-between gap-4">
+                                        <dt class="text-base font-normal text-gray-500 ">Savings</dt>
+                                        <dd class="text-base font-medium text-green-500">-00 TK</dd>
+                                    </dl>
 
-                    <div class="mt-6 grow sm:mt-8 lg:mt-0">
-
-                        <div class=" flex items-center justify-center gap-8">
-
-                            <label for="amx">
-                                <div class="w-[64px] h-[64px]">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-[64px] h-[64px]"
-                                        id="american-express">
-                                        <path fill="#2FABF7" d="M5.9 26.5h2.2L7 23.7z"></path>
-                                        <path fill="#228FE0"
-                                            d="M33.2 24.1c-.2-.1-.5-.1-.8-.1h-2v1.6h2c.3 0 .6 0 .8-.1.2-.1.3-.4.3-.7.1-.4-.1-.6-.3-.7z">
-                                        </path>
-                                        <path fill="#0571C1"
-                                            d="M54.6 21.1v1.2l-.6-1.2h-4.7v1.2l-.6-1.2h-6.4c-1.1 0-2 .2-2.8.6v-.6H35v.6c-.5-.4-1.1-.6-1.9-.6H17l-1.1 2.5-1.1-2.5H9.7v1.2l-.6-1.2H4.8l-2 4.7L.5 31h5.1l.6-1.6h1.4l.6 1.6H14v-1.2l.5 1.2h2.9l.5-1.2V31h13.9v-2.6h.2c.2 0 .2 0 .2.3v2.2h7.2v-.6c.6.3 1.5.6 2.7.6h3l.6-1.6h1.4l.6 1.6h5.8v-1.5l.9 1.5h4.7v-9.8h-4.5zm-33.8 8.4h-1.7V24l-2.4 5.5h-1.5L12.8 24v5.5H9.4L8.7 28H5.3l-.6 1.6H2.8l3-7.1h2.5l2.8 6.7v-6.7h2.7l2.2 4.8 2-4.8h2.8v7zm6.8-5.5h-3.9v1.3h3.8v1.4h-3.8v1.4h3.9v1.5H22v-7.1h5.6V24zm7.5 2.9c.2.4.3.7.3 1.3v1.4h-1.7v-.9c0-.4 0-1-.3-1.4-.3-.3-.6-.3-1.2-.3h-1.8v2.6h-1.7v-7.1h3.8c.9 0 1.5 0 2 .3s.8.8.8 1.6c0 1.1-.7 1.7-1.2 1.9.5.1.8.4 1 .6zm3 2.6h-1.7v-7.1h1.7v7.1zm19.7 0h-2.4l-3.2-5.3v5.3h-3.4l-.6-1.5h-3.5l-.6 1.6h-1.9c-.8 0-1.8-.2-2.4-.8-.6-.6-.9-1.4-.9-2.7 0-1 .2-2 .9-2.8.5-.6 1.4-.8 2.5-.8h1.6V24h-1.6c-.6 0-.9.1-1.3.4-.3.3-.5.9-.5 1.6 0 .8.1 1.3.5 1.7.3.3.7.4 1.2.4h.7l2.3-5.5h2.5l2.8 6.7v-6.7H53l2.9 4.9v-4.9h1.7v6.9z">
-                                        </path>
-                                        <path fill="#228FE0" d="M45.3 26.5h2.3l-1.1-2.8zM28.3 40.9v-5.7L25.7 38z">
-                                        </path>
-                                        <path fill="#2FABF7" d="M17.6 35.9v1.3h3.7v1.4h-3.7v1.5h4.1l1.9-2.1-1.8-2.1z">
-                                        </path>
-                                        <path fill="#228FE0"
-                                            d="M32.1 35.9H30v1.8h2.2c.6 0 1-.3 1-.9-.1-.6-.5-.9-1.1-.9z">
-                                        </path>
-                                        <path fill="#0571C1"
-                                            d="M63 37.6v-4.5h-4.2c-.9 0-1.6.2-2.1.6v-.6h-4.6c-.7 0-1.6.2-2 .6v-.6H42v.6c-.6-.5-1.7-.6-2.2-.6h-5.4v.6c-.5-.5-1.7-.6-2.3-.6h-6l-1.4 1.5-1.3-1.5h-9v9.8h8.8l1.4-1.5 1.3 1.5h5.4v-2.3h.7c.7 0 1.6 0 2.3-.3V43h4.5v-2.6h.2c.3 0 .3 0 .3.3V43h13.6c.9 0 1.8-.2 2.3-.6v.6h4.3c.9 0 1.8-.1 2.4-.5 1-.6 1.6-1.7 1.6-3 0-.7-.2-1.4-.5-1.9zm-31 1.6h-2v2.4h-3.2l-2-2.3-2.1 2.3h-6.6v-7.1h6.7l2 2.3 2.1-2.3h5.3c1.3 0 2.8.4 2.8 2.3-.1 2-1.5 2.4-3 2.4zm10-.4c.2.3.3.7.3 1.3v1.4h-1.7v-.9c0-.4 0-1.1-.3-1.4-.2-.3-.6-.3-1.2-.3h-1.8v2.6h-1.7v-7.1h3.8c.8 0 1.5 0 2 .3s.9.8.9 1.6c0 1.1-.7 1.7-1.2 1.9.5.2.8.4.9.6zm6.9-2.9H45v1.3h3.8v1.4H45V40h3.9v1.5h-5.6v-7.1h5.6v1.5zm4.2 5.6h-3.2V40h3.2c.3 0 .5 0 .7-.2.1-.1.2-.3.2-.5s-.1-.4-.2-.5c-.1-.1-.3-.2-.6-.2-1.6-.1-3.5 0-3.5-2.2 0-1 .6-2.1 2.4-2.1h3.3V36h-3.1c-.3 0-.5 0-.7.1-.2.1-.2.3-.2.5 0 .3.2.4.4.5.2.1.4.1.6.1h.9c.9 0 1.5.2 1.9.6.3.3.5.8.5 1.5 0 1.5-.9 2.2-2.6 2.2zm8.6-.7c-.4.4-1.1.7-2.1.7h-3.2V40h3.2c.3 0 .5 0 .7-.2.1-.1.2-.3.2-.5s-.1-.4-.2-.5c-.1-.1-.3-.2-.6-.2-1.6-.1-3.5 0-3.5-2.2 0-1 .6-2.1 2.4-2.1h3.3V36h-3c-.3 0-.5 0-.7.1-.2.1-.2.3-.2.5 0 .3.1.4.4.5.2.1.4.1.6.1h.9c.9 0 1.5.2 1.9.6.1 0 .1.1.1.1.3.4.4.9.4 1.4 0 .6-.2 1.1-.6 1.5z">
-                                        </path>
-                                        <path fill="#228FE0"
-                                            d="M40.2 36.1c-.2-.1-.5-.1-.8-.1h-2v1.6h2c.3 0 .6 0 .8-.1.2-.1.3-.4.3-.7.1-.4-.1-.6-.3-.7z">
-                                        </path>
-                                        <g fill="#228FE0">
-                                            <path
-                                                d="M33.2 24.1c-.2-.1-.5-.1-.8-.1h-2v1.6h2c.3 0 .6 0 .8-.1.2-.1.3-.4.3-.7.1-.4-.1-.6-.3-.7zM45.3 26.5h2.3l-1.1-2.8zM28.3 40.9v-5.7L25.7 38zM32.1 35.9H30v1.8h2.2c.6 0 1-.3 1-.9-.1-.6-.5-.9-1.1-.9zM40.2 36.1c-.2-.1-.5-.1-.8-.1h-2v1.6h2c.3 0 .6 0 .8-.1.2-.1.3-.4.3-.7.1-.4-.1-.6-.3-.7z">
-                                            </path>
-                                        </g>
-                                        <path fill="#2FABF7"
-                                            d="M31.4 41.3 30 39.8v1.7h-3.3l-2-2.3-2.2 2.3h-6.6v-7h6.7l2.1 2.3 1-1.2-2.5-2.5h-8.8v9.8h8.8l1.5-1.5 1.3 1.5h5.4z">
-                                        </path>
-                                        <g fill="#2FABF7">
-                                            <path
-                                                d="m21 30.9-1.3-1.4h-.6v-.6l-1.5-1.5-1 2.1h-1.4L12.8 24v5.5H9.4L8.7 28H5.3l-.7 1.5H2.8l3-7h2.5l2.8 6.7v-6.7h1.5l-1.4-1.4H9.7v1.2l-.5-1.2H4.8l-2 4.7-2.3 5.1h5.2l.6-1.5h1.4l.7 1.5H14v-1.2l.5 1.2h2.9l.5-1.2v1.2z">
-                                            </path>
-                                            <path d="m16.4 26.3-1.6-1.6 1.2 2.6z"></path>
-                                        </g>
-                                        <g fill="#228FE0">
-                                            <path
-                                                d="M61.9 42.4c.9-.6 1.5-1.6 1.6-2.7l-1.4-1.4c.1.3.2.6.2 1 0 .6-.2 1.1-.6 1.5-.4.4-1.1.7-2.1.7h-3.2V40h3.2c.3 0 .5 0 .7-.2.1-.1.2-.3.2-.5s-.1-.4-.2-.5c-.1-.1-.3-.2-.6-.2-1.6-.1-3.5 0-3.5-2.2 0-1 .6-1.9 2.1-2.1l-1.1-1.1c-.2.1-.3.2-.4.2v-.6h-4.6c-.7 0-1.6.2-2 .6v-.6H42v.6c-.6-.5-1.7-.6-2.2-.6h-5.4v.6c-.5-.5-1.7-.6-2.3-.6h-6l-1.4 1.5-1.3-1.5h-1.1l3 3 1.5-1.6h5.3c1.3 0 2.8.4 2.8 2.3 0 2-1.4 2.4-2.9 2.4h-2v1.5l1.5 1.5v-1.5h.5c.7 0 1.6 0 2.3-.3v2.7h4.5v-2.6h.2c.3 0 .3 0 .3.3v2.3h13.6c.9 0 1.8-.2 2.3-.6v.6h4.3c.8.1 1.7 0 2.4-.4zM42 38.8c.2.3.3.7.3 1.3v1.4h-1.7v-.9c0-.4 0-1.1-.3-1.4-.2-.3-.6-.3-1.2-.3h-1.8v2.6h-1.7v-7.1h3.8c.8 0 1.5 0 2 .3s.9.8.9 1.6c0 1.1-.7 1.7-1.2 1.9.5.2.8.4.9.6zm6.9-2.9H45v1.3h3.8v1.4H45V40h3.9v1.5h-5.6v-7.1h5.6v1.5zm4.2 5.6h-3.2V40h3.2c.3 0 .5 0 .7-.2.1-.1.2-.3.2-.5s-.1-.4-.2-.5c-.1-.1-.3-.2-.6-.2-1.6-.1-3.5 0-3.5-2.2 0-1 .6-2.1 2.4-2.1h3.3V36h-3.1c-.3 0-.5 0-.7.1-.2.1-.2.3-.2.5 0 .3.2.4.4.5.2.1.4.1.6.1h.9c.9 0 1.5.2 1.9.6.3.3.5.8.5 1.5 0 1.5-.9 2.2-2.6 2.2z">
-                                            </path>
-                                            <path
-                                                d="M57.9 36.6c0 .3.1.4.4.5.2.1.4.1.6.1h.9c.6 0 1 .1 1.4.3L59.7 36h-.9c-.3 0-.5 0-.7.1-.1.1-.2.3-.2.5z">
-                                            </path>
-                                        </g>
-                                        <g fill="#228FE0">
-                                            <path d="m54.4 30.6.2.3h.1zM48.9 25.1l1.7 4.1v-2.4z"></path>
-                                            <path
-                                                d="M31.8 28.4h.2c.2 0 .2 0 .2.3v2.2h7.2v-.6c.6.3 1.5.6 2.7.6h3l.6-1.6h1.4l.6 1.6h5.8v-1l-1.4-1.4v1.1h-3.4l-.5-1.6h-3.5l-.6 1.6h-1.9c-.8 0-1.8-.2-2.4-.8-.6-.6-.9-1.4-.9-2.7 0-1 .2-2 .9-2.8.5-.6 1.4-.8 2.5-.8h1.6V24h-1.6c-.6 0-.9.1-1.3.4-.3.3-.5.9-.5 1.6 0 .8.1 1.3.5 1.7.3.3.7.4 1.2.4h.7l2.3-5.5h1l-1.4-1.4h-2.6c-1.1 0-2 .2-2.8.6v-.6H35v.6c-.5-.4-1.1-.6-1.9-.6H17l-1.1 2.5-1.1-2.5h-4.4l1.4 1.4h2l1.7 3.7.6.6 1.8-4.4h2.8v7.1H19v-5.5l-1.7 4 2.9 2.9h11.5l.1-2.6zm4.6-5.9h1.7v7.1h-1.7v-7.1zM27.6 24h-3.9v1.3h3.8v1.4h-3.8v1.4h3.9v1.5H22v-7.1h5.6V24zm2.8 5.5h-1.7v-7.1h3.8c.9 0 1.5 0 2 .3s.8.8.8 1.6c0 1.1-.7 1.7-1.2 1.9.4.1.7.4.8.6.2.4.3.7.3 1.3v1.4h-1.7v-.9c0-.4 0-1-.3-1.4-.1-.2-.4-.2-1-.2h-1.8v2.5z">
-                                            </path>
-                                        </g>
-                                    </svg>
+                                    <dl class="flex items-center justify-between gap-4">
+                                        <dt class="text-base font-normal text-gray-500 ">Tax (2%)</dt>
+                                        <dd class="text-base font-medium text-gray-900 ">
+                                            {{calculateTax(+(productDetails?.product_price)||0)}} TK</dd>
+                                    </dl>
                                 </div>
-                            </label>
-                            <input [checked]="cardSelect==='amx'" (change)="changeCard($event)" value="amx" type="radio"
-                                id="amx" name="selectCard" />
 
-                            <label for="visa">
-                                <div class="w-[64px] h-[64px]">
-                                    <img class="w-full h-full"
-                                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa.svg"
-                                        alt="" />
-                                </div>
-                            </label>
-                            <input [checked]="cardSelect==='visa'" (change)="changeCard($event)" type="radio"
-                                value="visa" id="visa" name="selectCard" />
-
-                            <label for="msc">
-                                <div class="w-[64px] h-[64px]">
-                                    <img class="w-full h-full"
-                                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/mastercard.svg"
-                                        alt="" />
-                                </div>
-                            </label>
-                            <input [checked]="cardSelect==='msc'" (change)="changeCard($event)" value="msc" type="radio"
-                                id="msc" name="selectCard" />
-                        </div>
-                        <div class="space-y-4 border border-gray-100 bg-gray-50 p-6 ">
-                            <div class="space-y-2">
-                                <dl class="flex items-center justify-between gap-4">
-                                    <dt class="text-base font-normal text-gray-500 ">Product price</dt>
-                                    <dd class="text-base font-medium text-gray-900 ">{{oderDetails?.product?.price||0}}
-                                        TK</dd>
-                                </dl>
-
-                                <dl class="flex items-center justify-between gap-4">
-                                    <dt class="text-base font-normal text-gray-500 ">Savings</dt>
-                                    <dd class="text-base font-medium text-green-500">-$299.00</dd>
-                                </dl>
-
-                                <dl class="flex items-center justify-between gap-4">
-                                    <dt class="text-base font-normal text-gray-500 ">Tax</dt>
-                                    <dd class="text-base font-medium text-gray-900 ">$799</dd>
+                                <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 ">
+                                    <dt class="text-base font-bold text-gray-900 ">Total</dt>
+                                    <dd class="text-base font-bold text-gray-900 ">
+                                        {{calculateTotal(+(productDetails?.product_price)||0,calculateTax(+(productDetails.product_price)||0),(productDetails.shipping_cost)||0)}}
+                                        TK
+                                    </dd>
                                 </dl>
                             </div>
-
-                            <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 ">
-                                <dt class="text-base font-bold text-gray-900 ">Total</dt>
-                                <dd class="text-base font-bold text-gray-900 ">$7,191.00</dd>
-                            </dl>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </div>
 
-
+    <ng-template #showError>
+        <div class="w-full h-screen absolute top-0 left-0">
+            <div *ngIf="isMessage === 'Product Placed Successfully'" class="flex flex-col items-center">
+                <iframe class="w-96 h-96 "
+                    src="https://lottie.host/embed/a77cb3d8-a99f-405d-94ea-357ec207aa1e/x7iXBMJKkx.json"></iframe>
+                <p class=" font-semibold text-5xl text-gray-600">Product Placed Successfully</p>
+            </div>
+            <ng-template [ngIf]="isMessage === 'Product has already been placed.'">
+                <div class="flex flex-col items-center">
+                    <iframe class="w-96 h-96 "
+                        src="https://lottie.host/embed/4711d859-8d60-453a-bddc-16093fc8f590/7uHKEoExny.json"></iframe>
+                    <p class=" font-semibold text-5xl text-gray-600">Product Already Placed</p>
+                </div>
+            </ng-template>
+        </div>
+    </ng-template>
 </div>
+
+
+<span *ngIf="!productDetails">
+    <div
+        class="w-28 h-28 border-4 mx-auto mt-16 border-gray-400 border-t-transparent border-double rounded-full animate-spin">
+    </div>
+</span>

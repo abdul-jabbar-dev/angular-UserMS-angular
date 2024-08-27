@@ -1,3 +1,4 @@
+import { StatusGuard } from './StateGuard';
 import { FilterSelectButtonComponent } from './../components/common/filter-select-button/filter-select-button.component';
 import { StaticModalComponent } from './../components/common/static-modal/static-modal.component';
 import { ShippingService } from './services/shipping.service';
@@ -92,6 +93,7 @@ import { PaymentComponent } from './shipping/payment/payment.component';
     ShippingService,
     RequestService,
     AuthGuard,
+    StatusGuard,
     SharedModule,
   ],
   bootstrap: [AppComponent],

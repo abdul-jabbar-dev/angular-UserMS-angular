@@ -66,7 +66,7 @@ export class AuthService {
       );
 
       if (result.token) {
-        this.store.addToken(result.token);
+        this.store.addTokenFromStore(result.token);
         await this.handleAuthSuccess();
       } else {
         return result;
@@ -86,7 +86,7 @@ export class AuthService {
       );
 
       if (result.token) {
-        this.store.addToken(result.token);
+        this.store.addTokenFromStore(result.token);
         await this.handleAuthSuccess();
       }
       return result;
@@ -133,7 +133,7 @@ export class AuthService {
 
   async signOut() {
     const data = await this.supabase.supabase.auth.signOut();
-    this.store.removeToken();
+    this.store.removeTokenFromStore();
     this.userSubject.next(null);
     this.isAuthenticatedSubject.next(false);
     return data;

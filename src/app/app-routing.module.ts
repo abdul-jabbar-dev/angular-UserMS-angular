@@ -1,3 +1,4 @@
+import { StatusGuard } from './StateGuard';
 import { ShippingComponent } from './shipping/shipping.component';
 import { AdminProductsComponent } from './products/admin-products/admin-products.component';
 import { FavouriteComponent } from './favourite/favourite.component';

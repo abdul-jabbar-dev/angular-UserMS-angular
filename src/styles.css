@@ -39,5 +39,22 @@
     color: red;
 }
 
-
+.ckeditor_style_output table,
+th,
+td {
+    border-bottom: 1px solid rgb(240, 240, 240);
  
+}
+
+.ckeditor_style_output table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 5px;
+}
+
+.ckeditor_style_output th,
+td {
+    padding: 10px 20px;
+    text-align: left;
+    
+}

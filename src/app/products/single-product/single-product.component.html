@@ -1,6 +1,6 @@
-<div class="flex relative flex-col justify-center h-screen">
+<div class="flex relative flex-col justify-center w-full h-screen">
 
-    <span *ngIf="currentPath?.length" class="absolute flex top-10 left-10">
+    <span *ngIf="currentPath?.length" class="absolute   flex top-10 left-10">
         <ul class="list-none  text-gray-700 flex items-center space-x-2">
             <li *ngFor="let path of currentPath; let last = last">
                 <a class="hover:underline" [routerLink]="'/'+(path==='product'?'':'product/'+path)">{{
@@ -11,28 +11,30 @@
     </span>
 
     <div *ngIf="product; else pingComponent"
-        class="relative flex flex-col lg:flex-row lg:space-x-5 space-y-3 lg:space-y-0   p-3 max-w-xs lg:max-w-3xl mx-auto border border-white bg-white">
-        <div class="w-full lg:w-1/3 bg-white grid place-items-center">
+        class="relative flex  flex-col lg:flex-row lg:space-x-5 space-y-3 h-full  lg:space-y-0  w-full p-3  top-32 mx-auto border border-white bg-white">
+        <div class="w-full bg-white grid place-items-start justify-items-center">
             <img class="select-none"
                 [src]="'https://vdlbpitmjmlzfxhvgyxo.supabase.co/storage/v1/object/public/' + product.image"
                 [alt]="product.title" />
         </div>
-        <div class="w-full lg:w-2/3 bg-white flex flex-col space-y-2 p-3">
-            <div class="flex justify-between items-center">
+        <div class="w-full   xl:w-full  bg-white flex flex-col space-y-2 p-3">
+            <div class="flex justify-between w-full items-center">
                 <div class="flex items-center text-gray-600 text-sm">
                     {{getDay(product.created_at)}}
                 </div>
             </div>
-            <h3 class="font-black text-gray-800 lg:text-3xl text-xl">{{ product.title }}</h3>
-            <div class=" w-full text-gray-500 ckeditor_style_output" [innerHTML]="product.desc"></div>
             <div class="flex justify-between items-center">
                 <p class="text-xl font-black  text-gray-800">
                     TK {{ product.price }}
                 </p>
                 <button [routerLink]="'/shipping/'+product.id"
-                    class="border py-2 px-4  *: text-gray-700 hover:bg-slate-100">Make
+                    class="border py-2 px-4  *: text-gray-700 mr-6 hover:bg-slate-100">Make
                     Order</button>
             </div>
+            <br>
+            <h3 class="font-black  text-gray-800 lg:text-3xl text-xl">{{ product.title }}</h3>
+            <div class=" w-full text-gray-500 ckeditor_style_output" [innerHTML]="product.desc"></div>
+            <br><br><br>
 
         </div>
     </div>

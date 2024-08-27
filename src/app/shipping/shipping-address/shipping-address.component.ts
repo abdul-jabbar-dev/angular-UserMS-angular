@@ -74,8 +74,8 @@ export class ShippingAddressComponent
       ]),
     });
   }
-  ngOnChanges(changes: SimpleChanges): void { 
-    if (changes['exist'].currentValue.id) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['exist']?.currentValue?.id) {
       this.billingForm.patchValue({
         phone: this.exist.shipping_phone,
         email: this.exist.shipping_email,
@@ -120,11 +120,13 @@ export class ShippingAddressComponent
     }
   }
   async makeOrder() {
-    this.router.navigateByUrl('/payment');
     try {
       const result = await this.shipping.orderPlaced();
 
       if (result) {
+        this.router.navigate(['/payment'], {
+          queryParams: { productId: this.product?.id },
+        });
         // this.displayErrorMessage('Product placed Successfully');
       }
     } catch (error) {

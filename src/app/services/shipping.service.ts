@@ -1,9 +1,11 @@
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, catchError, firstValueFrom, throwError } from 'rxjs';
+import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { RequestService } from './request.service';
 
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { StoreService } from './store.service';
+
 interface TProduct {
   price: number;
   id: string;
@@ -39,6 +41,7 @@ interface ShippingType {
   address_line1: string;
   address_line2?: string;
   city: string;
+  product_price: number;
   stat: string;
   country: string;
   zip: string;
@@ -52,8 +55,12 @@ export class ShippingService {
   constructor(
     public request: RequestService,
     public auth: AuthService,
-    public router: Router
-  ) {}
+    public router: Router,
+    protected store: StoreService
+  ) {
+    // const existData = this.store.getDataFromStore('order');
+    // console.log(existData);
+  }
 
   shippingOrder: BehaviorSubject<TOrder> = new BehaviorSubject<TOrder>({
     shippingSpot: { cost: '', time: '', spot: '' },
@@ -88,6 +95,10 @@ export class ShippingService {
   shippingAddress$ = this.shippingAddress.asObservable();
 
   setProduct(product: TProduct) {
+    this.store.setDataFromStore('order', {
+      property: 'product',
+      value: product,
+    });
     this.product.next(product);
   }
   setAddress(add: TAddress) {
@@ -99,6 +110,7 @@ export class ShippingService {
   setShippingDetailsFroDB(product: ShippingType) {
     this.orderDetailsDB.next(product);
   }
+
   async orderPlaced() {
     let user = await this.auth.getProfile();
     let address;
@@ -108,17 +120,20 @@ export class ShippingService {
       (data) => (shippingSummary = data.shippingSpot)
     );
     this.shippingAddress.subscribe((e) => (address = e));
+
+    const info: Record<string, any> = {
+      bill: shippingSummary,
+      user: user,
+      address: address,
+      product: this.product.value,
+    };
+
     if (!address) {
       alert('Shiping address not included');
     } else {
       try {
         const result = await firstValueFrom(
-          await this.request.create('/shipping', {
-            bill: shippingSummary,
-            user: user,
-            address: address,
-            product: this.product.value,
-          })
+          await this.request.create('/shipping', info)
         );
         if (result) {
           this.getOrderFromDB(result);
@@ -159,27 +174,35 @@ export class ShippingService {
       shippingSummary,
     };
   }
-  async getExistingOrder(data?: TProduct): Promise<Record<string, any>> {
+  async getExistingOrder(data?: TProduct | any): Promise<Record<string, any>> {
     try {
       let product = data;
 
-      this.product$.subscribe((p) => {
-        if (p.id) {
+      this.product$?.subscribe((p) => {
+        if (p?.id) {
           product = p;
         } else {
           product = data;
         }
-      });
+      }); 
       if (product && product['id']) {
         const result: ShippingType = await firstValueFrom(
-          await this.request.get('/shipping/' + (product as any).id)
+          await this.request.get('/shipping/' + 9)
         );
-        
-        this.setShippingDetailsFroDB(result);
-        
-        console.log(result);
+        await this.setShippingDetailsFroDB(result);
+
         return result;
       } else return {};
+    } catch (error) {
+      throw error;
+    }
+  }
+  async confirmPayment(orderNumber: { orderNumber: string }) {
+    try {
+      const result = await firstValueFrom(
+        await this.request.create('/shipping/confirm', orderNumber)
+      );
+      return result;
     } catch (error) {
       throw error;
     }
