@@ -10,12 +10,12 @@
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
- 
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "@supabase/realtime-js","ws"
+              "@supabase/realtime-js",
+              "ws"
             ],
             "outputPath": "dist/test-supabse",
             "index": "src/index.html",
@@ -36,19 +36,25 @@
           },
           "configurations": {
             "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "buildOptimizer": true,
+              "extractLicenses": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "100kb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "4kb",
+                  "maximumError": "6kb"
                 }
-              ],
-              "outputHashing": "all"
+              ]
             },
             "development": {
               "buildOptimizer": false,
@@ -62,7 +68,6 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-        
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
