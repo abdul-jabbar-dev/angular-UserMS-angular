@@ -1,7 +1,7 @@
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { Component, OnInit } from '@angular/core';
 import { RequestService } from 'src/app/services/request.service';
-
+import * as moment from 'moment'
 interface TProduct {
   id: string | number;
   title: string;
@@ -90,8 +90,8 @@ export class AdminProductsComponent implements OnInit {
   }
 
   getDay(dateString: any) {
-    const date = new Date(dateString);
-    return date.toUTCString();
+    const date = moment(dateString);
+    return date.calendar();
   }
 
   async toggleStatus(id: string | number) {

@@ -15,7 +15,8 @@
           "options": {
             "allowedCommonJsDependencies": [
               "@supabase/realtime-js",
-              "ws"
+              "ws",
+              "moment"
             ],
             "outputPath": "dist/test-supabse",
             "index": "src/index.html",
@@ -46,8 +47,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "100kb",
-                  "maximumError": "2mb"
+                  "maximumWarning": "300kb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",

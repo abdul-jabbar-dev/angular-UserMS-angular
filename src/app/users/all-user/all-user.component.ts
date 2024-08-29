@@ -1,6 +1,8 @@
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { Component, OnInit } from '@angular/core'; 
 import { RequestService } from 'src/app/services/request.service';
+import * as moment from 'moment'
+
 interface TUserResponse {
   id: number;
   username: string;
@@ -91,10 +93,9 @@ export class AllUserComponent implements OnInit {
   }
 
   getDay(dateString: any) {
-    const date = new Date(dateString);
-    return date.toUTCString();
+    const date = moment(dateString);
+    return date.calendar();
   }
-
   async toggleRole(id: string | number) {
     try {
       await firstValueFrom(

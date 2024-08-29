@@ -18,8 +18,7 @@ export class RequestService {
     query?: Record<string, string | number | boolean | null>
   ): Promise<Observable<any>> { 
     try {
-      console.log(pref, query);
-      let options = { headers: new HttpHeaders(), params: new HttpParams() };
+       let options = { headers: new HttpHeaders(), params: new HttpParams() };
 
       const token = this.store.getTokenFromStore() as string;
       if (token && token.length > 15) {
@@ -40,8 +39,7 @@ export class RequestService {
         headers: options.headers,
         params: options.params,
       });
-    } catch (error) {
-      console.log(error, 'from request');
+    } catch (error) { 
       throw new Error(JSON.stringify(error));
     }
   }

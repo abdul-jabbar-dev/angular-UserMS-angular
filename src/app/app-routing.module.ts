@@ -1,3 +1,4 @@
+import { PromocodeComponent } from './promocode/promocode.component';
 import { StatusGuard } from './StateGuard';
 import { ShippingComponent } from './shipping/shipping.component';
 import { AdminProductsComponent } from './products/admin-products/admin-products.component';
@@ -35,6 +36,11 @@ const routes: Routes = [
   {
     path: 'edit_profile',
     component: EditProfileComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'promocode',
+    component: PromocodeComponent,
     canActivate: [AuthGuard],
   },
   {

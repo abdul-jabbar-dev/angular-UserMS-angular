@@ -121,6 +121,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
         ],
       },
       {
+        title: 'Promocode',
+        id: 'promocode',
+        isActive: false,
+        icon: '/assets/icon/nav/Promocode.svg',
+        link: '/promocode',
+        forAdmin: true,
+      },{
         title: 'Products',
         id: 'products',
         isActive: false,

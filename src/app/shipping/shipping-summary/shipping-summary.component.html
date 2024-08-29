@@ -9,7 +9,7 @@
             <p class="text-base leading-4 text-gray-800">Discount
                 <!-- <span class="bg-gray-200 p-1 text-xs font-medium   leading-3 text-gray-800">STUDENT</span> -->
             </p>
-            <p class="text-base  leading-4 text-gray-600">00 TK</p>
+            <p class="text-base  leading-4 text-gray-600">{{(coupon?.discount_amount|number)||'00 '}} {{coupon?.discount_type==='percentage'?'%':'TK'}}</p>
         </div>
         <div class="flex justify-between items-center w-full">
             <p class="text-base leading-4 text-gray-800">Shipping</p>
@@ -18,6 +18,6 @@
     </div>
     <div class="flex justify-between items-center w-full">
         <p class="text-base font-semibold leading-4 text-gray-800">Total</p>
-        <p class="text-base  font-semibold leading-4 text-gray-600">{{getTotal() +' TK'}}</p>
+        <p class="text-base  font-semibold leading-4 text-gray-600">{{ totalAmount }} TK</p>
     </div>
 </div>

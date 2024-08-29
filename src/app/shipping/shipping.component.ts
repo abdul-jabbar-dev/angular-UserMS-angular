@@ -5,12 +5,12 @@ import {
   Output,
   Input,
   SimpleChanges,
-  EventEmitter,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RequestService } from '../services/request.service';
 import { firstValueFrom } from 'rxjs';
 import { ShippingService } from '../services/shipping.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-shipping',
@@ -46,6 +46,13 @@ export class ShippingComponent implements OnInit, OnDestroy {
   handleOrderStatus(message: string): void {
     this.isMessage = message;
   }
+
+  onConfirmOrder() {
+    if (this.param) {
+      this.getProducts(this.param);
+    }
+  }
+
   async getProducts(params: any): Promise<void> {
     if (!params) {
       console.error('No product ID found');
@@ -75,7 +82,6 @@ export class ShippingComponent implements OnInit, OnDestroy {
       await this.getProducts(this.param);
 
       const res = await this.shipping.getExistingOrder(this.product as any);
- 
     });
 
     this.updateDate();
@@ -93,7 +99,7 @@ export class ShippingComponent implements OnInit, OnDestroy {
     }
   }
   getDate(): string {
-    return new Date().toUTCString();
+    return moment().format('LTS');
   }
 
   updateDate(): void {

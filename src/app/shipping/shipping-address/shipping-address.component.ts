@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { ShippingService } from 'src/app/services/shipping.service';
 import { RequestService } from 'src/app/services/request.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-shipping-address',
@@ -23,6 +24,7 @@ import { RequestService } from 'src/app/services/request.service';
 export class ShippingAddressComponent
   implements OnInit, AfterViewInit, OnChanges
 {
+  @Output() confirmOrderEvent = new EventEmitter<void>();
   @Output() orderStatus = new EventEmitter<string>();
   @Input() exist: any;
   @Input() product: {
@@ -122,13 +124,6 @@ export class ShippingAddressComponent
   async makeOrder() {
     try {
       const result = await this.shipping.orderPlaced();
-
-      if (result) {
-        this.router.navigate(['/payment'], {
-          queryParams: { productId: this.product?.id },
-        });
-        // this.displayErrorMessage('Product placed Successfully');
-      }
     } catch (error) {
       if ((error as any).error.message === 'Product Already Placed') {
         this.displayErrorMessage('Product has already been placed.');
@@ -147,8 +142,30 @@ export class ShippingAddressComponent
       this.shipping.setAddress(this.billingForm.value);
       this.isSubmit = true;
       await this.makeOrder();
+      this.confirmOrderEvent.emit();
     } else {
       console.log('Form is invalid. Please fill in all required fields.');
     }
   }
+
+  confirmOrder() {
+    if (this.billingForm.valid) {
+      this.shipping.setAddress(this.billingForm.value);
+      this.isSubmit = true;
+      if (this.exist) {
+        let coupon;
+        this.shipping.shippingOrder$.subscribe((res) => (coupon = res));
+
+        this.router.navigate(['/payment'], {
+          queryParams: {
+            productId: this.product?.id,
+            coupon: (coupon as any)?.coupon?.code || undefined,
+          },
+        });
+      }
+    } else {
+      console.log('Form is invalid. Please fill in all required fields.');
+    }
+  }
+ 
 }

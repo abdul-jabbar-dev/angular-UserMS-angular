@@ -1,3 +1,4 @@
+import { MatNativeDateModule } from '@angular/material/core';
 import { StatusGuard } from './StateGuard';
 import { FilterSelectButtonComponent } from './../components/common/filter-select-button/filter-select-button.component';
 import { StaticModalComponent } from './../components/common/static-modal/static-modal.component';
@@ -44,6 +45,9 @@ import { ShippingPromoComponent } from './shipping/shipping-promo/shipping-promo
 import { ShippingDeliveryComponent } from './shipping/shipping-delivery/shipping-delivery.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { PaymentComponent } from './shipping/payment/payment.component';
+import { PromocodeComponent } from './promocode/promocode.component';
+import { CreatePromoComponent } from './promocode/create-promo/create-promo.component';
+ 
 
 @NgModule({
   declarations: [
@@ -74,7 +78,9 @@ import { PaymentComponent } from './shipping/payment/payment.component';
     ShippingDeliveryComponent,
     StaticModalComponent,
     FilterSelectButtonComponent,
-    PaymentComponent
+    PaymentComponent,
+    PromocodeComponent,
+    CreatePromoComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,7 +88,7 @@ import { PaymentComponent } from './shipping/payment/payment.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CKEditorModule,
+    CKEditorModule,   
   ],
   providers: [
     RouteService,

@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { RequestService } from 'src/app/services/request.service';
 import { filter } from 'rxjs/operators';
-
+import * as moment from 'moment'
 @Component({
   selector: 'app-single-product',
   templateUrl: './single-product.component.html',
@@ -47,9 +47,9 @@ export class SingleProductComponent implements OnInit, OnDestroy {
     this.currentPath = this.router.url.split('/').filter((i) => i !== '');
   }
 
-  getDay(dateString: any): string {
-    const date = new Date(dateString);
-    return date.toDateString();
+  getDay(dateString: any) {
+    const date = moment(dateString);
+    return date.calendar();
   }
 
   async getProducts(): Promise<void> {
@@ -65,7 +65,7 @@ export class SingleProductComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error('Failed to fetch product:', error);
     }
-  } 
+  }
 
   ngOnDestroy(): void {
     this.paramValue = null;

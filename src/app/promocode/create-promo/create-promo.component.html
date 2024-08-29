@@ -1,0 +1,113 @@
+<form [formGroup]="createPromoForm" (ngSubmit)="onSubmit()" class="w-full h-full bg-white shadow-md p-6">
+    <div class="flex flex-wrap -mx-3 mb-6">
+
+        <!-- Promo Code Input -->
+        <div class="w-full md:w-full px-3 mb-6">
+            <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="code">
+                Promo Code
+            </label>
+            <input [ngClass]="isError.length>0? ' border-red-800 text-red-700':''" id="code" formControlName="code"
+                class="appearance-none block w-full bg-white text-gray-900 font-medium border uppercase border-gray-300 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-gray-800"
+                type="text" placeholder="Make The Code" required />
+
+            <div class="text-red-500 text-xs italic"><small *ngIf="isError">{{isError}}</small></div>
+
+            <div *ngIf="createPromoForm.get('code')?.['invalid'] && createPromoForm.get('code')?.touched"
+                class="text-red-500 text-xs italic">
+                <small *ngIf="createPromoForm.get('code')?.errors?.['required']">Promo code is required.</small>
+                <small *ngIf="createPromoForm.get('code')?.errors?.['minlength']">Promo code must be at least 3
+                    characters
+                    long.</small>
+            </div>
+        </div>
+
+        <!-- Discount Amount Input -->
+        <div class="w-full md:w-full px-3 mb-6">
+            <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="discount_amount">
+                Discount Amount
+            </label>
+            <input id="discount_amount" formControlName="discount_amount"
+                class="appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-300 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-gray-800"
+                type="number" placeholder="Price" required />
+            <div *ngIf="createPromoForm.get('discount_amount')?.['invalid'] && createPromoForm.get('discount_amount')?.touched"
+                class="text-red-500 text-xs italic">
+                <small *ngIf="createPromoForm.get('discount_amount')?.errors?.['required']">Discount amount is
+                    required.</small>
+                <small *ngIf="createPromoForm.get('discount_amount')?.errors?.['min']">Discount amount must be a
+                    positive
+                    value.</small>
+            </div>
+        </div>
+
+        <div class="flex w-full gap-x-2">
+
+            <!-- Limit Range Input -->
+            <div class="w-full md:w-full px-3 mb-6">
+                <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="usage_limit">
+                    Limit Range
+                </label>
+                <input id="usage_limit" formControlName="usage_limit"
+                    class="appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-300 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-gray-800"
+                    type="number" placeholder="Total Limit" required />
+
+                <div *ngIf="createPromoForm.get('usage_limit')?.invalid && createPromoForm.get('usage_limit')?.touched"
+                    class="text-red-500 text-xs italic">
+                    <small *ngIf="createPromoForm.get('usage_limit')?.errors?.['required']">
+                        Usage limit is required.
+                    </small>
+                    <small *ngIf="createPromoForm.get('usage_limit')?.errors?.['min']">
+                        Usage limit must be at least 1.
+                    </small>
+                </div>
+
+            </div>
+
+            <!-- Discount Type Select -->
+            <div class="w-full md:w-full px-3 mb-6">
+                <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="discount_type">
+                    Discount Type
+                </label>
+                <select formControlName="discount_type"
+                    class="appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-300 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-gray-800">
+                    <option value="percentage">Percentage</option>
+                    <option value="fixed">Fixed</option>
+                </select>
+            </div>
+        </div>
+
+
+
+        <div class="w-full md:w-full px-3 mb-6">
+            <label class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2" for="valid_to">
+                Valid To
+            </label>
+            <input id="valid_to" formControlName="valid_to"
+                class="appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-300 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-gray-800"
+                type="datetime-local" placeholder="Valid To" required />
+            <div *ngIf="createPromoForm.get('valid_to')?.invalid && createPromoForm.get('valid_to')?.touched"
+                class="text-red-500 text-xs italic">
+                <small *ngIf="createPromoForm.get('valid_to')?.errors?.['required']">Valid To date is required.</small>
+            </div>
+        </div>
+
+
+        <!-- Submit Button -->
+        <div class="w-full md:w-full px-3 mb-6">
+            <button *ngIf="!successEvent(); else succes" type="submit"
+                class="appearance-none block w-full bg-gray-700 text-gray-100 font-bold border border-gray-200 rounded-lg py-3 px-3 leading-tight hover:bg-gray-600 focus:outline-none focus:bg-white focus:border-gray-500">
+                <span *ngIf="!isLoading">Create Coupon Code</span>
+                <div *ngIf="isLoading"
+                    class="w-6 h-6 border-4 mx-auto rounded-full border-gray-400 border-t-transparent animate-spin">
+                </div>
+            </button>
+            <ng-template #succes>
+                <iframe class="w-20 h-20 mx-auto"
+                    src="https://lottie.host/embed/14c26023-1ffe-4459-9cfc-2beb8712b71f/bGSzuTX9x4.json"></iframe>
+            </ng-template>
+
+
+
+        </div>
+
+    </div>
+</form>

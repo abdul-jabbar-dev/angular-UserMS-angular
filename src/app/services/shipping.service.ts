@@ -1,10 +1,10 @@
-import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
-import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject, combineLatest, firstValueFrom } from 'rxjs';
 import { RequestService } from './request.service';
-
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { StoreService } from './store.service';
+import { take } from 'rxjs/operators';
 
 interface TProduct {
   price: number;
@@ -27,7 +27,7 @@ interface TAddress {
 }
 interface TOrder {
   shippingSpot: { cost: string | number; time: string; spot: string };
-  coupon?: string;
+  coupon?: { code: string; discount_type: string; discount_amount: number };
 }
 interface ShippingType {
   id: number;
@@ -44,32 +44,23 @@ interface ShippingType {
   product_price: number;
   stat: string;
   country: string;
+  promocode_id?: number;
   zip: string;
   created_at: Date;
   order_status: 'pending' | 'expired' | 'paid';
 }
+
 @Injectable({
   providedIn: 'root',
 })
-export class ShippingService {
-  constructor(
-    public request: RequestService,
-    public auth: AuthService,
-    public router: Router,
-    protected store: StoreService
-  ) {
-    // const existData = this.store.getDataFromStore('order');
-    // console.log(existData);
-  }
-
-  shippingOrder: BehaviorSubject<TOrder> = new BehaviorSubject<TOrder>({
+export class ShippingService implements OnInit {
+  private shippingOrder = new BehaviorSubject<TOrder>({
     shippingSpot: { cost: '', time: '', spot: '' },
-    coupon: '',
+    coupon: { code: '', discount_type: 'string', discount_amount: 0 },
   });
-  orderDetailsDB: BehaviorSubject<ShippingType | null> =
-    new BehaviorSubject<ShippingType | null>(null);
 
-  shippingAddress: BehaviorSubject<TAddress> = new BehaviorSubject<TAddress>({
+  private orderDetailsDB = new BehaviorSubject<ShippingType | null>(null);
+  private shippingAddress = new BehaviorSubject<TAddress>({
     addressLine1: '',
     city: '',
     country: '',
@@ -79,7 +70,8 @@ export class ShippingService {
     zip: '',
     addressLine2: '',
   });
-  product: BehaviorSubject<TProduct> = new BehaviorSubject<TProduct>({
+
+  private product = new BehaviorSubject<TProduct>({
     price: 0,
     id: '',
     user_id: '',
@@ -94,6 +86,17 @@ export class ShippingService {
   shippingOrder$ = this.shippingOrder.asObservable();
   shippingAddress$ = this.shippingAddress.asObservable();
 
+  constructor(
+    private request: RequestService,
+    private auth: AuthService,
+    private router: Router,
+    private store: StoreService
+  ) {}
+
+  ngOnInit(): void {
+    console.log(this.getOrderInfo());
+  }
+
   setProduct(product: TProduct) {
     this.store.setDataFromStore('order', {
       property: 'product',
@@ -101,110 +104,123 @@ export class ShippingService {
     });
     this.product.next(product);
   }
+
   setAddress(add: TAddress) {
     this.shippingAddress.next(add);
   }
-  addOrder(product: TOrder) {
+
+  async addOrder(product: TOrder) {
+    if (product.coupon) {
+      const existingOrder = await this.getExistingOrder();
+      if (existingOrder && (existingOrder as any).id) {
+        const res = await firstValueFrom(
+          await this.request.put(
+            `/shipping/addpromo/${(existingOrder as any).id}`,
+            {
+              promocode_id: product.coupon.code,
+            }
+          )
+        );
+        if (res) {
+          this.setShippingDetailsFroDB(res);
+        }
+      }
+    }
     this.shippingOrder.next(product);
   }
-  setShippingDetailsFroDB(product: ShippingType) {
-    this.orderDetailsDB.next(product);
+
+  setShippingDetailsFroDB(orderDetails: ShippingType) {
+    this.orderDetailsDB.next(orderDetails);
   }
 
   async orderPlaced() {
-    let user = await this.auth.getProfile();
-    let address;
-    let shippingSummary: Record<string, any> = {};
-
-    this.shippingOrder$.subscribe(
-      (data) => (shippingSummary = data.shippingSpot)
+    const [user, address, shippingSummary] = await firstValueFrom(
+      combineLatest([
+        this.auth.getProfile(),
+        this.shippingAddress$,
+        this.shippingOrder$,
+      ])
     );
-    this.shippingAddress.subscribe((e) => (address = e));
 
-    const info: Record<string, any> = {
-      bill: shippingSummary,
+    if (!address) {
+      alert('Shipping address not included');
+      return;
+    }
+
+    let orderInfo:any = {
+      bill: shippingSummary.shippingSpot,
       user: user,
       address: address,
       product: this.product.value,
     };
 
-    if (!address) {
-      alert('Shiping address not included');
-    } else {
-      try {
-        const result = await firstValueFrom(
-          await this.request.create('/shipping', info)
-        );
-        if (result) {
-          this.getOrderFromDB(result);
-        }
+    if (shippingSummary.coupon?.code) {
+      orderInfo['promocode_id'] = shippingSummary.coupon.code;
+    }
 
-        return result;
-      } catch (error) {
-        throw error;
+    try {
+      const result = await firstValueFrom(
+        await this.request.create('/shipping', orderInfo)
+      );
+      if (result) {
+        this.getOrderFromDB(result);
       }
+      return result;
+    } catch (error) {
+      console.error('Order placement failed', error);
+      throw error;
     }
   }
-  getOrderFromDB(orderInfoDB: ShippingType): any {
+
+  getOrderFromDB(orderInfoDB: ShippingType) {
     this.setShippingDetailsFroDB(orderInfoDB);
-    if (orderInfoDB['order_number']) {
-      if (orderInfoDB['order_status'] === 'pending') {
-        this.router.navigateByUrl('/payment');
-        this.shippingOrder.unsubscribe();
-        this.shippingAddress.unsubscribe();
-        this.product.unsubscribe();
-      } else {
-        throw new Error('Product placed Successfully');
-      }
+    if (orderInfoDB.order_number && orderInfoDB.order_status === 'pending') {
+      this.router.navigateByUrl('/payment');
+      this.clearSubjects();
+    } else {
+      throw new Error('Product placed successfully');
     }
   }
-  async getOrderInfo() {
-    let shippingSummary;
-    let address;
-    let product;
-    let user = await this.auth.getProfile();
 
-    this.shippingOrder$.subscribe((data) => (shippingSummary = data));
-    this.product$.subscribe((data) => (product = data));
-    this.shippingAddress.subscribe((e) => (address = e));
+  async getOrderInfo() {
+    const [shippingSummary, product, address] = await firstValueFrom(
+      combineLatest([this.shippingOrder$, this.product$, this.shippingAddress$])
+    );
+    const user = await this.auth.getProfile();
     return {
-      user: user,
+      user,
       product,
       address,
       shippingSummary,
     };
   }
-  async getExistingOrder(data?: TProduct | any): Promise<Record<string, any>> {
+
+  async getExistingOrder(data?: TProduct): Promise<ShippingType | {}> {
+    const product = data || (await firstValueFrom(this.product$));
+    if (product?.id) {
+      const result: ShippingType = await firstValueFrom(
+        await this.request.get(`/shipping/${product.id}`)
+      );
+      this.setShippingDetailsFroDB(result);
+      return result;
+    }
+    return {};
+  }
+
+  async confirmPayment(orderNumber: { orderNumber: string; coupon?: string }) {
     try {
-      let product = data;
-
-      this.product$?.subscribe((p) => {
-        if (p?.id) {
-          product = p;
-        } else {
-          product = data;
-        }
-      }); 
-      if (product && product['id']) {
-        const result: ShippingType = await firstValueFrom(
-          await this.request.get('/shipping/' + 9)
-        );
-        await this.setShippingDetailsFroDB(result);
-
-        return result;
-      } else return {};
+      return await firstValueFrom(
+        await this.request.create('/shipping/confirm', orderNumber)
+      );
     } catch (error) {
+      console.error('Payment confirmation failed', error);
       throw error;
     }
   }
-  async confirmPayment(orderNumber: { orderNumber: string }) {
-    try {
-      const result = await firstValueFrom(
-        await this.request.create('/shipping/confirm', orderNumber)
-      );
-      return result;
-    } catch (error) {
-      throw error;
-    }
+
+  private clearSubjects() {
+    this.shippingOrder.complete();
+    this.shippingAddress.complete();
+    this.product.complete();
   }
 }

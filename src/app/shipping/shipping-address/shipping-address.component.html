@@ -73,7 +73,7 @@
                         Shipping Address</p>
                     <div class="w-full">
 
-                        <form *ngIf="!isSubmit; else nonEdit" class="w-full" [formGroup]="billingForm"
+                        <form *ngIf="!exist else nonEdit" class="w-full" [formGroup]="billingForm"
                             (ngSubmit)="onSubmit()">
 
                             <div class="py-2  flex gap-x-2">
@@ -202,8 +202,9 @@
                                 billingForm.value['city']+", "+billingForm.value['zip'] +", "+billingForm.value['state']
                                 +", "+billingForm.value['country']}} </p>
 
-                            <button (click)="makeOrder()"
-                                class="mt-6 md:mt-0 py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base leading-4 text-gray-800">Next</button>
+                            <div (click)="confirmOrder()"
+                                class=" mx-auto text-center w-full mt-6 md:mt-0 py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium cursor-pointer  2xl:w-full text-base leading-4 text-gray-800">
+                                Next</div>
                         </ng-template>
                     </div>
                 </div>
