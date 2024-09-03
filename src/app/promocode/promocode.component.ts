@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RequestService } from '../services/request.service';
-import { firstValueFrom } from 'rxjs';
-import * as moment from 'moment';
+import { firstValueFrom } from 'rxjs'; 
+import { formatDistanceToNow } from 'date-fns';
 interface TPromocodeResponce {
   is_expire: boolean;
   id: number;
@@ -113,7 +113,10 @@ export class PromocodeComponent implements OnInit {
   }
 
   getDay(dateString: any) {
-    const date = moment(dateString);
-    return date.calendar();
+    const result = formatDistanceToNow(new Date(dateString), {
+      addSuffix: true,
+      includeSeconds: true,
+    }); 
+    return result;
   }
 }

@@ -1,3 +1,4 @@
+import { OrdersComponent } from './orders/orders.component';
 import { PromocodeComponent } from './promocode/promocode.component';
 import { StatusGuard } from './StateGuard';
 import { ShippingComponent } from './shipping/shipping.component';
@@ -19,6 +20,8 @@ import { AuthGuard } from './AuthGuard';
 import { MyProductsComponent } from './products/my-products/my-products.component';
 import { SingleProductComponent } from './products/single-product/single-product.component';
 import { PaymentComponent } from './shipping/payment/payment.component';
+import { SingleOrderComponent } from './orders/single-order/single-order.component';
+import { VerifyBillComponent } from './verify-bill/verify-bill.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
@@ -34,6 +37,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'verify/:id',
+    component: VerifyBillComponent,
+  },
+  {
     path: 'edit_profile',
     component: EditProfileComponent,
     canActivate: [AuthGuard],
@@ -41,6 +48,16 @@ const routes: Routes = [
   {
     path: 'promocode',
     component: PromocodeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'my_orders',
+    component: OrdersComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'my_orders/:id',
+    component: SingleOrderComponent,
     canActivate: [AuthGuard],
   },
   {

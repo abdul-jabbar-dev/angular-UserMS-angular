@@ -10,7 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 import { RequestService } from '../services/request.service';
 import { firstValueFrom } from 'rxjs';
 import { ShippingService } from '../services/shipping.service';
-import * as moment from 'moment';
+
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-shipping',
@@ -99,7 +100,7 @@ export class ShippingComponent implements OnInit, OnDestroy {
     }
   }
   getDate(): string {
-    return moment().format('LTS');
+    return format(Date.now(), 'yyyy-MM-dd HH:mm:ss');
   }
 
   updateDate(): void {

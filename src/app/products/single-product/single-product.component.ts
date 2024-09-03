@@ -3,7 +3,8 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { RequestService } from 'src/app/services/request.service';
 import { filter } from 'rxjs/operators';
-import * as moment from 'moment'
+import { formatDistanceToNow } from 'date-fns';
+
 @Component({
   selector: 'app-single-product',
   templateUrl: './single-product.component.html',
@@ -48,8 +49,11 @@ export class SingleProductComponent implements OnInit, OnDestroy {
   }
 
   getDay(dateString: any) {
-    const date = moment(dateString);
-    return date.calendar();
+    const result = formatDistanceToNow(new Date(dateString), {
+      addSuffix: true,
+      includeSeconds: true,
+    });
+    return result;
   }
 
   async getProducts(): Promise<void> {

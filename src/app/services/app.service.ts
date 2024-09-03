@@ -16,9 +16,10 @@ export class RouteService {
         this.checkRoute(event.urlAfterRedirects);
       });
   }
-
   async checkRoute(url: string) {
-    if (url === '/login' || url === '/registration') {
+    if (url.includes('/verify/')) {
+      this.showSidebar = false;
+    } else if (url === '/login' || url === '/registration') {
       const res = await this.auth.getProfile();
       if (res.data.user?.id) {
         this.router.navigate(['/']);

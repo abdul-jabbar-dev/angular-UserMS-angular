@@ -1,8 +1,15 @@
-import { Component, Input, Output, NgModule, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  NgModule,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { TPromocode } from 'src/app/promocode/create-promo/create-promo.component';
 import { RequestService } from 'src/app/services/request.service';
-import * as moment from 'moment';
+import { isAfter, formatDistanceToNow, parseISO, isValid } from 'date-fns';
 import { ShippingService } from 'src/app/services/shipping.service';
 interface TOrder {
   shippingSpot: { cost: string | number; time: string; spot: string };
@@ -13,8 +20,9 @@ interface TOrder {
   templateUrl: './shipping-promo.component.html',
   styleUrls: ['./shipping-promo.component.css'],
 })
-export class ShippingPromoComponent implements OnInit {
+export class ShippingPromoComponent implements OnInit, OnDestroy {
   promocode: any;
+  isLoading = false;
   isError = '';
   constructor(
     protected request: RequestService,
@@ -33,6 +41,7 @@ export class ShippingPromoComponent implements OnInit {
   } | null = null;
 
   async verify() {
+    this.isLoading = true;
     try {
       const result: TPromocode = await firstValueFrom(
         await this.request.get('/promo/verify/' + this.promocode)
@@ -58,6 +67,7 @@ export class ShippingPromoComponent implements OnInit {
       }
       console.log((error as any).error);
     }
+    this.isLoading = false;
   }
 
   async ngOnInit() {
@@ -71,13 +81,28 @@ export class ShippingPromoComponent implements OnInit {
     }
   }
 
-  inExpire(expireDate: Date): string {
-    const expiration = moment(expireDate);
+  inExpire(expireDate: Date | string | null): string {
+    if (expireDate === null) {
+      return 'No expiration date';
+    }
 
-    if (moment().isAfter(expiration)) {
+    const date =
+      typeof expireDate === 'string' ? parseISO(expireDate) : expireDate;
+
+    if (!isValid(date)) {
+      return 'Invalid date';
+    }
+
+    const now = new Date();
+
+    if (isAfter(now, date)) {
       return 'Expired';
     }
 
-    return expiration.fromNow();
+    return formatDistanceToNow(date, { addSuffix: true, includeSeconds: true });
+  }
+
+  ngOnDestroy(): void {
+    this.isLoading = false;
   }
 }

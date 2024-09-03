@@ -3,3 +3,4 @@ declare module '@ckeditor/ckeditor5-build-classic' {
 
   export = ClassicEditorBuild;
 }
+declare module 'date-fns';

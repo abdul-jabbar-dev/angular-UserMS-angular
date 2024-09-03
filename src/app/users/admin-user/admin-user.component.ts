@@ -1,7 +1,8 @@
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { Component, OnInit } from '@angular/core'; 
 import { RequestService } from 'src/app/services/request.service';
-import * as moment from 'moment'
+import { formatDistanceToNow } from 'date-fns';
+
 
 interface TUserResponse {
   id: number;
@@ -93,8 +94,11 @@ export class AdminUserComponent implements OnInit {
   }
 
   getDay(dateString: any) {
-    const date = moment(dateString);
-    return date.calendar();
+    const result = formatDistanceToNow(new Date(dateString), {
+      addSuffix: true,
+      includeSeconds: true,
+    });
+    return result;
   }
   async toggleRole(id: string | number) {
     try {

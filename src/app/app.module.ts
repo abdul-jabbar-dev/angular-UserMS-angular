@@ -1,3 +1,4 @@
+import { SingleOrderComponent } from './orders/single-order/single-order.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { StatusGuard } from './StateGuard';
 import { FilterSelectButtonComponent } from './../components/common/filter-select-button/filter-select-button.component';
@@ -47,7 +48,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { PaymentComponent } from './shipping/payment/payment.component';
 import { PromocodeComponent } from './promocode/promocode.component';
 import { CreatePromoComponent } from './promocode/create-promo/create-promo.component';
- 
+import { OrdersComponent } from './orders/orders.component';
+ import { QRCodeModule } from 'angularx-qrcode';
+import { VerifyBillComponent } from './verify-bill/verify-bill.component';
+
 
 @NgModule({
   declarations: [
@@ -81,12 +85,16 @@ import { CreatePromoComponent } from './promocode/create-promo/create-promo.comp
     PaymentComponent,
     PromocodeComponent,
     CreatePromoComponent,
+    OrdersComponent,
+    SingleOrderComponent,
+    VerifyBillComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    QRCodeModule,
     HttpClientModule,
     CKEditorModule,   
   ],

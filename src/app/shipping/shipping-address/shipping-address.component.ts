@@ -125,8 +125,13 @@ export class ShippingAddressComponent
     try {
       const result = await this.shipping.orderPlaced();
     } catch (error) {
-      if ((error as any).error.message === 'Product Already Placed') {
+      console.log(error);
+      if ((error as any)?.error?.message === 'Product Already Placed') {
         this.displayErrorMessage('Product has already been placed.');
+      } else if (
+        (error as any)?.error?.message === 'Product placed successfully'
+      ) {
+        this.onSubmit();
       }
     }
   }
@@ -167,5 +172,4 @@ export class ShippingAddressComponent
       console.log('Form is invalid. Please fill in all required fields.');
     }
   }
- 
 }
