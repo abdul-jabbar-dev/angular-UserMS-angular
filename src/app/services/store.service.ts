@@ -46,4 +46,31 @@ export class StoreService {
       return 0;
     }
   }
+  isView(id: number) {
+    const get = localStorage.getItem('view');
+    if (get) {
+      const exist = JSON.parse(get);
+      return true;
+    } else {
+      return false;
+    }
+  }
+  setView(id: number) {
+     
+    const get = localStorage.getItem('view');
+    if (get) {
+      const exist: number[] = JSON.parse(get);
+      if (exist.includes(id)) {
+        localStorage.setItem(
+          'view',
+          JSON.stringify(exist.filter((i) => i !== id))
+        );
+      } else {
+        localStorage.setItem('view', JSON.stringify([...exist, id]));
+      }
+    } else {
+      const newItem = JSON.stringify([id]);
+      localStorage.setItem('view', newItem);
+    }
+  }
 }

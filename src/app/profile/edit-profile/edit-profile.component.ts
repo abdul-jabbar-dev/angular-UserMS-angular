@@ -3,7 +3,7 @@ import { firstValueFrom } from 'rxjs';
 import { RequestService } from 'src/app/services/request.service';
 interface TUser {
   password?: string;
-  role?: 'admin' | 'subscriber';
+  role?: 'admin' | 'subscriber'|'rider';
   first_name: string;
   email: string;
   username?: string;

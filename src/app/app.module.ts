@@ -1,5 +1,7 @@
+ 
+import { GlobalGuard } from './GlocalGuard';
 import { SingleOrderComponent } from './orders/single-order/single-order.component';
-import { MatNativeDateModule } from '@angular/material/core';
+ 
 import { StatusGuard } from './StateGuard';
 import { FilterSelectButtonComponent } from './../components/common/filter-select-button/filter-select-button.component';
 import { StaticModalComponent } from './../components/common/static-modal/static-modal.component';
@@ -49,8 +51,17 @@ import { PaymentComponent } from './shipping/payment/payment.component';
 import { PromocodeComponent } from './promocode/promocode.component';
 import { CreatePromoComponent } from './promocode/create-promo/create-promo.component';
 import { OrdersComponent } from './orders/orders.component';
- import { QRCodeModule } from 'angularx-qrcode';
+import { QRCodeModule } from 'angularx-qrcode';
 import { VerifyBillComponent } from './verify-bill/verify-bill.component';
+import { RiderComponent } from './rider/rider.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
+import { RiderDashComponent } from './rider/rider-dash/rider-dash.component';
+import { SplitPipe } from './split.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { RiderOrdersComponent } from './rider/rider-orders/rider-orders.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -60,6 +71,7 @@ import { VerifyBillComponent } from './verify-bill/verify-bill.component';
     AboutComponent,
     ContactusComponent,
     NavbarComponent,
+    AdminOrdersComponent,
     AllProductsComponent,
     SidebarComponent,
     LoginComponent,
@@ -87,16 +99,25 @@ import { VerifyBillComponent } from './verify-bill/verify-bill.component';
     CreatePromoComponent,
     OrdersComponent,
     SingleOrderComponent,
-    VerifyBillComponent
+    VerifyBillComponent,
+    RiderComponent,
+    NotFoundComponent,
+    RiderOrdersComponent,
+    RiderDashComponent,
+    SplitPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    MatSlideToggleModule,
     ReactiveFormsModule,
     QRCodeModule,
     HttpClientModule,
-    CKEditorModule,   
+    CKEditorModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     RouteService,
@@ -109,6 +130,7 @@ import { VerifyBillComponent } from './verify-bill/verify-bill.component';
     AuthGuard,
     StatusGuard,
     SharedModule,
+    GlobalGuard,
   ],
   bootstrap: [AppComponent],
 })

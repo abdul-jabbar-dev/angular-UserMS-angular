@@ -8,7 +8,7 @@ import { formatDistanceToNow } from 'date-fns';
   styleUrls: ['./orders.component.css'],
 })
 export class OrdersComponent implements OnInit {
-   constructor(public request: RequestService) {}
+  constructor(public request: RequestService) {}
   allOrders: any;
   currentPage: any;
   isLoading = false;
@@ -18,7 +18,7 @@ export class OrdersComponent implements OnInit {
 
     try {
       const resu = await firstValueFrom(await this.request.get('/shipping'));
-  
+
       if (resu) {
         this.allOrders = resu;
       }
@@ -28,7 +28,6 @@ export class OrdersComponent implements OnInit {
       this.isLoading = false;
     }
   }
-
   calculateTax(price: number): number {
     const taxRate = 0.02;
     return price * taxRate;

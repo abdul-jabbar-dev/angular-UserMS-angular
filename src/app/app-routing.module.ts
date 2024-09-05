@@ -1,3 +1,4 @@
+import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
 import { OrdersComponent } from './orders/orders.component';
 import { PromocodeComponent } from './promocode/promocode.component';
 import { StatusGuard } from './StateGuard';
@@ -22,6 +23,7 @@ import { SingleProductComponent } from './products/single-product/single-product
 import { PaymentComponent } from './shipping/payment/payment.component';
 import { SingleOrderComponent } from './orders/single-order/single-order.component';
 import { VerifyBillComponent } from './verify-bill/verify-bill.component';
+import { RiderComponent } from './rider/rider.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
@@ -95,6 +97,12 @@ const routes: Routes = [
   {
     path: 'product/:id',
     component: SingleProductComponent,
+  },  {
+    path: 'dash',
+    component: RiderComponent,
+  }, {
+    path: 'admin_orders',
+    component: AdminOrdersComponent,
   },
   {
     path: 'shipping/:id',

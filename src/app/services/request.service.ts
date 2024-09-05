@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 })
 
 export class RequestService {
-  private apiUrl = 'https://angular-userms-nest-knex-production.up.railway.app';//valid
+  // private apiUrl = 'https://angular-userms-nest-knex-production.up.railway.app';//valid
   // private apiUrl = 'https://angular-userms-nest-knex.onrender.com';
-//  public apiUrl = 'http://localhost:3000'; 
+ public apiUrl = 'http://localhost:3000'; 
 
   constructor(private http: HttpClient, public store: StoreService) {}
 
@@ -45,7 +45,7 @@ export class RequestService {
     }
   }
 
-  async put(pref: string, body: any): Promise<Observable<any>> {
+  async put(pref: string, body: any): Promise<Observable<any>> { 
     let options = { headers: new HttpHeaders() };
 
     const token = this.store.getTokenFromStore() as string;

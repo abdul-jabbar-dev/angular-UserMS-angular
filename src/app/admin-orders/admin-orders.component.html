@@ -1,0 +1,117 @@
+<h1 class="my-6 text-2xl text-center w-full overflow-hidden text-gray-600">My Order List </h1>
+<div class="w-full m-1 bg-white shadow-lg px-3 text-lg rounded-sm border border-gray-200 ">
+    <div class="overflow-x-auto rounded-lg p-3">
+        <table class="min-w-full divide-y divide-gray-200 " style="table-layout: fixed;">
+            <thead class="bg-gray-50 ">
+                <tr>
+                    <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-600 ">
+                        <div class="flex items-center gap-x-3">
+                            <button class="flex items-center gap-x-2">
+                                <span>Order Id</span>
+                            </button>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-600 ">
+                        Order Number
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-600 ">
+                        Product Name
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-600 ">
+                        Create In
+                    </th>
+
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-600 ">
+                        Order Status
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-600 ">
+                        Delivary By
+                    </th>
+                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-600 ">
+                        Delivary Status
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody *ngIf="!isLoading" class="divide-y divide-gray-700 bg-gray-900">
+                <tr *ngFor="let order of allOrders?.data">
+
+                    <td class="px-4 py-4 text-sm font-medium text-gray-200 whitespace-nowrap">
+                        <div class="inline-flex items-center gap-x-3">
+                            <span>#{{order.order_id}}</span>
+                        </div>
+                    </td>
+
+                    <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
+                        &#64;{{ order.order_number | slice:-8 }}
+                    </td>
+
+                    <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
+                        <a class="hover:underline hover:text-blue-700">{{order.title}}</a>
+
+                    </td>
+
+                    <td class="px-4 py-4 text-md text-gray-300 whitespace-nowrap">
+                        {{order.shipping_order_created_at}}
+                    </td>
+
+                    <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                        <div
+                            [className]="order.order_status==='paid'?'inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 bg-gray-800':
+                                                            'inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-white bg-emerald-100/60 bg-red-800'">
+                            <h2 class="text-sm font-normal">
+                                {{order.order_status==='pending'?'Unpaid':(order.order_status==='paid'?'paid':'expired')}}
+                            </h2>
+                        </div>
+                    </td>
+
+                    <td
+                        class="px-4 gap-x-1 items-center flex py-4 text-sm font-medium border-0 text-gray-700 whitespace-nowrap ">
+                        <label *ngIf="!order.delivery_boy_name" for="rider"
+                            class="relative flex justify-center items-center w-full">
+                            <select [(ngModel)]="order.selected_rider" (change)="addRider(order, $event)" id="rider"
+                                class="w-full h-10 bg-transparent placeholder:text-slate-400 text-white text-sm border border-slate-200 rounded px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer">
+                                <option class="text-slate-700 bg-white" (click)="reset(order)" selected>Select Rider
+                                </option>
+                                <option *ngFor="let rider of riders" class="text-slate-700" [value]="rider.id">
+                                    {{rider.userName}}</option>
+                            </select>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2"
+                                stroke="currentColor" class="h-5 w-5 ml-1 absolute top-2.5 right-2.5 text-slate-700">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                            </svg>
+                        </label>
+                        <span class="  p-4  text-white w-full"
+                            *ngIf="order.delivery_boy_name">{{order.delivery_boy_name}}</span>
+
+                        <button (click)="submitRider(order)" *ngIf="order.selected_rider"
+                            class="border-slate-200 w-min h-max text-white underline cursor-pointer">
+                            Assign
+                        </button>
+
+                    </td>
+
+
+                    <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                        <div *ngIf="order.delivery_status"
+                            [className]="order.delivery_status==='packaging'?'inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 bg-gray-800':
+                                                            'inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-white bg-emerald-100/60 bg-red-800'">
+                            <h2 class="text-sm font-normal">
+                                {{(order.delivery_status==='packaging'?"Request Sent":order.delivery_status)}}
+                            </h2>
+                        </div>
+                        <div *ngIf="!order.delivery_status"
+                            class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            No Rider Selected
+                        </div>
+                    </td>
+ 
+                </tr>
+            </tbody>
+            <div *ngIf="isLoading"
+                class="w-16 text-center  my-6 h-16 border-4 mx-auto rounded-full border-blue-900 border-t-transparent animate-spin">
+            </div>
+        </table>
+    </div>
+</div>

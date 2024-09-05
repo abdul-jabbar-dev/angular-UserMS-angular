@@ -44,7 +44,7 @@ export class ShippingAddressComponent
     username: string;
     email: string;
     phone: string;
-    role: 'admin' | 'subscriber';
+    role: 'admin' | 'subscriber'|'rider';
     status: 'active' | 'deactive';
     age: number | null;
     created_at: string;

@@ -18,17 +18,19 @@ import { RequestService } from 'src/app/services/request.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
+
 export class NavbarComponent implements OnInit, OnDestroy {
   @Input() searchValue: string = '';
   searchedResult: {
     id: number;
     title: string;
   }[] = [];
+  
   isSearchBarShow: boolean = false;
   isLoginRoute = false;
   currentPath: string = '';
   isLogin: boolean = false;
-  role: 'subscriber' | 'admin' | null = null;
+  role: 'subscriber' | 'admin' |'rider'| null = null;
   @ViewChild('searchContainer ') searchContainer: ElementRef | null = null;
   selectedIndex: number = -1;
   isDropdownOpen: boolean = false;

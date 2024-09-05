@@ -14,7 +14,7 @@ interface TUserResponse {
   age: number;
   phone: string;
   status: 'active' | 'deactive';
-  role: 'admin' | 'subscriber';
+  role: 'admin' | 'subscriber'|'rider';
   created_at: Date;
   updated_at: Date;
 }
