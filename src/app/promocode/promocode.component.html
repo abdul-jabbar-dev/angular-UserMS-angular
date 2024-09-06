@@ -88,11 +88,12 @@
                                 </td>
                                 <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                     {{promo.author_id}}</td>
-                                <td class="p-2 text-xs font-medium text-gray-700 whitespace-nowrap">
-                                    <div *ngIf="!promo.is_expire;else isExpire" (click)="toggolStatus(promo.id)"
-                                        [className]="(promo.is_active?'inline-flex items-center px-3 py-1 cursor-pointer rounded-full gap-x-2 text-emerald-500 hover:text-emerald-300 bg-gray-800 hover:bg-gray-7':
-                                                        'inline-flex items-center px-3 py-1 rounded-full cursor-pointer gap-x-2 text-white hover:text-gray-50 bg-red-800 hover:bg-red-700')">
-                                        <h2 class="text-xs font-normal">
+                                <td class="p-2 text-sm font-medium text-gray-700 relative whitespace-nowrap">
+                                    <div matRipple *ngIf="!promo.is_expire;else isExpire"
+                                        (click)="toggolStatus(promo.id)"
+                                        [className]="(promo.is_active?'inline-flex items-center px-3 cursor-pointer relative rounded-full gap-x-2 text-emerald-500 hover:text-emerald-300 bg-gray-800 hover:bg-gray-7':
+                                                        'inline-flex items-center px-3 rounded-full cursor-pointer relative gap-x-2 text-white hover:text-gray-50 bg-red-800 hover:bg-red-700')">
+                                        <h2 class="text-sm font-normal py-1">
                                             {{promo.is_active?'Active':'Deactive'}}
                                         </h2>
 
@@ -101,13 +102,15 @@
                                         Expired
                                     </ng-template>
                                 </td>
-                                <td class="p-2 text-xs font-medium text-gray-700 whitespace-nowrap">
-                                    <span *ngIf="!promo.is_expire;else isExpire">
-                                        <div *ngIf="promo.is_active" (click)="toggolvisibility(promo.id)"
+                                <td class="p-2 text-xs font-medium text-gray-700 whitespace-nowrap relative">
+                                    <span class="relative" *ngIf="!promo.is_expire;else isExpire">
+                                        <div matRipple class="my-ripple-container" *ngIf="promo.is_active"
+                                            (click)="toggolvisibility(promo.id)"
                                             [className]="(promo.visible==='public'?'inline-flex items-center px-3 py-1 cursor-pointer rounded-full gap-x-2 text-emerald-500 hover:text-emerald-300 bg-gray-800 hover:bg-gray-700':
                                                             'inline-flex items-center px-3 py-1 rounded-full cursor-pointer gap-x-2 text-white hover:text-gray-50 bg-red-800 hover:bg-red-700')">
-                                            <h2 class="text-xs font-normal">
+                                            <h2 class="text-sm font-normal"><ng-content></ng-content>
                                                 {{promo.visible}}</h2>
+
                                         </div>
                                     </span>
                                 </td>

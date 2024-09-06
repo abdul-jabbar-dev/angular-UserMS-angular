@@ -80,11 +80,11 @@
                                 <td
                                     class="px-4 uppercase py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                     {{user.role}}</td>
-                                <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                                <td class="px-4  py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                     <div
-                                        [className]="user.status==='active'?'inline-flex items-center px-3 py-1  gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800':
-                                        'inline-flex items-center px-3 py-1  gap-x-2 text-white bg-emerald-100/60 dark:bg-red-800'">
-                                        <h2 class="text-sm font-normal">{{user.status}}</h2>
+                                        [className]="user.status==='active'?'inline-flex rounded-full items-center px-3 py-1 gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800':
+                                        'inline-flex items-center px-3  rounded-full py-1  gap-x-2 text-white bg-emerald-100/60 dark:bg-red-800'">
+                                        <h2 class="text-sm font-normal ">{{user.status}}</h2>
                                     </div>
                                 </td>
                                 <td class="px-4   py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">

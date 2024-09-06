@@ -1,7 +1,6 @@
- 
 import { GlobalGuard } from './GlocalGuard';
 import { SingleOrderComponent } from './orders/single-order/single-order.component';
- 
+
 import { StatusGuard } from './StateGuard';
 import { FilterSelectButtonComponent } from './../components/common/filter-select-button/filter-select-button.component';
 import { StaticModalComponent } from './../components/common/static-modal/static-modal.component';
@@ -62,8 +61,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RiderOrdersComponent } from './rider/rider-orders/rider-orders.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-
+import { MatRippleModule } from '@angular/material/core';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatIconModule } from '@angular/material/icon';
+import { OrderStatusStepperComponent } from './orders/order-status-stepper/order-status-stepper.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,6 +109,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     RiderOrdersComponent,
     RiderDashComponent,
     SplitPipe,
+    OrderStatusStepperComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,6 +123,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     BrowserAnimationsModule,
     MatSlideToggleModule,
     MatProgressSpinnerModule,
+    MatRippleModule,
+    MatStepperModule,
+    MatIconModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule
   ],
   providers: [
     RouteService,

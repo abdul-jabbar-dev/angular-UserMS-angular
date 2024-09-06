@@ -1,0 +1,8 @@
+<mat-stepper [selectedIndex]="currentStep" linear [disableRipple]="true" class="read-only-stepper">
+    <mat-step *ngFor="let step of steps; let i = index" [editable]="false" [completed]="completedSteps[i]"
+        [ngClass]="{'completed': completedSteps[i]}">
+        <ng-template matStepLabel>
+            <span class="uppercase">{{ step }}</span>
+        </ng-template>
+    </mat-step>
+</mat-stepper>

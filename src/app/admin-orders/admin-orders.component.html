@@ -59,29 +59,30 @@
                         <div
                             [className]="order.order_status==='paid'?'inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 bg-gray-800':
                                                             'inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-white bg-emerald-100/60 bg-red-800'">
-                            <h2 class="text-sm font-normal">
+                            <h2 class="text-sm font-normal py-1">
                                 {{order.order_status==='pending'?'Unpaid':(order.order_status==='paid'?'paid':'expired')}}
                             </h2>
                         </div>
                     </td>
 
-                    <td
+                    <td *ngIf="order.order_status==='paid'; else not"
                         class="px-4 gap-x-1 items-center flex py-4 text-sm font-medium border-0 text-gray-700 whitespace-nowrap ">
-                        <label *ngIf="!order.delivery_boy_name" for="rider"
-                            class="relative flex justify-center items-center w-full">
-                            <select [(ngModel)]="order.selected_rider" (change)="addRider(order, $event)" id="rider"
-                                class="w-full h-10 bg-transparent placeholder:text-slate-400 text-white text-sm border border-slate-200 rounded px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md appearance-none cursor-pointer">
-                                <option class="text-slate-700 bg-white" (click)="reset(order)" selected>Select Rider
-                                </option>
-                                <option *ngFor="let rider of riders" class="text-slate-700" [value]="rider.id">
-                                    {{rider.userName}}</option>
-                            </select>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2"
-                                stroke="currentColor" class="h-5 w-5 ml-1 absolute top-2.5 right-2.5 text-slate-700">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                            </svg>
-                        </label>
+
+                        <select *ngIf="!order.delivery_boy_name" (change)="addRider(order, $event)" id="rider"
+                            class="w-full h-10 shadow-sm focus:shadow-md cursor-pointer appearance-none">
+
+                            <!-- Placeholder option -->
+                            <option [disabled]="!order.selected_rider" selected>Select Rider
+                            </option>
+
+                            <option *ngFor="let rider of riders" class="text-slate-700" [value]="rider.id"
+                                style="color: #4a5568; font-size: 14px; font-weight: 500;">
+                                {{rider.userName}}
+                            </option>
+
+                        </select>
+
+
                         <span class="  p-4  text-white w-full"
                             *ngIf="order.delivery_boy_name">{{order.delivery_boy_name}}</span>
 
@@ -91,6 +92,11 @@
                         </button>
 
                     </td>
+                    <ng-template #not>
+                        <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                            Order Not confirm yet
+                        </td>
+                    </ng-template>
 
 
                     <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -106,7 +112,7 @@
                             No Rider Selected
                         </div>
                     </td>
- 
+
                 </tr>
             </tbody>
             <div *ngIf="isLoading"

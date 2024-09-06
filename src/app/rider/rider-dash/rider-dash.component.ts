@@ -10,6 +10,9 @@ export class RiderDashComponent implements OnChanges {
   @Input() orders: BehaviorSubject<any> | undefined;
   allOrders: any;
   ngOnChanges(changes: SimpleChanges): void {
-    this.orders?.subscribe((res) => (this.allOrders = res));
+    this.orders?.subscribe((res) => {
+      this.allOrders = res;
+      console.log(res);
+    });
   }
 }

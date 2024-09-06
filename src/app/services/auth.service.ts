@@ -84,13 +84,14 @@ export class AuthService {
           password: data?.password,
         })
       );
-
+      console.log(result);
       if (result.token) {
         this.store.addTokenFromStore(result.token);
         await this.handleAuthSuccess();
       }
       return result;
     } catch (error) {
+      console.log(error);
       throw new Error((error as any).error.message);
     }
   }

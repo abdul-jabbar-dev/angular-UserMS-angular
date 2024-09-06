@@ -82,8 +82,8 @@
                                     {{user.role}}</td>
                                 <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                                     <div
-                                        [className]="user.status==='active'?'inline-flex items-center px-3 py-1  gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800':
-                                        'inline-flex items-center px-3 py-1  gap-x-2 text-white bg-emerald-100/60 dark:bg-red-800'">
+                                        [className]="user.status==='active'?'inline-flex rounded-full items-center px-3 py-1  gap-x-2 text-emerald-500 bg-emerald-100/60 dark:bg-gray-800':
+                                        'inline-flex items-center px-3 rounded-full py-1  gap-x-2 text-white bg-emerald-100/60 dark:bg-red-800'">
                                         <h2 class="text-sm font-normal">{{user.status}}</h2>
                                     </div>
                                 </td>
@@ -99,7 +99,7 @@
 
                                                 <span class="group relative">
                                                     <div
-                                                        class="absolute bottom-[calc(100%+0.5rem)] left-[50%] -translate-x-[50%] hidden group-hover:block w-auto">
+                                                        class="absolute z-50 bottom-[calc(100%+0.5rem)] left-[50%] -translate-x-[50%] hidden group-hover:block w-auto">
                                                         <div
                                                             class="bottom-full right-0  bg-black px-4 py-1 text-xs text-white whitespace-nowrap">
                                                             Deactive User
@@ -181,11 +181,11 @@
 
                                             <span class="group relative ">
                                                 <div
-                                                    class="absolute bottom-[calc(100%+0.5rem)] left-[50%] -translate-x-[50%] hidden group-hover:block w-auto">
+                                                    class="absolute z-[99999]  bottom-[calc(100%+0.5rem)] left-[50%] -translate-x-[50%] hidden group-hover:block w-auto">
                                                     <div
                                                         class="bottom-full right-0  bg-black px-4 py-1 text-xs text-white whitespace-nowrap">
-                                                        Delete User
-                                                        <svg class="absolute left-0 top-full h-2 w-full text-black"
+                                                        Delete
+                                                        <svg class="absolute -left-6 top-full h-2 w-full text-black"
                                                             x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve">
                                                             <polygon class="fill-current"
                                                                 points="0,0 127.5,127.5 255,0" />

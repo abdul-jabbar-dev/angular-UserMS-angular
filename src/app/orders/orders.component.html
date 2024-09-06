@@ -1,13 +1,14 @@
 <h1 class="my-6 text-2xl text-center w-full overflow-hidden text-gray-600">My Order List </h1>
 <div class="w-full m-1 bg-white shadow-lg px-3 text-lg rounded-sm border border-gray-200 ">
     <div class="overflow-x-auto rounded-lg p-3">
-        <table class="min-w-full divide-y divide-gray-200 " style="table-layout: fixed;">
+        <table class="relative min-w-full divide-y divide-gray-200 " style="table-layout: fixed;">
+
             <thead class="bg-gray-50 ">
                 <tr>
-                    <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-600 ">
+                    <th scope="col" class="py-3.5 w-3 px-4 text-sm font-normal text-left rtl:text-right text-gray-600 ">
                         <div class="flex items-center gap-x-3">
                             <button class="flex items-center gap-x-2">
-                                <span>Order Id</span>
+                                <span>OID</span>
                             </button>
                         </div>
                     </th>
@@ -21,29 +22,31 @@
                         Total Price
                     </th>
 
-                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-600 ">
+                    <th scope="col"
+                        class="px-4 max-w-96 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-600 ">
                         Status
                     </th>
 
 
                 </tr>
             </thead>
+
             <tbody *ngIf="!isLoading" class="divide-y divide-gray-700 bg-gray-900">
                 <tr *ngFor="let order of allOrders?.data">
 
-                    <td class="px-4 py-4 text-sm font-medium text-gray-200 whitespace-nowrap">
+                    <td class="px-4 py-4 text-sm w-3 font-medium text-gray-200 whitespace-nowrap">
                         <div class="inline-flex items-center gap-x-3">
-                            <span>#{{order.id}}</span>
+                            <span>#{{order.order_id}}</span>
                         </div>
                     </td>
-                    <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
+                    <td class="px-4 py-4 text-sm text-gray-300 whitespace-wrap max-w-60 text-wrap">
                         <a class="hover:underline hover:text-blue-700"
                             [routerLink]="order.order_status==='pending'?'/shipping/' + order.product_id:'/my_orders/'+order.id">{{order.title}}</a>
 
                     </td>
 
 
-                    <td class="px-4 py-4 text-md text-gray-300 whitespace-nowrap">
+                    <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
                         {{getDay(order.shipping_order_created_at)}}
                     </td>
 
@@ -52,21 +55,28 @@
                         TK
                     </td>
 
-                    <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                        <div
+                    <td class="w-96 px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                        <!-- <div
                             [className]="order.order_status==='paid'?'inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-emerald-500 bg-emerald-100/60 bg-gray-800':
                                                             'inline-flex items-center px-3 py-1 rounded-full gap-x-2 text-white bg-emerald-100/60 bg-red-800'">
                             <h2 class="text-sm font-normal">
                                 {{order.order_status==='pending'?'Unpaid':(order.order_status==='paid'?'paid':'expired')}}
                             </h2>
-                        </div>
+                        </div> -->
+
+                        <app-order-status-stepper [order]="order"></app-order-status-stepper>
+
+
                     </td>
 
                 </tr>
             </tbody>
+
             <div *ngIf="isLoading"
                 class="w-16 text-center  my-6 h-16 border-4 mx-auto rounded-full border-blue-900 border-t-transparent animate-spin">
             </div>
+
+        
         </table>
 
     </div>

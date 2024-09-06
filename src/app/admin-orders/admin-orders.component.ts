@@ -38,7 +38,7 @@ export class AdminOrdersComponent implements OnInit {
       const resu = await firstValueFrom(
         await this.request.create('/shipping/add_rider', _t21)
       );
-      console.log(resu);
+
       if (resu) {
         this.allOrders.data = this.allOrders?.data?.map((pre: any) => {
           if (pre.order_id === resu.order_id) {
@@ -49,7 +49,7 @@ export class AdminOrdersComponent implements OnInit {
             };
           } else return pre;
         });
-        console.log(this.allOrders);
+        await this.refresh();
       }
     } catch (error) {
       console.log(error);
@@ -103,6 +103,10 @@ export class AdminOrdersComponent implements OnInit {
     }
   }
   async ngOnInit() {
+    await this.refresh();
+  }
+
+  async refresh() {
     this.isLoading = true;
 
     try {

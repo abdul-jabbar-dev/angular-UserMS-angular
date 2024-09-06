@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RequestService } from '../services/request.service';
 import { firstValueFrom } from 'rxjs';
 import { formatDistanceToNow } from 'date-fns';
@@ -13,12 +13,11 @@ export class OrdersComponent implements OnInit {
   currentPage: any;
   isLoading = false;
 
-  async ngOnInit() {
+  async refreshData() {
     this.isLoading = true;
 
     try {
       const resu = await firstValueFrom(await this.request.get('/shipping'));
-
       if (resu) {
         this.allOrders = resu;
       }
@@ -27,6 +26,10 @@ export class OrdersComponent implements OnInit {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  async ngOnInit() {
+    this.refreshData();
   }
   calculateTax(price: number): number {
     const taxRate = 0.02;
