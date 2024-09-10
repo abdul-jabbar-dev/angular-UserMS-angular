@@ -14,8 +14,7 @@ import {
 export class OrderStatusStepperComponent implements OnInit {
   @Input() order: any;
   currentStep: number | undefined = 0;
-
-  steps: any[] = ['Viewing', 'packaging', 'transit', 'delivery', null];
+  steps: string[] = ['Viewing', 'packaging', 'transit', 'delivery', ''];
   completedSteps: boolean[] = [true, true, true, true];
 
   ngOnInit(): void {
@@ -37,7 +36,7 @@ export class OrderStatusStepperComponent implements OnInit {
   }
 
   setCurrentStep(orderStatus: string): void {
-    this.steps = ['Viewing', 'packaging', 'transit', 'delivery', null];
+    this.steps = ['Viewing', 'packaging', 'transit', 'delivery', ''];
     switch (orderStatus) {
       case 'paid':
         this.currentStep = 1;

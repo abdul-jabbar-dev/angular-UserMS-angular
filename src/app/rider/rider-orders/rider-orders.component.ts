@@ -3,6 +3,7 @@ import {
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
@@ -14,8 +15,9 @@ import { RequestService } from 'src/app/services/request.service';
   styleUrls: ['./rider-orders.component.css'],
 })
 export class RiderOrdersComponent implements OnChanges, OnInit {
+  erorMsg = [];
   constructor(protected request: RequestService) {}
-
+  @Output() knockedByLoad: BehaviorSubject<any> = new BehaviorSubject<any>('');
   @Input() orders: BehaviorSubject<any> | undefined;
   allOrders: any;
   isCheckedMap: { [key: string]: boolean } = {};
@@ -53,6 +55,7 @@ export class RiderOrdersComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['orders']) {
+      console.log(this.orders);
       this.orders?.subscribe((res) => {
         this.allOrders = res;
 
@@ -66,6 +69,29 @@ export class RiderOrdersComponent implements OnChanges, OnInit {
           }
         });
       });
+    }
+  }
+
+  async submitCode(_t53: HTMLInputElement, order: any, i: number) {
+    try {
+      const response = await firstValueFrom(
+        await this.request.put(
+          '/shipping/confirm_delivery/' + order.delivery_id,
+          {
+            code: _t53.value,
+          }
+        )
+      );
+      if (response) {
+        (this.erorMsg as string[])[i] = '';
+        this.knockedByLoad?.next(' ');
+      }
+    } catch (error: any) {
+      const errorMessage = error?.error?.message;
+
+      if (errorMessage) {
+        (this.erorMsg as string[])[i] = errorMessage;
+      }
     }
   }
 

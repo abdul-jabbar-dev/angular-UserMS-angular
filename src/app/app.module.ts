@@ -68,6 +68,7 @@ import { OrderStatusStepperComponent } from './orders/order-status-stepper/order
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -110,6 +111,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     RiderDashComponent,
     SplitPipe,
     OrderStatusStepperComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,

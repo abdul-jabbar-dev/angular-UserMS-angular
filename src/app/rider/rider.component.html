@@ -2,8 +2,8 @@
     <div class="container px-6 py-8 mx-auto">
         <h3 class="text-3xl font-medium text-gray-700">Dashboard</h3>
 
-        <app-rider-dash [orders]="orders" />
-        <app-rider-orders  [orders]="orders" />
-
+        <app-rider-dash [orders]="orders"></app-rider-dash>
+        <app-rider-orders (knockedByLoad)="handleOrders()" [orders]="orders">
+        </app-rider-orders>
     </div>
 </main>

@@ -1,4 +1,11 @@
-import { Component, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { RequestService } from '../services/request.service';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
 
@@ -7,10 +14,14 @@ import { BehaviorSubject, firstValueFrom } from 'rxjs';
   templateUrl: './rider.component.html',
   styleUrls: ['./rider.component.css'],
 })
-export class RiderComponent implements OnInit {
+export class RiderComponent implements OnInit, OnChanges {
+  @Output() orders = new BehaviorSubject<any[]>([]);
   constructor(protected request: RequestService) {}
-  @Output() orders = new BehaviorSubject([]);
-  async ngOnInit() {
+  async ngOnChanges(changes: SimpleChanges) {
+    await this.handleOrders();
+  }
+
+  async handleOrders() {
     try {
       const result = await firstValueFrom(
         await this.request.get('/shipping/get_rider_order')
@@ -21,5 +32,9 @@ export class RiderComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async ngOnInit() {
+    await this.handleOrders();
   }
 }

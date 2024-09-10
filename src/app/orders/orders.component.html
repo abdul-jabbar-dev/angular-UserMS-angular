@@ -26,8 +26,7 @@
                         class="px-4 max-w-96 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-600 ">
                         Status
                     </th>
-
-
+                    
                 </tr>
             </thead>
 
@@ -63,12 +62,9 @@
                                 {{order.order_status==='pending'?'Unpaid':(order.order_status==='paid'?'paid':'expired')}}
                             </h2>
                         </div> -->
-
                         <app-order-status-stepper [order]="order"></app-order-status-stepper>
-
-
                     </td>
-
+                    
                 </tr>
             </tbody>
 
@@ -76,7 +72,7 @@
                 class="w-16 text-center  my-6 h-16 border-4 mx-auto rounded-full border-blue-900 border-t-transparent animate-spin">
             </div>
 
-        
+
         </table>
 
     </div>

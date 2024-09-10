@@ -24,6 +24,7 @@ import { PaymentComponent } from './shipping/payment/payment.component';
 import { SingleOrderComponent } from './orders/single-order/single-order.component';
 import { VerifyBillComponent } from './verify-bill/verify-bill.component';
 import { RiderComponent } from './rider/rider.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
@@ -51,6 +52,9 @@ const routes: Routes = [
     path: 'promocode',
     component: PromocodeComponent,
     canActivate: [AuthGuard],
+  },  {
+    path: 'forgot_password',
+    component: ForgotPasswordComponent
   },
   {
     path: 'my_orders',

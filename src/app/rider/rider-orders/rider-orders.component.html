@@ -31,13 +31,13 @@
                             Benefit</th>
                         <th
                             class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                            Accept Ride</th>
+                            Delivery</th>
 
                     </tr>
                 </thead>
 
                 <tbody class="bg-white">
-                    <tr *ngFor="let order of allOrders">
+                    <tr *ngFor="let order of allOrders; let i = index">
 
                         <td class="pl-6 pr-0 py-3 whitespace-no-wrap border-b border-gray-200">
                             <span class="text-sm leading-5 text-gray-900">{{ order.order_id}}</span>
@@ -77,16 +77,15 @@
                             class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
                             {{ order.shipping_zone | split:'_'}}
                         </td>
-
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                            <span class="text-sm leading-5 text-gray-900">{{ order.product_price}}</span>
+                        </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                             <span class="text-sm leading-5 text-gray-900">
                                 {{order.shipping_cost}}
                             </span>
                         </td>
 
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                            <span class="text-sm leading-5 text-gray-900">{{ order.product_price}}</span>
-                        </td>
 
                         <td
                             class="px-6 py-4 text-sm font-medium leading-5 text-right whitespace-no-wrap border-b border-gray-200">
@@ -95,11 +94,28 @@
                                     class="w-6 h-6 border-4 border-gray-400 border-t-transparent  rounded-full animate-spin">
                                 </div>
                             </div>
-                            <mat-slide-toggle *ngIf="!isLoading(order.order_id) " class="text-gray-500 text-xs"
-                                [disabled]="isCheckedMap[order.order_id]" [checked]="isCheckedMap[order.order_id]"
-                                (change)="handleToggleChange($event, order)">
+                            <mat-slide-toggle *ngIf="!isLoading(order.order_id)&&order.delivery_status!=='transit'"
+                                class="text-gray-500 text-xs" [disabled]="isCheckedMap[order.order_id]"
+                                [checked]="isCheckedMap[order.order_id]" (change)="handleToggleChange($event, order)">
                                 {{ isCheckedMap[order.order_id]?'Accepted':'Accept Ride?'}}
                             </mat-slide-toggle>
+
+                            <div *ngIf="!isLoading(order.order_id)&&order.delivery_status==='transit'"
+                                class="relative rounded-md shadow-sm">
+
+                                <input #rvcInput type="text" name="rvc" id="rvc"
+                                    class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-[.5px] ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    placeholder="Verification code">
+                                <div class="absolute inset-y-0 right-0 flex items-center">
+                                    <button (click)="submitCode(rvcInput,order,i)"
+                                        class="h-full bg-indigo-700 text-white text-center rounded-r-md border-0  py-0 pl-2 pr-6 sm:text-sm">Check</button>
+                                </div>
+                            </div>
+                            <small class="text-red-700 w-full" *ngIf="erorMsg[i]">
+                                <p>{{erorMsg[i]}}</p>
+                            </small>
+
+
                         </td>
 
 

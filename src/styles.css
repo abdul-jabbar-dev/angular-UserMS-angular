@@ -3,6 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 * {
 
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -24,13 +25,17 @@
     cursor: not-allowed;
 }
 
- #cdk-step-label-0-4{
-    display: none !important;
- }
 
- .mat-horizontal-stepper-header-container>:nth-last-child(2){
+td[ng-reflect-index="4"] {
     display: none !important;
- }
+    background: red;
+}
+
+ 
+
+#cdk-step-label-0-4 {
+    display: none !important;
+}
 
 .main-container {
     width: 100%;
