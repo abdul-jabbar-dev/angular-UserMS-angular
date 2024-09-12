@@ -1,3 +1,5 @@
+import { WebsocketService } from './services/websocket.service';
+import { PasswordInputComponent } from './../components/common/password-input/password-input.component';
 import { GlobalGuard } from './GlocalGuard';
 import { SingleOrderComponent } from './orders/single-order/single-order.component';
 
@@ -19,7 +21,7 @@ import { RouterLinkService } from './services/router-link.service';
 import { RouteService } from './services/app.service';
 import { SidebarComponent } from './../components/sidebar/sidebar.component';
 import { NavbarComponent } from './../components/navbar/navbar.component';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -69,6 +71,29 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatChipsModule } from '@angular/material/chips';
+import { ChatRiderComponent } from './orders/chat-rider/chat-rider.component'; 
+
+// export function initializeWebSocket(
+//   authService: AuthService,
+//   websocketService: WebsocketService
+// ) {
+//   return async () => {
+//     try {
+//       const user: any = await authService.getProfile();
+//       console.log(user);
+//       if (user && user.id) {
+//         await websocketService.initializeSocket(user.id);
+//       } else {
+//         throw new Error('User not authenticated');
+//       }
+//     } catch (error) {
+//       console.error('Error during WebSocket initialization:', error);
+//     }
+//   };
+// }
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -112,6 +137,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     SplitPipe,
     OrderStatusStepperComponent,
     ForgotPasswordComponent,
+    PasswordInputComponent,
+    ChatRiderComponent,
   ],
   imports: [
     BrowserModule,
@@ -131,13 +158,16 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatSnackBarModule,
+    MatChipsModule, 
   ],
   providers: [
+    AuthService,
     RouteService,
     RouterLinkService,
     SupabaseService,
-    AuthService,
+    // WebsocketService,
     StoreService,
     ShippingService,
     RequestService,
@@ -145,6 +175,12 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     StatusGuard,
     SharedModule,
     GlobalGuard,
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: initializeWebSocket,
+    //   deps: [AuthService, WebsocketService],
+    //   multi: true,
+    // },
   ],
   bootstrap: [AppComponent],
 })

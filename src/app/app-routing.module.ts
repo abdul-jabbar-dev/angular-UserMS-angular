@@ -25,10 +25,11 @@ import { SingleOrderComponent } from './orders/single-order/single-order.compone
 import { VerifyBillComponent } from './verify-bill/verify-bill.component';
 import { RiderComponent } from './rider/rider.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+// import { WebsocketService } from './services/websocket.service';
 
 const routes: Routes = [
-  { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
-  { path: 'contact', component: ContactusComponent },
+  // { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
+  // { path: 'contact', component: ContactusComponent },
   { path: 'login', component: LoginComponent },
   {
     path: 'registration',
@@ -125,4 +126,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+ 
+}

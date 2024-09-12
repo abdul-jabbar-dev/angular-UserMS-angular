@@ -13,11 +13,13 @@ import { Router } from '@angular/router';
 export class ForgotPasswordComponent {
   new_password: any;
   match_password: any;
+
   constructor(
     public request: RequestService,
     protected cookie: CookieService,
     private router: Router
   ) {}
+
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,

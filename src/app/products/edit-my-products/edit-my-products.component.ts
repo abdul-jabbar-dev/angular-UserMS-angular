@@ -17,6 +17,8 @@ import {
   TableToolbar,
   Undo,
   type EditorConfig,
+  List,
+  Indent,
 } from 'ckeditor5';
 import {
   Component,
@@ -90,6 +92,13 @@ export class EditMyProductsComponent implements OnInit, OnChanges {
           '|',
           'link',
           'insertTable',
+          'tableColumn',
+          'tableRow',
+          '|',
+          'bulletedList', // Add unordered list
+          'numberedList', // Add ordered list
+          'outdent', // Decrease indent
+          'indent', // Increase indent
         ],
         shouldNotGroupWhenFull: false,
       },
@@ -99,6 +108,8 @@ export class EditMyProductsComponent implements OnInit, OnChanges {
         BalloonToolbar,
         Bold,
         Heading,
+        List,
+        Indent,
         Italic,
         Link,
         Paragraph,
@@ -110,6 +121,15 @@ export class EditMyProductsComponent implements OnInit, OnChanges {
         TableToolbar,
         Undo,
       ],
+      table: {
+        contentToolbar: [
+          'tableColumn',
+          'tableRow',
+          'mergeTableCells',
+          'tableProperties',
+          'tableCellProperties',
+        ],
+      },
       balloonToolbar: ['bold', 'italic', '|', 'link'],
       heading: {
         options: [

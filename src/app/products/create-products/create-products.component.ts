@@ -22,6 +22,7 @@ import {
   Undo,
   type EditorConfig,
 } from 'ckeditor5';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-create-products',
   templateUrl: './create-products.component.html',
@@ -140,7 +141,8 @@ export class CreateProductsComponent {
   constructor(
     public supabase: SupabaseService,
     public request: RequestService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    protected _snackBar: MatSnackBar
   ) {}
   createProductForm = new FormGroup({
     title: new FormControl<string>('', [
@@ -177,7 +179,7 @@ export class CreateProductsComponent {
       reader.readAsDataURL(file);
     }
   }
-  async onSubmit() { 
+  async onSubmit() {
     this.isCreateing = true;
     try {
       this.isError = '';
@@ -196,15 +198,21 @@ export class CreateProductsComponent {
               this.createProductForm.getRawValue()
             )
           );
+          this._snackBar.open('New product Inserted', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'bottom',
+            panelClass: ['custom-snackbar'],
+          });
 
           // const result = await this.supabase.insertData(
           // 'Products',
           // this.createProductForm.getRawValue()
           // );
 
-          if (result?.error) { 
+          if (result?.error) {
             this.isCreateing = false;
-          } else { 
+          } else {
             this.isCreateing = false;
           }
           this.createProductForm.reset();
@@ -214,7 +222,7 @@ export class CreateProductsComponent {
         this.createProductForm.markAllAsTouched();
       }
       this.isCreateing = false;
-    } catch (error) { 
+    } catch (error) {
       this.isCreateing = false;
       if (typeof error === 'string') {
         this.isError = error;

@@ -1,11 +1,11 @@
 <span class="relative w-full">
     <li [class]="isEditable?'py-3 sm:py-4 shadow-md relative':'py-3 sm:py-4  '">
         <form *ngIf="!isUpdating" [formGroup]="productEdit" (submit)="update()"
-            class="flex items-center space-x-4 px-8">
+            class="flex items-start space-x-4 px-8">
 
             <div class="flex-shrink-0">
 
-                <img class="w-32 h-32 select-none rounded-xl"
+                <img class="w-52 h-52 select-none rounded-xl"
                     [src]="selectedImage.url?selectedImage.url:'https://vdlbpitmjmlzfxhvgyxo.supabase.co/storage/v1/object/public/'+item?.image"
                     [alt]="selectedImage.name">
 
@@ -101,7 +101,7 @@
 
                     </label>
 
-                    <ng-template #nedesc> <span [innerHTML]="item.desc" class="ckeditor_style_output"></span> </ng-template>
+                    <ng-template #nedesc> <span [innerHTML]="item.desc" class="ckeditor_style_output trim"></span> </ng-template>
                 </p>
             </div>
             <div *ngIf="item.status!=='sold'">

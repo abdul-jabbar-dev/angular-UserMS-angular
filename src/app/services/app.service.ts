@@ -21,7 +21,7 @@ export class RouteService {
       this.showSidebar = false;
     } else if (url === '/login' || url === '/registration') {
       const res = await this.auth.getProfile();
-      if (res.data.user?.id) {
+      if (res?.data?.user?.id) {
         this.router.navigate(['/']);
       }
       this.showSidebar = false;

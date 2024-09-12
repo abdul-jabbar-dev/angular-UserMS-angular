@@ -2,7 +2,7 @@
     <section *ngIf="profile; else isLoading"
         class="w-full max-w-[430px] relative rounded-[6px] mx-2 -mt-6 overflow-hidden">
 
-        <img  src="https://avatar.iran.liara.run/public"
+        <img src="https://avatar.iran.liara.run/public"
             class="rounded-full w-[200px] mx-auto my-10 p-0  shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] ">
 
         <div class="mt-5">
@@ -26,7 +26,7 @@
                 class="w-full py-2 px-3 border border-slate-200 focus:outline-none focus:border-slate-500">
 
             <label for="age" class="block text-gray-600  mt-3">Age</label>
-            <input [(ngModel)]="profile.age" id="age" type="number"
+            <input [(ngModel)]="profile.age" placeholder="Enter your age" id="age" type="number"
                 class="w-full py-2 px-3 border border-slate-200 focus:outline-none focus:border-slate-500">
 
             <label for="new_password" class="block text-gray-600  mt-3">Password (Optional)</label>
@@ -67,8 +67,13 @@
             </div>
         </div>
 
-        <div class="flex justify-end mt-4">
-            <button (click)="saveProfile()" class="bg-green-500 text-white px-4 py-2 rounded">Save</button>
+        <div class="flex justify-end mt-4 flex-col">
+            <button *ngIf="!isUpdating" (click)="saveProfile()"
+                class="bg-green-500 text-white px-4 py-2 rounded">Save</button>
+
+            <div *ngIf="isUpdating"
+                class="w-8 text-center my-6 h-8 border-4 mx-auto rounded-full border-green-500 border-t-transparent animate-spin">
+            </div>
         </div>
     </section>
 

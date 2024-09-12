@@ -56,6 +56,7 @@ export class SingleOrderComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.orderId = params.get('id');
+     
       if (this.orderId) {
         this.loadOrder(this.orderId);
         this.myAngularxQrCode = this.rootUrl + '/verify/' + this.orderId;

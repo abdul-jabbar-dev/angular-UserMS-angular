@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { RequestService } from 'src/app/services/request.service';
-
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 interface TUser {
   new_password?: string;
   role?: 'admin' | 'subscriber' | 'rider';
@@ -19,13 +23,14 @@ interface TUser {
   styleUrls: ['./edit-profile.component.css'],
 })
 export class EditProfileComponent implements OnInit {
+  isUpdating = false;
   toggoleShow() {
     this.isVisible = !this.isVisible;
   }
   profile: TUser | null = null;
   isVisible = false;
 
-  constructor(public request: RequestService) {}
+  constructor(public request: RequestService, private _snackBar: MatSnackBar) {}
 
   async ngOnInit(): Promise<void> {
     try {
@@ -46,15 +51,24 @@ export class EditProfileComponent implements OnInit {
   }
 
   async saveProfile() {
+    this.isUpdating = true;
     try {
       console.log(this.profile);
-      // Make a PUT request to save the profile
       const response = await firstValueFrom(
         await this.request.put('/user/update_profile', this.profile)
       );
-      console.log('Profile updated successfully:', response);
+      if (response) {
+        this._snackBar.open('Profile successfully updated', 'Close', {
+          duration: 3000,
+          horizontalPosition: 'end',
+          verticalPosition: 'bottom',
+          panelClass: ['custom-snackbar'],
+        });
+        this.isUpdating = false;
+      }
     } catch (error) {
       console.error('Error updating profile:', error);
     }
+    this.isUpdating = false;
   }
 }

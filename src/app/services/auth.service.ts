@@ -72,7 +72,7 @@ export class AuthService {
         return result;
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   }
 
@@ -110,7 +110,17 @@ export class AuthService {
       );
       return result;
     } catch (error) {
-      console.error('Failed to get profile:', error);
+      return null;
+    }
+  }
+ async getProfileObs() {
+    try {
+      const result = await firstValueFrom(
+        await this.request.get('/user/get_my_profile')
+      );
+      return result;
+    } catch (error) {
+      console.log('Failed to get profile:', error);
       return null;
     }
   }

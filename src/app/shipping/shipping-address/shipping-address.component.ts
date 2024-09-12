@@ -15,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
 import { ShippingService } from 'src/app/services/shipping.service';
 import { RequestService } from 'src/app/services/request.service';
 import { firstValueFrom } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-shipping-address',
@@ -44,7 +45,7 @@ export class ShippingAddressComponent
     username: string;
     email: string;
     phone: string;
-    role: 'admin' | 'subscriber'|'rider';
+    role: 'admin' | 'subscriber' | 'rider';
     status: 'active' | 'deactive';
     age: number | null;
     created_at: string;
@@ -60,7 +61,8 @@ export class ShippingAddressComponent
     private http: HttpClient,
     public shipping: ShippingService,
     public request: RequestService,
-    public router: Router
+    public router: Router,
+    public _snackBar: MatSnackBar
   ) {
     this.billingForm = new FormGroup({
       phone: new FormControl('', [Validators.required]),
@@ -124,6 +126,13 @@ export class ShippingAddressComponent
   async makeOrder() {
     try {
       const result = await this.shipping.orderPlaced();
+
+      this._snackBar.open('Order create successfully', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        panelClass: ['custom-snackbar'],
+      });
     } catch (error) {
       console.log(error);
       if ((error as any)?.error?.message === 'Product Already Placed') {
@@ -153,7 +162,7 @@ export class ShippingAddressComponent
     }
   }
 
-  confirmOrder() {
+  confirmOrder() { 
     if (this.billingForm.valid) {
       this.shipping.setAddress(this.billingForm.value);
       this.isSubmit = true;
