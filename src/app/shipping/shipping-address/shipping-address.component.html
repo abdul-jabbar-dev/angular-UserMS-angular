@@ -1,0 +1,214 @@
+<div
+    class="bg-gray-50  w-full xl:w-[500px] flex justify-between items-center md:items-start px-4 py-6 md:p-6 xl:p-8 flex-col">
+    <div *ngIf="exist?.order_status==='pending'"
+        class="w-full rounded-md px-6 h-full  bg-green-500 text-white border-y border-gray-200 py-6">
+        <div class="text-white text-xl my-2 font-semibold">
+            Order Pending
+        </div>
+        <div class="flex gap-x-2">
+            <svg width="24px" height="24px" viewBox="0 0 1024 1024" fill="#ffffff" class="icon" version="1.1"
+                xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path d="M300 462.4h424.8v48H300v-48zM300 673.6H560v48H300v-48z" fill=""></path>
+                    <path
+                        d="M818.4 981.6H205.6c-12.8 0-24.8-2.4-36.8-7.2-11.2-4.8-21.6-11.2-29.6-20-8.8-8.8-15.2-18.4-20-29.6-4.8-12-7.2-24-7.2-36.8V250.4c0-12.8 2.4-24.8 7.2-36.8 4.8-11.2 11.2-21.6 20-29.6 8.8-8.8 18.4-15.2 29.6-20 12-4.8 24-7.2 36.8-7.2h92.8v47.2H205.6c-25.6 0-47.2 20.8-47.2 47.2v637.6c0 25.6 20.8 47.2 47.2 47.2h612c25.6 0 47.2-20.8 47.2-47.2V250.4c0-25.6-20.8-47.2-47.2-47.2H725.6v-47.2h92.8c12.8 0 24.8 2.4 36.8 7.2 11.2 4.8 21.6 11.2 29.6 20 8.8 8.8 15.2 18.4 20 29.6 4.8 12 7.2 24 7.2 36.8v637.6c0 12.8-2.4 24.8-7.2 36.8-4.8 11.2-11.2 21.6-20 29.6-8.8 8.8-18.4 15.2-29.6 20-12 5.6-24 8-36.8 8z"
+                        fill=""></path>
+                    <path
+                        d="M747.2 297.6H276.8V144c0-32.8 26.4-59.2 59.2-59.2h60.8c21.6-43.2 66.4-71.2 116-71.2 49.6 0 94.4 28 116 71.2h60.8c32.8 0 59.2 26.4 59.2 59.2l-1.6 153.6z m-423.2-47.2h376.8V144c0-6.4-5.6-12-12-12H595.2l-5.6-16c-11.2-32.8-42.4-55.2-77.6-55.2-35.2 0-66.4 22.4-77.6 55.2l-5.6 16H335.2c-6.4 0-12 5.6-12 12v106.4z"
+                        fill=""></path>
+                </g>
+            </svg> <span>{{exist.order_number}}</span>
+        </div>
+    </div><br>
+    <h3 class="text-xl font-semibold leading-5 text-gray-800">Customer</h3>
+    <div
+        class="flex flex-col md:flex-row xl:flex-col justify-start items-stretch h-full w-full md:space-x-6 lg:space-x-8 xl:space-x-0">
+        <div class="flex flex-col justify-start items-start flex-shrink-0">
+            <div
+                class="flex justify-center w-full md:justify-start items-center space-x-4 py-8 border-b border-gray-200">
+                <img width="50px" height="50px"
+                    src="https://img.freepik.com/free-vector/man-wearing-eyeglasses-avatar-character_24877-83454.jpg?t=st=1724068140~exp=1724071740~hmac=ba3cdfea4ffedd36474f467f4f673a3c50566a55f45dc74ae77125e1d99067f4&w=740"
+                    alt="avatar" />
+                <div class="flex justify-start items-start flex-col space-y-2">
+                    <p class="text-base font-semibold leading-4 text-left text-gray-800">{{user?.first_name +"
+                        "+ user?.last_name}}</p>
+                    <p class="text-sm  leading-5 text-gray-600">{{user?.role}}</p>
+                </div>
+            </div>
+
+            <div
+                class="flex justify-center text-gray-800 md:justify-start items-center space-x-4 pt-4 border-gray-200 w-full">
+
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5Z"
+                        stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M3 7L12 13L21 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <p class="cursor-pointer text-sm leading-5 ">{{user?.email}}</p>
+            </div>
+            <div
+                class="flex justify-center text-gray-800 md:justify-start items-center space-x-4 py-4 border-b border-gray-200 w-full">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path
+                            d="M16.1007 13.359L15.5719 12.8272H15.5719L16.1007 13.359ZM16.5562 12.9062L17.085 13.438H17.085L16.5562 12.9062ZM18.9728 12.5894L18.6146 13.2483L18.9728 12.5894ZM20.8833 13.628L20.5251 14.2869L20.8833 13.628ZM21.4217 16.883L21.9505 17.4148L21.4217 16.883ZM20.0011 18.2954L19.4723 17.7636L20.0011 18.2954ZM18.6763 18.9651L18.7459 19.7119H18.7459L18.6763 18.9651ZM8.81536 14.7266L9.34418 14.1947L8.81536 14.7266ZM4.00289 5.74561L3.2541 5.78816L3.2541 5.78816L4.00289 5.74561ZM10.4775 7.19738L11.0063 7.72922H11.0063L10.4775 7.19738ZM10.6342 4.54348L11.2346 4.09401L10.6342 4.54348ZM9.37326 2.85908L8.77286 3.30855V3.30855L9.37326 2.85908ZM6.26145 2.57483L6.79027 3.10667H6.79027L6.26145 2.57483ZM4.69185 4.13552L4.16303 3.60368H4.16303L4.69185 4.13552ZM12.0631 11.4972L12.5919 10.9654L12.0631 11.4972ZM16.6295 13.8909L17.085 13.438L16.0273 12.3743L15.5719 12.8272L16.6295 13.8909ZM18.6146 13.2483L20.5251 14.2869L21.2415 12.9691L19.331 11.9305L18.6146 13.2483ZM20.8929 16.3511L19.4723 17.7636L20.5299 18.8273L21.9505 17.4148L20.8929 16.3511ZM18.6067 18.2184C17.1568 18.3535 13.4056 18.2331 9.34418 14.1947L8.28654 15.2584C12.7186 19.6653 16.9369 19.8805 18.7459 19.7119L18.6067 18.2184ZM9.34418 14.1947C5.4728 10.3453 4.83151 7.10765 4.75168 5.70305L3.2541 5.78816C3.35456 7.55599 4.14863 11.144 8.28654 15.2584L9.34418 14.1947ZM10.7195 8.01441L11.0063 7.72922L9.9487 6.66555L9.66189 6.95073L10.7195 8.01441ZM11.2346 4.09401L9.97365 2.40961L8.77286 3.30855L10.0338 4.99296L11.2346 4.09401ZM5.73263 2.04299L4.16303 3.60368L5.22067 4.66736L6.79027 3.10667L5.73263 2.04299ZM10.1907 7.48257C9.66189 6.95073 9.66117 6.95144 9.66045 6.95216C9.66021 6.9524 9.65949 6.95313 9.659 6.95362C9.65802 6.95461 9.65702 6.95561 9.65601 6.95664C9.65398 6.95871 9.65188 6.96086 9.64972 6.9631C9.64539 6.96759 9.64081 6.97245 9.63599 6.97769C9.62634 6.98816 9.61575 7.00014 9.60441 7.01367C9.58174 7.04072 9.55605 7.07403 9.52905 7.11388C9.47492 7.19377 9.41594 7.2994 9.36589 7.43224C9.26376 7.70329 9.20901 8.0606 9.27765 8.50305C9.41189 9.36833 10.0078 10.5113 11.5343 12.0291L12.5919 10.9654C11.1634 9.54499 10.8231 8.68059 10.7599 8.27309C10.7298 8.07916 10.761 7.98371 10.7696 7.96111C10.7748 7.94713 10.7773 7.9457 10.7709 7.95525C10.7677 7.95992 10.7624 7.96723 10.7541 7.97708C10.75 7.98201 10.7451 7.98759 10.7394 7.99381C10.7365 7.99692 10.7335 8.00019 10.7301 8.00362C10.7285 8.00534 10.7268 8.00709 10.725 8.00889C10.7241 8.00979 10.7232 8.0107 10.7223 8.01162C10.7219 8.01208 10.7212 8.01278 10.7209 8.01301C10.7202 8.01371 10.7195 8.01441 10.1907 7.48257ZM11.5343 12.0291C13.0613 13.5474 14.2096 14.1383 15.0763 14.2713C15.5192 14.3392 15.8763 14.285 16.1472 14.1841C16.28 14.1346 16.3858 14.0763 16.4658 14.0227C16.5058 13.9959 16.5392 13.9704 16.5663 13.9479C16.5799 13.9367 16.5919 13.9262 16.6024 13.9166C16.6077 13.9118 16.6126 13.9073 16.6171 13.903C16.6194 13.9008 16.6215 13.8987 16.6236 13.8967C16.6246 13.8957 16.6256 13.8947 16.6266 13.8937C16.6271 13.8932 16.6279 13.8925 16.6281 13.8923C16.6288 13.8916 16.6295 13.8909 16.1007 13.359C15.5719 12.8272 15.5726 12.8265 15.5733 12.8258C15.5735 12.8256 15.5742 12.8249 15.5747 12.8244C15.5756 12.8235 15.5765 12.8226 15.5774 12.8217C15.5793 12.82 15.581 12.8183 15.5827 12.8166C15.5862 12.8133 15.5895 12.8103 15.5926 12.8074C15.5988 12.8018 15.6044 12.7969 15.6094 12.7929C15.6192 12.7847 15.6265 12.7795 15.631 12.7764C15.6403 12.7702 15.6384 12.773 15.6236 12.7785C15.5991 12.7876 15.501 12.8189 15.3038 12.7886C14.8905 12.7253 14.02 12.3853 12.5919 10.9654L11.5343 12.0291ZM9.97365 2.40961C8.95434 1.04802 6.94996 0.83257 5.73263 2.04299L6.79027 3.10667C7.32195 2.578 8.26623 2.63181 8.77286 3.30855L9.97365 2.40961ZM4.75168 5.70305C4.73201 5.35694 4.89075 4.9954 5.22067 4.66736L4.16303 3.60368C3.62571 4.13795 3.20329 4.89425 3.2541 5.78816L4.75168 5.70305ZM19.4723 17.7636C19.1975 18.0369 18.9029 18.1908 18.6067 18.2184L18.7459 19.7119C19.4805 19.6434 20.0824 19.2723 20.5299 18.8273L19.4723 17.7636ZM11.0063 7.72922C11.9908 6.7503 12.064 5.2019 11.2346 4.09401L10.0338 4.99295C10.4373 5.53193 10.3773 6.23938 9.9487 6.66555L11.0063 7.72922ZM20.5251 14.2869C21.3429 14.7315 21.4703 15.7769 20.8929 16.3511L21.9505 17.4148C23.2908 16.0821 22.8775 13.8584 21.2415 12.9691L20.5251 14.2869ZM17.085 13.438C17.469 13.0562 18.0871 12.9616 18.6146 13.2483L19.331 11.9305C18.2474 11.3414 16.9026 11.5041 16.0273 12.3743L17.085 13.438Z"
+                            fill="currentColor"></path>
+                    </g>
+                </svg>
+                <p class="cursor-pointer text-sm leading-5 ">{{user?.phone}}</p>
+            </div>
+        </div>
+        <div class="flex justify-between xl:h-full items-stretch w-full flex-col mt-6 md:mt-0">
+
+            <div
+                class="  w-full justify-center md:justify-start xl:flex-col flex-col md:space-x-6 lg:space-x-8 xl:space-x-0 space-y-4 xl:space-y-12 md:space-y-0 md:flex-row items-center md:items-start">
+                <div
+                    class="flex justify-center md:justify-start items-center md:items-start flex-col space-y-4 xl:mt-8">
+                    <p class="text-base font-semibold leading-4 text-center md:text-left text-gray-800">
+                        Shipping Address</p>
+                    <div class="w-full">
+
+                        <form *ngIf="!exist else nonEdit" class="w-full" [formGroup]="billingForm"
+                            (ngSubmit)="onSubmit()">
+
+                            <div class="py-2  flex gap-x-2">
+                                <span>
+
+                                    <label for="email">Email :</label>
+                                    <input [value]="user?.email" class="border w-full p-2 rounded-none" id="email"
+                                        formControlName="email" type="email" />
+                                    <div *ngIf="billingForm.get('email')?.invalid && billingForm.get('email')?.touched">
+                                        <small *ngIf="billingForm.get('email')?.errors?.['required']"
+                                            class="text-red-600 text-xs">Email is
+                                            required</small>
+                                        <small *ngIf="billingForm.get('email')?.errors?.['email']">Please enter a valid
+                                            email</small>
+                                    </div>
+                                </span>
+                                <span>
+                                    <label for="phone">Phone :</label>
+                                    <input [value]="user?.phone" class="border w-full p-2 rounded-none" id="phone"
+                                        formControlName="phone" type="text" />
+                                    <div *ngIf="billingForm.get('phone')?.invalid && billingForm.get('phone')?.touched">
+                                        <small *ngIf="billingForm.get('phone')?.errors?.['required']"
+                                            class="text-red-600 text-xs">Phone is
+                                            required</small>
+                                        <small *ngIf="billingForm.get('phone')?.errors?.['pattern']">Please enter a
+                                            valid
+                                            phone number</small>
+                                    </div>
+                                </span>
+                            </div>
+
+                            <div class="py-2">
+                                <label for="addressLine1">Address Line 1 :</label>
+                                <input class="border w-full p-2 rounded-none" id="addressLine1"
+                                    formControlName="addressLine1" type="text" />
+                                <div
+                                    *ngIf="billingForm.get('addressLine1')?.invalid && billingForm.get('addressLine1')?.touched">
+                                    <small *ngIf="billingForm.get('addressLine1')?.errors?.['required']"
+                                        class="text-red-600 text-xs">Address Line 1
+                                        is required</small>
+                                </div>
+                            </div>
+
+                            <div class="py-2">
+                                <label for="addressLine2">Address Line 2 :</label>
+                                <input class="border w-full p-2 rounded-none" id="addressLine2"
+                                    formControlName="addressLine2" type="text" />
+                            </div>
+
+                            <div class="py-2 flex gap-x-2">
+                                <span>
+                                    <label for="city">City :</label>
+                                    <input class="border w-full p-2 rounded-none" id="city" formControlName="city"
+                                        type="text" />
+                                    <div *ngIf="billingForm.get('city')?.invalid && billingForm.get('city')?.touched">
+                                        <small *ngIf="billingForm.get('city')?.errors?.['required']"
+                                            class="text-red-600 text-xs">City is
+                                            required</small>
+                                    </div>
+                                </span>
+
+                                <span>
+                                    <label for="state">State :</label>
+                                    <input class="border w-full p-2 rounded-none" id="state" formControlName="state"
+                                        type="text" />
+                                    <div *ngIf="billingForm.get('state')?.invalid && billingForm.get('state')?.touched">
+                                        <small *ngIf="billingForm.get('state')?.errors?.['required']"
+                                            class="text-red-600 text-xs">State is
+                                            required</small>
+                                    </div>
+                                </span>
+                            </div>
+
+                            <div class="py-2 flex gap-x-2">
+                                <span>
+                                    <label for="zip">ZIP Code :</label>
+                                    <input class="border w-full p-2 rounded-none" id="zip" formControlName="zip"
+                                        type="text" />
+                                    <div *ngIf="billingForm.get('zip')?.invalid && billingForm.get('zip')?.touched">
+                                        <small *ngIf="billingForm.get('zip')?.errors?.['required']"
+                                            class="text-red-600 text-xs">ZIP Code is
+                                            required</small>
+                                        <small *ngIf="billingForm.get('zip')?.errors?.['pattern']">ZIP Code should be in
+                                            the
+                                            format XXXX or
+                                            XXXXX-XXXX</small>
+                                    </div>
+                                </span>
+                                <span>
+                                    <label for="country">Country :</label>
+
+                                    <select class="border w-full p-2 rounded-none" id="country"
+                                        formControlName="country" type="text">
+                                        <option *ngFor="let country of listCountry">{{country['name'].common}}</option>
+                                    </select>
+
+                                    <div
+                                        *ngIf="billingForm.get('country')?.invalid && billingForm.get('country')?.touched">
+                                        <small *ngIf="billingForm.get('country')?.errors?.['required']"
+                                            class="text-red-600 text-xs">Country is
+                                            required</small>
+                                    </div>
+                                </span>
+                            </div>
+                            <br>
+                            <div>
+
+                            </div>
+                            <div class="flex w-full justify-center items-center md:justify-start md:items-start">
+                                <button type="submit"
+                                    class="mt-6 md:mt-0 py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base leading-4 text-gray-800"
+                                    [disabled]="billingForm.invalid"
+                                    [ngClass]="billingForm.invalid?'hover:bg-white cursor-not-allowed':''">Add</button>
+                            </div>
+                        </form>
+                        <ng-template #nonEdit>
+
+                            <p class="w-48text-center md:text-left text-sm leading-5 text-gray-600">
+                                Email: <span class="text-gray-800">{{billingForm.value['email'] }}</span> </p>
+                            <p class="w-48 text-center md:text-left text-sm leading-5 text-gray-600">
+                                Phone: <span class="text-gray-800">{{billingForm.value['phone'] }}</span> </p>
+
+                            <p class="w-48 py-6 lg:w-full   text-center md:text-left text-sm leading-5 text-gray-600">
+                                {{billingForm.value['addressLine1']+", "+(
+                                billingForm.value['addressLine2'] &&billingForm.value['addressLine2']+", ")+
+                                billingForm.value['city']+", "+billingForm.value['zip'] +", "+billingForm.value['state']
+                                +", "+billingForm.value['country']}} </p>
+
+                            <div (click)="confirmOrder()"
+                                class=" mx-auto text-center w-full mt-6 md:mt-0 py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium cursor-pointer  2xl:w-full text-base leading-4 text-gray-800">
+                                Next</div>
+                        </ng-template>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>

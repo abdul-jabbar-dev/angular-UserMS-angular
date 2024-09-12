@@ -1,35 +1,92 @@
-<div class="  flex items-center justify-center min-h-screen  ">
+<div class="flex items-center justify-center min-h-screen">
     <section *ngIf="profile; else isLoading"
-        class="w-full max-w-[430px] relative  rounded-[6px]  mx-2 -mt-6 overflow-hidden">
+        class="w-full max-w-[430px] relative rounded-[6px] mx-2 -mt-6 overflow-hidden">
 
         <img src="https://avatar.iran.liara.run/public"
             class="rounded-full w-[200px] mx-auto my-10 p-0  shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] ">
 
-        <h1 class="text-xl font-bold text-center">{{profile.first_name+" "+ profile.last_name}}</h1>
-        <small class="block my-1 text-center">{{'@'+profile.username}}</small>
-        <p class="mt-5 text-start">Email: {{profile.email}}</p>
-        <p class="mt-5 text-start">Phone: {{profile.phone||'--'}}</p>
-        <p class="mt-5 text-start">Age: {{profile.age||'--'}}</p>
-        <p class="mt-5 text-start">Role: <span class="uppercase">{{profile.role||'--'}}</span></p>
+        <div class="mt-5">
 
+            <label for="" class=" text-gray-600 block">Role</label>
+            <input disabled [value]="profile['role']" id="" type="text" class="w-full uppercase py-2 px-3 border ">
+            <br><br>
+            <label for="first_name" class=" text-gray-600 block">First Name</label>
+            <input [(ngModel)]="profile.first_name" id="first_name" type="text"
+                class="w-full py-2 px-3 border border-slate-200 focus:outline-none focus:border-slate-500">
+
+            <label for="last_name" class="block text-gray-600  mt-3">Last Name</label>
+            <input [(ngModel)]="profile.last_name" id="last_name" type="text"
+                class="w-full py-2 px-3 border border-slate-200 focus:outline-none focus:border-slate-500">
+
+            <label for="email" class="block text-gray-600  mt-3">Email</label>
+            <input disabled [value]="profile.email" id="email" type="email" class="w-full py-2 px-3 border ">
+
+            <label for="phone" class="block text-gray-600  mt-3">Phone</label>
+            <input [(ngModel)]="profile.phone" id="phone" type="text"
+                class="w-full py-2 px-3 border border-slate-200 focus:outline-none focus:border-slate-500">
+
+            <label for="age" class="block text-gray-600  mt-3">Age</label>
+            <input [(ngModel)]="profile.age" placeholder="Enter your age" id="age" type="number"
+                class="w-full py-2 px-3 border border-slate-200 focus:outline-none focus:border-slate-500">
+
+            <label for="new_password" class="block text-gray-600  mt-3">Password (Optional)</label>
+            <div class="relative w-full h-full">
+                <input [(ngModel)]="profile.new_password" id="new_password" [type]="isVisible?'text':'password'"
+                    placeholder="Enter new password"
+                    class="w-full h-full py-2 px-3 border border-slate-200 focus:outline-none focus:border-slate-500">
+                <span *ngIf="isVisible" (click)="toggoleShow()" class=" cursor-pointer w-7 h-7 absolute top-1 right-1">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path
+                                d="M2.21967 2.21967C1.9534 2.48594 1.9292 2.9026 2.14705 3.19621L2.21967 3.28033L6.25424 7.3149C4.33225 8.66437 2.89577 10.6799 2.29888 13.0644C2.1983 13.4662 2.4425 13.8735 2.84431 13.9741C3.24613 14.0746 3.6534 13.8305 3.75399 13.4286C4.28346 11.3135 5.59112 9.53947 7.33416 8.39452L9.14379 10.2043C8.43628 10.9258 8 11.9143 8 13.0046C8 15.2138 9.79086 17.0046 12 17.0046C13.0904 17.0046 14.0788 16.5683 14.8004 15.8608L20.7197 21.7803C21.0126 22.0732 21.4874 22.0732 21.7803 21.7803C22.0466 21.5141 22.0708 21.0974 21.8529 20.8038L21.7803 20.7197L15.6668 14.6055L15.668 14.604L8.71877 7.65782L8.72 7.656L7.58672 6.52549L3.28033 2.21967C2.98744 1.92678 2.51256 1.92678 2.21967 2.21967ZM12 5.5C10.9997 5.5 10.0291 5.64807 9.11109 5.925L10.3481 7.16119C10.8839 7.05532 11.4364 7 12 7C15.9231 7 19.3099 9.68026 20.2471 13.4332C20.3475 13.835 20.7546 14.0794 21.1565 13.9791C21.5584 13.8787 21.8028 13.4716 21.7024 13.0697C20.5994 8.65272 16.6155 5.5 12 5.5ZM12.1947 9.00928L15.996 12.81C15.8942 10.7531 14.2472 9.10764 12.1947 9.00928Z"
+                                fill="#6b6b6b"></path>
+                        </g>
+                    </svg>
+                </span><span *ngIf="!isVisible" (click)="toggoleShow()"
+                    class=" cursor-pointer w-7 h-7 absolute top-1 right-1">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#6b6b6b">
+
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <title>ic_fluent_eye_show_24_filled</title>
+                            <desc>Created with Sketch.</desc>
+                            <g id="🔍-System-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g id="ic_fluent_eye_show_24_filled" fill="#6b6b6b" fill-rule="nonzero">
+                                    <path
+                                        d="M12,9.0046246 C14.209139,9.0046246 16,10.7954856 16,13.0046246 C16,15.2137636 14.209139,17.0046246 12,17.0046246 C9.790861,17.0046246 8,15.2137636 8,13.0046246 C8,10.7954856 9.790861,9.0046246 12,9.0046246 Z M12,5.5 C16.613512,5.5 20.5960869,8.65000641 21.7011157,13.0643865 C21.8017,13.4662019 21.557504,13.8734775 21.1556885,13.9740618 C20.7538731,14.0746462 20.3465976,13.8304502 20.2460132,13.4286347 C19.3071259,9.67795854 15.9213644,7 12,7 C8.07693257,7 4.69009765,9.68026417 3.75285786,13.4331499 C3.65249525,13.8350208 3.24535455,14.0794416 2.84348365,13.979079 C2.44161275,13.8787164 2.19719198,13.4715757 2.29755459,13.0697048 C3.4006459,8.65271806 7.38448293,5.5 12,5.5 Z"
+                                        id="🎨-Color"> </path>
+                                </g>
+                            </g>
+                        </g>
+
+                    </svg>
+                </span>
+            </div>
+        </div>
+
+        <div class="flex justify-end mt-4 flex-col">
+            <button *ngIf="!isUpdating" (click)="saveProfile()"
+                class="bg-green-500 text-white px-4 py-2 rounded">Save</button>
+
+            <div *ngIf="isUpdating"
+                class="w-8 text-center my-6 h-8 border-4 mx-auto rounded-full border-green-500 border-t-transparent animate-spin">
+            </div>
+        </div>
     </section>
 
     <ng-template #isLoading>
-        <section class="w-full max-w-[430px] animate-pulse relative  rounded-[6px]  mx-2 -mt-6 overflow-hidden">
-
+        <section class="w-full max-w-[430px] animate-pulse relative mx-2 -mt-6 overflow-hidden">
             <div
-                class="bg-gray-600 rounded-full w-[120px] h-[120px] mx-auto my-10 p-0 border-[6px] box-content opacity-15  shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)]  ">
+                class="bg-gray-600 rounded-full w-[120px] h-[120px] mx-auto my-10 p-0 border-[6px] box-content opacity-15 shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)]">
             </div>
             <div class="w-full flex flex-col justify-center items-center">
-                <h1 class="text-xl font-bold text-center w-40 bg-slate-600 h-4 rounded-lg opacity-15 mb-2"> </h1>
-                <h1 class="text-xl font-bold text-center w-24 bg-slate-600 h-4 rounded-lg opacity-15 mb-6"> </h1>
-                <h1 class="text-xl font-bold text-center w-96 bg-slate-600 h-4 rounded-lg opacity-15 my-1"> </h1>
-                <h1 class="text-xl font-bold text-center w-96 bg-slate-600 h-4 rounded-lg opacity-15 my-1"> </h1>
-                <h1 class="text-xl font-bold text-center w-96 bg-slate-600 h-4 rounded-lg opacity-15 my-1"> </h1>
-                <h1 class="text-xl font-bold text-center w-96 bg-slate-600 h-4 rounded-lg opacity-15 my-1"> </h1>
+                <h1 class="text-xl font-bold text-center w-40 bg-slate-600 h-4 opacity-15 mb-2"></h1>
+                <h1 class="text-xl font-bold text-center w-24 bg-slate-600 h-4 opacity-15 mb-6"></h1>
+                <h1 class="text-xl font-bold text-center w-96 bg-slate-600 h-4 opacity-15 my-1"></h1>
             </div>
-
-
         </section>
     </ng-template>
 </div>

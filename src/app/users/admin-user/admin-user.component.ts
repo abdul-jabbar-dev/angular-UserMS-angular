@@ -1,6 +1,9 @@
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { Component, OnInit } from '@angular/core'; 
 import { RequestService } from 'src/app/services/request.service';
+import { formatDistanceToNow } from 'date-fns';
+
+
 interface TUserResponse {
   id: number;
   username: string;
@@ -11,7 +14,7 @@ interface TUserResponse {
   age: number;
   phone: string;
   status: 'active' | 'deactive';
-  role: 'admin' | 'subscriber';
+  role: 'admin' | 'subscriber'|'rider';
   created_at: Date;
   updated_at: Date;
 }
@@ -48,9 +51,9 @@ export class AdminUserComponent implements OnInit {
     const queryParams = {
       page: this.pagination.page,
       pageSize: this.pagination.pageSize,
-      role:'admin'
+      role: 'admin',
     };
-    try {  
+    try {
       (await this.request.get('/user/get_users', queryParams)).subscribe(
         (data: {
           data: TUserResponse[];
@@ -91,10 +94,12 @@ export class AdminUserComponent implements OnInit {
   }
 
   getDay(dateString: any) {
-    const date = new Date(dateString);
-    return date.toUTCString();
+    const result = formatDistanceToNow(new Date(dateString), {
+      addSuffix: true,
+      includeSeconds: true,
+    });
+    return result;
   }
-
   async toggleRole(id: string | number) {
     try {
       await firstValueFrom(

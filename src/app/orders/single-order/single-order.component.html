@@ -1,0 +1,169 @@
+<div *ngIf="order">
+    <div class=" flex my-8 text-center justify-center items-center rounded-md ">
+        <button (click)="downloadPDF()"
+            class="text-slate-800 shadow-md  justify-center hover:text-gray-600 text-sm bg-white hover:bg-slate-100 border border-slate-200 rounded-l-lg font-medium px-4 py-2 inline-flex space-x-1 items-center">
+            <span><svg class="w-6 h-6 " viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path
+                            d="M12.5535 16.5061C12.4114 16.6615 12.2106 16.75 12 16.75C11.7894 16.75 11.5886 16.6615 11.4465 16.5061L7.44648 12.1311C7.16698 11.8254 7.18822 11.351 7.49392 11.0715C7.79963 10.792 8.27402 10.8132 8.55352 11.1189L11.25 14.0682V3C11.25 2.58579 11.5858 2.25 12 2.25C12.4142 2.25 12.75 2.58579 12.75 3V14.0682L15.4465 11.1189C15.726 10.8132 16.2004 10.792 16.5061 11.0715C16.8118 11.351 16.833 11.8254 16.5535 12.1311L12.5535 16.5061Z"
+                            fill="#696969"></path>
+                        <path
+                            d="M3.75 15C3.75 14.5858 3.41422 14.25 3 14.25C2.58579 14.25 2.25 14.5858 2.25 15V15.0549C2.24998 16.4225 2.24996 17.5248 2.36652 18.3918C2.48754 19.2919 2.74643 20.0497 3.34835 20.6516C3.95027 21.2536 4.70814 21.5125 5.60825 21.6335C6.47522 21.75 7.57754 21.75 8.94513 21.75H15.0549C16.4225 21.75 17.5248 21.75 18.3918 21.6335C19.2919 21.5125 20.0497 21.2536 20.6517 20.6516C21.2536 20.0497 21.5125 19.2919 21.6335 18.3918C21.75 17.5248 21.75 16.4225 21.75 15.0549V15C21.75 14.5858 21.4142 14.25 21 14.25C20.5858 14.25 20.25 14.5858 20.25 15C20.25 16.4354 20.2484 17.4365 20.1469 18.1919C20.0482 18.9257 19.8678 19.3142 19.591 19.591C19.3142 19.8678 18.9257 20.0482 18.1919 20.1469C17.4365 20.2484 16.4354 20.25 15 20.25H9C7.56459 20.25 6.56347 20.2484 5.80812 20.1469C5.07435 20.0482 4.68577 19.8678 4.40901 19.591C4.13225 19.3142 3.9518 18.9257 3.85315 18.1919C3.75159 17.4365 3.75 16.4354 3.75 15Z"
+                            fill="#696969"></path>
+                    </g>
+                </svg>
+            </span>
+            <span>Download</span>
+        </button>
+        <button (click)="printOrder()"
+            class="text-slate-800 shadow-md hover:text-gray-600 text-sm bg-white hover:bg-slate-100 border border-slate-200 rounded-r-lg font-medium px-4 py-2 inline-flex space-x-1 items-center">
+            <span>
+                <svg class="w-6 h-6 " viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path
+                            d="M16 18C16 16.6667 15.7778 15.5 15.5556 15.3333C15.3333 15.1667 13.7778 15 12 15C10.2222 15 8.66667 15.1667 8.44444 15.3333C8.22222 15.5 8 16.6667 8 18M16 18C16 19.3333 15.7778 20.5 15.5556 20.6667C15.3333 20.8333 13.7778 21 12 21C10.2222 21 8.66667 20.8333 8.44444 20.6667C8.22222 20.5 8 19.3333 8 18M16 18C16 18 19.5 17.75 20 17.5C20.5 17.25 21 15.5 21 13.5C21 11.5 20.5 9.75 20 9.5C19.6796 9.33977 18.1268 9.17955 16 9.08514M8 18C8 18 4.5 17.75 4 17.5C3.5 17.25 3 15.5 3 13.5C3 11.5 3.5 9.75 4 9.5C4.32045 9.33977 5.87316 9.17955 8 9.08514M8 9.08514C9.19168 9.03224 10.5636 9 12 9C13.4364 9 14.8083 9.03224 16 9.08514M8 9.08514V7C8 5.22222 8.22222 3.66667 8.44444 3.44444C8.66667 3.22222 10.2222 3 12 3C13.7778 3 15.3333 3.22222 15.5556 3.44444C15.7778 3.66667 16 5.22222 16 7V9.08514"
+                            stroke="#696969" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </g>
+                </svg>
+            </span>
+            <span>Print</span>
+        </button>
+
+    </div>
+    <hr>
+
+    <div class="my-12">
+        <div #content class="bg-white w-full  relative rounded-lg shadow-lg px-8 py-10 max-w-3xl mx-auto">
+            <div class="flex  items-center w-full h-full justify-between mb-8">
+                <div class="flex items-center">
+
+
+
+                    <svg class="h-16 w-16 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path
+                                d="M6 7C5.44772 7 5 6.55228 5 6C5 5.44772 5.44772 5 6 5C6.55228 5 7 5.44772 7 6C7 6.55228 6.55228 7 6 7Z"
+                                fill="#7d7d7d" stroke="#7d7d7d" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M12 7C11.4477 7 11 6.55228 11 6C11 5.44772 11.4477 5 12 5C12.5523 5 13 5.44772 13 6C13 6.55228 12.5523 7 12 7Z"
+                                fill="#7d7d7d" stroke="#7d7d7d" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M18 7C17.4477 7 17 6.55228 17 6C17 5.44772 17.4477 5 18 5C18.5523 5 19 5.44772 19 6C19 6.55228 18.5523 7 18 7Z"
+                                fill="#7d7d7d" stroke="#7d7d7d" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M6 13C5.44772 13 5 12.5523 5 12C5 11.4477 5.44772 11 6 11C6.55228 11 7 11.4477 7 12C7 12.5523 6.55228 13 6 13Z"
+                                fill="#7d7d7d" stroke="#7d7d7d" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M12 13C11.4477 13 11 12.5523 11 12C11 11.4477 11.4477 11 12 11C12.5523 11 13 11.4477 13 12C13 12.5523 12.5523 13 12 13Z"
+                                fill="#7d7d7d" stroke="#7d7d7d" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M18 13C17.4477 13 17 12.5523 17 12C17 11.4477 17.4477 11 18 11C18.5523 11 19 11.4477 19 12C19 12.5523 18.5523 13 18 13Z"
+                                fill="#7d7d7d" stroke="#7d7d7d" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M12 19C11.4477 19 11 18.5523 11 18C11 17.4477 11.4477 17 12 17C12.5523 17 13 17.4477 13 18C13 18.5523 12.5523 19 12 19Z"
+                                fill="#7d7d7d" stroke="#7d7d7d" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                        </g>
+                    </svg>
+
+
+                    <div class="text-gray-700 font-semibold text-lg">Second Hand Shop</div>
+                </div>
+                <div class="text-gray-700">
+                    <div class="font-bold text-xl mb-2">INVOICE</div>
+                    <div class="text-sm">Date: {{getDay(order.shipping_updated_at)}}</div>
+                    <div class="text-sm">Invoice #: INV{{order.order_id}}</div>
+                </div>
+                <div *ngIf="order.order_status==='paid'"
+                    class="absolute opacity-90 right-36 top-56 px-10 py-3 bg-green-300 text-2xl rotate-12 border-4 border-dashed  border-green-700  text-green-900">
+                    PAID</div>
+            </div>
+            <div class="border-b-2 border-gray-300 pb-8 mb-8">
+                <h2 class="text-2xl font-bold mb-4">Bill To:</h2>
+                <div class="text-gray-700 mb-2">{{ order.first_name+" "+order?.last_name || '' }}</div>
+                <div class="text-gray-700 ">
+                    {{ (order.address_line1 || '') +
+                    (order.address_line2 ? ' ' + order.address_line2 : '')
+                    }}
+                </div>
+                <div class="text-gray-700 mb-2">{{(order.city || '') +
+                    (order.zip ? ' ' + order.zip : '')+", "+(order.country )}}</div>
+                <div class="text-gray-700">{{order.email}}</div>
+                <div class="text-gray-700">{{order.phone}}</div>
+            </div>
+
+            <table class="w-full text-left mb-8">
+                <thead>
+                    <tr>
+                        <th class="text-gray-700 font-bold uppercase py-2 table-auto w-full">Description</th>
+                        <th class="text-gray-700 font-bold uppercase py-2">Price</th>
+                    </tr>
+                </thead>
+                <tbody class="w-full">
+                    <tr>
+                        <td class="py-4 text-gray-700  ">{{order.title}}</td>
+                        <td class="py-4 flex text-gray-700">
+                            <div class="text-gray-700 flex min-w-20">
+                                <p>{{order.price}} TK</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="mb-3 flex justify-end">
+                <div class="text-gray-700 mr-2">Subtotal:</div>
+                <div class="text-gray-700">{{order.price}} TK</div>
+            </div>
+            <div class="text-right mb-3 flex justify-end">
+                <div class="text-gray-700 mr-2">Tax:</div>
+                <div class="text-gray-700">{{(calculateTax(+(order.product_price) )|number:'1.1-1')}} TK</div>
+
+            </div>
+            <div *ngIf="order.discount_amount" class="text-right mb-3 flex justify-end">
+                <div class="text-gray-700 mr-2">Discount:</div>
+                <div class="text-gray-700">
+                    {{'-'+(calculateSavings(calculateTotal(+(order?.product_price)||0,calculateTax(+(order.product_price)||0),(order.shipping_cost)||0))|number:'1.1-1')}}
+                    TK</div>
+
+            </div>
+            <hr>
+            <br>
+            <div class="flex mb-8 justify-end">
+                <div class="text-gray-700 mr-2">Total:</div>
+                <div class="text-gray-700 font-bold text-xl">
+                    {{(calculateTotal(+(order?.product_price)||0,calculateTax(+(order?.product_price)||0),(order.shipping_cost)||0)-calculateSavings(calculateTotal(+(order?.product_price)||0,calculateTax(+(order?.product_price)||0),(order?.shipping_cost)||0))
+                    |number:'1.1-1')+"
+                    TK"}}
+                </div>
+            </div>
+            <div class="flex items-center justify-center">
+                <div class="border-t-2 border-gray-300 pt-8 mb-8 w-10/12">
+                    <div class="text-gray-700 mb-2">Payment is due within 30 days. Late payments are subject to fees.
+                    </div>
+                    <div class="text-gray-700 mb-2">Please make checks payable to Second Hand Shop and mail to:</div>
+                    <div class="text-gray-700">support&#64;secondhandshop.com or visit in Uttara Dhaka Bangladesh</div>
+                </div>
+                <div class=" w-2/12">
+
+                    <qrcode *ngIf="myAngularxQrCode" [qrdata]="myAngularxQrCode" class="w-full"
+                        [errorCorrectionLevel]="'M'">
+                    </qrcode>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div *ngIf="!order" class="w-full my-28 text-3xl font-semibold text-gray-700">No Invoice Found</div>

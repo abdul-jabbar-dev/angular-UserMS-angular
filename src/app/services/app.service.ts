@@ -16,13 +16,17 @@ export class RouteService {
         this.checkRoute(event.urlAfterRedirects);
       });
   }
-
   async checkRoute(url: string) {
-    if (url === '/login' || url === '/registration') {
+    if (url.includes('/verify/')) {
+    } else if (url === '/login' || url === '/registration') {
       const res = await this.auth.getProfile();
-      if (res.data.user?.id) {
+
+      if (res?.data?.user?.id) {
         this.router.navigate(['/']);
+      } else {
+        return;
       }
+
       this.showSidebar = false;
     } else {
       this.showSidebar = true;

@@ -1,0 +1,29 @@
+<div class="flex flex-col h-full justify-start px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 space-y-6">
+    <h3 class="text-xl font-semibold leading-5 text-gray-800">Shipping</h3>
+    <div>
+        <div class="space-y-4">
+
+            <div *ngFor="let deli of availibleSpot" [ngClass]="deli.selected?'border-gray-900':''"
+                class="flex justify-between items-start w-full p-4 border rounded-lg">
+                <div class="flex items-center space-x-4">
+
+                    <input (change)="onChange($event)" [checked]="deli.selected" type="radio" [id]="deli.key"
+                        name="deliveryOption" [value]="deli.key" class="form-radio h-5 w-5 text-blue-600" />
+
+                    <label [for]="deli.key" class="flex justify-center items-center space-x-4">
+                        <div class="w-8 h-8">
+                            <img class="w-full h-full" alt="logo" [src]="deli.img" />
+                        </div>
+                        <div class="flex flex-col justify-start">
+                            <p class="text-lg leading-6 font-semibold text-gray-800">{{deli.title}}<br />
+                                <span class="font-normal">Delivery within {{deli.deliveryTime}}</span>
+                            </p>
+                        </div>
+                    </label>
+                </div>
+                <p class="text-lg font-semibold min-w-20 w-max text-gray-800">{{'TK '+deli.cost}}</p>
+            </div>
+        </div> 
+    </div>
+
+</div>

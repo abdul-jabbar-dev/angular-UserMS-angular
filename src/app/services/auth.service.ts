@@ -66,13 +66,13 @@ export class AuthService {
       );
 
       if (result.token) {
-        this.store.addToken(result.token);
+        this.store.addTokenFromStore(result.token);
         await this.handleAuthSuccess();
       } else {
         return result;
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   }
 
@@ -84,13 +84,14 @@ export class AuthService {
           password: data?.password,
         })
       );
-
+      console.log(result);
       if (result.token) {
-        this.store.addToken(result.token);
+        this.store.addTokenFromStore(result.token);
         await this.handleAuthSuccess();
       }
       return result;
     } catch (error) {
+      console.log(error);
       throw new Error((error as any).error.message);
     }
   }
@@ -109,7 +110,17 @@ export class AuthService {
       );
       return result;
     } catch (error) {
-      console.error('Failed to get profile:', error);
+      return null;
+    }
+  }
+ async getProfileObs() {
+    try {
+      const result = await firstValueFrom(
+        await this.request.get('/user/get_my_profile')
+      );
+      return result;
+    } catch (error) {
+      console.log('Failed to get profile:', error);
       return null;
     }
   }
@@ -133,7 +144,7 @@ export class AuthService {
 
   async signOut() {
     const data = await this.supabase.supabase.auth.signOut();
-    this.store.removeToken();
+    this.store.removeTokenFromStore();
     this.userSubject.next(null);
     this.isAuthenticatedSubject.next(false);
     return data;

@@ -29,8 +29,8 @@ export class RegisterComponent {
   });
 
   onSubmit() {
-    console.log(this.registerUserForm.getRawValue());
-    console.log(this.auth.signUpNewUser(this.registerUserForm.getRawValue()));
+     
+    this.auth.signUpNewUser(this.registerUserForm.getRawValue())
   }
 
   async loginByGoogle() {

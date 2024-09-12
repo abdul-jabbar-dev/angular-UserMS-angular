@@ -30,12 +30,12 @@
             </svg>
         </a>
         <div #searchContainer *ngIf="isSearchBarShow" class="w-full max-w-[500px] relative">
-            <div class="flex rounded-lg bg-[#0d1829] px-2">
+            <div class="flex  bg-[#0d1829] px-2">
                 <input type="text" (ngModelChange)="handleSearchValueChange($event)" [(ngModel)]="searchValue"
-                    class="w-full text-center rounded-lg bg-[#0d1829] flex bg-transparent pl-2 text-[#cccccc] outline-0"
+                    class="w-full text-center  bg-[#0d1829] flex bg-transparent pl-2 text-[#cccccc] outline-0"
                     placeholder="Search product" />
                 <button *ngIf="!searchValue; else closeModal" type="submit"
-                    class="relative p-2 bg-[#0d1829] rounded-lg">
+                    class="relative p-2 bg-[#0d1829] ">
                     <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -47,7 +47,7 @@
                     </svg>
                 </button>
                 <ng-template #closeModal>
-                    <button (click)="searchValue=''" type="submit" class="relative p-2 bg-[#0d1829] rounded-lg">
+                    <button (click)="searchValue=''" type="submit" class="relative p-2 bg-[#0d1829] ">
                         <svg class="hover:scale-105" width="30px" height="30px" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -62,12 +62,12 @@
                 </ng-template>
             </div>
 
-            <div class="w-full absolute top-[155%] transform transition-all  h-max py-6 ease-out duration-300 bg-white shadow-lg rounded-lg z-[999999]"
+            <div class="w-full absolute top-[155%] transform transition-all  h-max py-6 ease-out duration-300 bg-white shadow-lg  z-[999999]"
                 [class.translate-y-0]="searchValue" [class.-translate-y-5]="!searchValue" [class.opacity-100]="searchValue"
                 [class.opacity-0]="!searchValue">
                 <ul *ngIf="searchedResult">
                     <li *ngFor="let item of searchedResult; let i = index" [routerLink]="'/product/' + item.id"
-                        class="px-6 py-1 text-gray-400 hover:text-gray-800 hover:bg-gray-100 cursor-pointer rounded-sm hover:shadow-sm"
+                        class="px-6 py-1 text-gray-400 hover:text-gray-800 hover:bg-gray-100 cursor-pointer hover:shadow-sm"
                         [class.bg-gray-100]="i === selectedIndex" (click)="onEnter($event)">
                         {{item.title}}
                     </li>
@@ -83,7 +83,7 @@
         <div class="items-center h-full" *ngIf="!isLogin ">
             <a routerLink="login" class="mr-5 font-medium hover:text-white">Login</a>
             <a routerLink="registration"
-                class="px-4 py-2 text-xs font-bold text-white uppercase transition-all duration-150 bg-teal-500 rounded shadow outline-none active:bg-teal-600 hover:shadow-md focus:outline-none ease">
+                class="px-4 py-2 text-xs font-bold text-white uppercase transition-all duration-150 bg-teal-500 shadow outline-none active:bg-teal-600 hover:shadow-md focus:outline-none ease">
                 Sign Up
             </a>
         </div>

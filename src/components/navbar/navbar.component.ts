@@ -18,17 +18,19 @@ import { RequestService } from 'src/app/services/request.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
+
 export class NavbarComponent implements OnInit, OnDestroy {
   @Input() searchValue: string = '';
   searchedResult: {
     id: number;
-    title: string
+    title: string;
   }[] = [];
+  
   isSearchBarShow: boolean = false;
   isLoginRoute = false;
   currentPath: string = '';
   isLogin: boolean = false;
-  role: 'subscriber' | 'admin' | null = null;
+  role: 'subscriber' | 'admin' |'rider'| null = null;
   @ViewChild('searchContainer ') searchContainer: ElementRef | null = null;
   selectedIndex: number = -1;
   isDropdownOpen: boolean = false;
@@ -52,7 +54,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     try {
       let searchData = await firstValueFrom(
         await this.request.get(
-          `/product/get_products?searchQuery=title:${newValue}`,{token:localStorage.getItem('token')}
+          `/product/get_products?searchQuery=title:${newValue}`,
+          { token: localStorage.getItem('token') }
         )
       );
       this.searchedResult = searchData;
@@ -87,7 +90,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.selectedIndex < this.searchedResult.length
     ) {
       const selectedItem = this.searchedResult[this.selectedIndex];
-      this.router.navigateByUrl('/product/' + selectedItem.id,);
+      this.router.navigateByUrl('/product/' + selectedItem.id);
     }
   }
 

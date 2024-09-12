@@ -1,8 +1,116 @@
+@import 'ckeditor5/ckeditor5.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-*{
+
+* {
 
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+
+.mat-horizontal-content-container {
+    display: none !important;
+    padding: 0 !important;
+}
+
+.mat-stepper-horizontal,
+.mat-stepper-vertical {
+    background-color: transparent !important;
+}
+
+.read-only-stepper .mat-step-header {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+
+td[ng-reflect-index="4"] {
+    display: none !important;
+    background: red;
+}
+
+
+
+#cdk-step-label-0-4 {
+    display: none !important;
+}
+
+.main-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ck-content {
+    font-family: 'Lato';
+    line-height: 1.6;
+    word-break: break-word;
+}
+
+.editor-container_classic-editor .editor-container__editor {
+
+    border: 1px solid #14b8a6;
+}
+
+.ckeditor_style_output a {
+    color: #14b8a6;
+}
+
+.ckeditor_style_output a:hover {
+    text-decoration: underline;
+    color: #037c6e;
+}
+
+.ckeditor_style_output a:active {
+    color: red;
+}
+
+.ckeditor_style_output table,
+th,
+td {
+    border-bottom: 1px solid rgb(240, 240, 240);
+
+}
+
+.ckeditor_style_output table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 5px;
+}
+.ckeditor_style_output ol {
+   list-style-type: disc;
+}
+.ckeditor_style_output ul {
+   list-style-type: disc;
+}
+
+.ckeditor_style_output th,
+td {
+    padding: 10px 20px;
+    text-align: left;
+
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.text-xs {
+    font-size: 0.75rem !important;
+    line-height: 1rem !important;
+    margin: 0 !important;
+}
+
+.text-sm {
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+    margin: 0 !important;
 }

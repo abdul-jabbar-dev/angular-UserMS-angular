@@ -1,5 +1,10 @@
-import { AdminProductsComponent } from './products/admin-products/admin-products.component'; 
-import { FavouriteComponent } from './favourite/favourite.component'; 
+import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
+import { OrdersComponent } from './orders/orders.component';
+import { PromocodeComponent } from './promocode/promocode.component';
+import { StatusGuard } from './StateGuard';
+import { ShippingComponent } from './shipping/shipping.component';
+import { AdminProductsComponent } from './products/admin-products/admin-products.component';
+import { FavouriteComponent } from './favourite/favourite.component';
 import { AllUserComponent } from './users/all-user/all-user.component';
 import { UsersComponent } from './users/users.component';
 import { ContactusComponent } from './contactus/contactus.component';
@@ -15,6 +20,15 @@ import { AdminUserComponent } from './users/admin-user/admin-user.component';
 import { AuthGuard } from './AuthGuard';
 import { MyProductsComponent } from './products/my-products/my-products.component';
 import { SingleProductComponent } from './products/single-product/single-product.component';
+import { PaymentComponent } from './shipping/payment/payment.component';
+import { SingleOrderComponent } from './orders/single-order/single-order.component';
+import { VerifyBillComponent } from './verify-bill/verify-bill.component';
+import { RiderComponent } from './rider/rider.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfilePasswordComponent } from './profile/profile-password/profile-password.component';
+import { ProfileAccountComponent } from './profile/profile-account/profile-account.component';
+// import { WebsocketService } from './services/websocket.service';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
@@ -30,8 +44,36 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'edit_profile',
-    component: EditProfileComponent,
+    path: 'verify/:id',
+    component: VerifyBillComponent,
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', component: EditProfileComponent },
+      { path: 'password', component: ProfilePasswordComponent },
+      { path: 'account', component: ProfileAccountComponent },
+    ],
+  },
+  {
+    path: 'promocode',
+    component: PromocodeComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'forgot_password',
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: 'my_orders',
+    component: OrdersComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'my_orders/:id',
+    component: SingleOrderComponent,
     canActivate: [AuthGuard],
   },
   {
@@ -62,8 +104,26 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'payment',
+    component: PaymentComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'product/:id',
     component: SingleProductComponent,
+  },
+  {
+    path: 'dash',
+    component: RiderComponent,
+  },
+  {
+    path: 'admin_orders',
+    component: AdminOrdersComponent,
+  },
+  {
+    path: 'shipping/:id',
+    component: ShippingComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'my_products',

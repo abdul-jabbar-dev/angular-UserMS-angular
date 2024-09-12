@@ -3,15 +3,17 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/services/auth.service';
+import { StoreService } from 'src/app/services/store.service';
 interface TUser {
   password?: string;
-  role?: 'admin' | 'subscriber';
+  role?: 'admin' | 'subscriber' | 'rider';
   first_name: string;
   email: string;
   username?: string;
   last_name: string;
   age: number;
   phone: string;
+  id: number;
 }
 @Component({
   selector: 'app-sidebar',
@@ -38,6 +40,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     isActive: boolean;
     icon: string;
     forAdmin: boolean;
+    forRider?: boolean;
     chield?: {
       title: string;
       id: string;
@@ -50,7 +53,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   constructor(
     public router: Router,
     protected auth: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    protected store: StoreService
   ) {
     this.menus = [
       {
@@ -78,6 +82,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
         icon: '/assets/icon/nav/All.svg',
       },
       {
+        title: 'My Orders',
+        id: 'my_orders',
+        link: '/my_orders',
+        isActive: false,
+        isAuthorization: true,
+        icon: '/assets/icon/nav/Orders.svg',
+      },
+      {
         title: 'Favourite',
         id: 'favourite',
         link: '/favourite',
@@ -89,11 +101,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.userMenus = [
       {
         title: 'Edit Profile',
-        id: 'edit_profile',
-        link: '/edit_profile',
+        id: 'profile',
+        link: '/profile',
         isActive: false,
         icon: '/assets/icon/nav/User.svg',
         forAdmin: false,
+      },
+      {
+        title: 'Rider Mode',
+        id: 'rider_dash',
+        link: '/dash',
+        isActive: false,
+        icon: '/assets/icon/nav/Rider.svg',
+        forAdmin: false,
+        forRider: true,
       },
       {
         title: 'User Management',
@@ -119,6 +140,22 @@ export class SidebarComponent implements OnInit, OnDestroy {
             forAdmin: false,
           },
         ],
+      },
+      {
+        title: 'Promocode',
+        id: 'promocode',
+        isActive: false,
+        icon: '/assets/icon/nav/Promocode.svg',
+        link: '/promocode',
+        forAdmin: true,
+      },
+      {
+        title: 'All Orders',
+        id: 'all_orders',
+        isActive: false,
+        icon: '/assets/icon/nav/AllOrders.svg',
+        link: '/admin_orders',
+        forAdmin: true,
       },
       {
         title: 'Products',
@@ -160,6 +197,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
   }
 
+  switchRider() {
+    if (this?.user?.id) {
+      this.store.setView(this.user.id);
+      this.router.navigateByUrl('/dash');
+    }
+  }
+
   async checkLogin() {
     let result = await this.auth.isLogin();
     this.isAuthenticate = !!result;
@@ -188,6 +232,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
     });
 
     this.cdr.detectChanges();
+  }
+
+  shouldShowTab(tabs: any): boolean {
+    const isRiderTab =
+      !tabs.forAdmin && tabs.forRider && this.user?.role === 'rider';
+    const isAdminTab = tabs.forAdmin && this.user?.role === 'admin';
+
+    return (!tabs.forAdmin && !tabs.forRider) || isRiderTab || isAdminTab;
   }
 
   updateMenuAuthorization() {

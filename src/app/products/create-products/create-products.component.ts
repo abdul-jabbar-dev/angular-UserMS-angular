@@ -1,15 +1,136 @@
 import { firstValueFrom } from 'rxjs';
 import { RequestService } from 'src/app/services/request.service';
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SupabaseService } from 'src/app/services/supabase.service';
-
+import {
+  ClassicEditor,
+  AutoLink,
+  Autosave,
+  BalloonToolbar,
+  Bold,
+  Heading,
+  Italic,
+  Link,
+  Paragraph,
+  Table,
+  TableCaption,
+  TableCellProperties,
+  TableColumnResize,
+  TableProperties,
+  TableToolbar,
+  Undo,
+  type EditorConfig,
+} from 'ckeditor5';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-create-products',
   templateUrl: './create-products.component.html',
   styleUrls: ['./create-products.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CreateProductsComponent {
+  public form!: FormGroup;
+
+  public isLayoutReady = false;
+  public Editor = ClassicEditor;
+  public config: EditorConfig = {};
+  public ngAfterViewInit(): void {
+    this.config = {
+      toolbar: {
+        items: [
+          'undo',
+          'redo',
+          '|',
+          'heading',
+          '|',
+          'bold',
+          'italic',
+          'code',
+          '|',
+          'link',
+          'insertTable',
+        ],
+        shouldNotGroupWhenFull: false,
+      },
+      plugins: [
+        AutoLink,
+        Autosave,
+        BalloonToolbar,
+        Bold,
+        Heading,
+        Italic,
+        Link,
+        Paragraph,
+        Table,
+        TableCaption,
+        TableCellProperties,
+        TableColumnResize,
+        TableProperties,
+        TableToolbar,
+        Undo,
+      ],
+      balloonToolbar: ['bold', 'italic', '|', 'link'],
+      heading: {
+        options: [
+          {
+            model: 'paragraph',
+            title: 'Paragraph',
+            class: 'ck-heading_paragraph',
+          },
+          {
+            model: 'heading1',
+            view: 'h1',
+            title: 'Heading 1',
+            class: 'ck-heading_heading1',
+          },
+          {
+            model: 'heading2',
+            view: 'h2',
+            title: 'Heading 2',
+            class: 'ck-heading_heading2',
+          },
+          {
+            model: 'heading3',
+            view: 'h3',
+            title: 'Heading 3',
+            class: 'ck-heading_heading3',
+          },
+          {
+            model: 'heading4',
+            view: 'h4',
+            title: 'Heading 4',
+            class: 'ck-heading_heading4',
+          },
+          {
+            model: 'heading5',
+            view: 'h5',
+            title: 'Heading 5',
+            class: 'ck-heading_heading5',
+          },
+          {
+            model: 'heading6',
+            view: 'h6',
+            title: 'Heading 6',
+            class: 'ck-heading_heading6',
+          },
+        ],
+      },
+      initialData: '',
+      link: {
+        addTargetToExternalLinks: true,
+        defaultProtocol: 'https://',
+      },
+      placeholder: 'Product Description',
+    };
+
+    this.isLayoutReady = true;
+    this.changeDetector.detectChanges();
+  }
+
+  public editorConfig = {
+    toolbar: ['heading', '|', 'bold', 'italic', 'link'],
+  };
   isError = '';
   selectedImg: { url: string; name: string; file: File | null } = {
     url: '',
@@ -19,7 +140,9 @@ export class CreateProductsComponent {
   isCreateing: boolean = false;
   constructor(
     public supabase: SupabaseService,
-    public request: RequestService
+    public request: RequestService,
+    private changeDetector: ChangeDetectorRef,
+    protected _snackBar: MatSnackBar
   ) {}
   createProductForm = new FormGroup({
     title: new FormControl<string>('', [
@@ -75,6 +198,12 @@ export class CreateProductsComponent {
               this.createProductForm.getRawValue()
             )
           );
+          this._snackBar.open('New product Inserted', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'bottom',
+            panelClass: ['custom-snackbar'],
+          });
 
           // const result = await this.supabase.insertData(
           // 'Products',
@@ -82,10 +211,8 @@ export class CreateProductsComponent {
           // );
 
           if (result?.error) {
-            console.log(result?.error);
             this.isCreateing = false;
           } else {
-            console.log(result);
             this.isCreateing = false;
           }
           this.createProductForm.reset();
@@ -96,7 +223,6 @@ export class CreateProductsComponent {
       }
       this.isCreateing = false;
     } catch (error) {
-      console.log(error);
       this.isCreateing = false;
       if (typeof error === 'string') {
         this.isError = error;

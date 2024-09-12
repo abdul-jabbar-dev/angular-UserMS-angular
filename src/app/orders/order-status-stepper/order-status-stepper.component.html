@@ -1,0 +1,13 @@
+<mat-stepper [selectedIndex]="currentStep" linear [disableRipple]="true" class="read-only-stepper">
+    <ng-container *ngFor="let step of steps; let i = index">
+        <mat-step *ngIf="step.length > 0 && step !== ''" [editable]="false" [completed]="completedSteps[i]">
+            <ng-template class="cursor-text" matStepLabel>
+                <span  *ngIf="step!=='delivery'" class="uppercase">{{ step }}</span>
+                <span  *ngIf="step==='delivery'" class="uppercase">{{
+                    order.delivery_received_code&&order.delivery_status==='transit'?
+                    step+' Code: '+order.delivery_received_code:
+                    (order.delivery_status==='delivery'?'order placed':'delivery')
+                    }}</span>
+            </ng-template>
+        </mat-step></ng-container>
+</mat-stepper>

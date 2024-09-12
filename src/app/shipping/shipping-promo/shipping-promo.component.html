@@ -1,0 +1,54 @@
+<div class="flex flex-col px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 space-y-6">
+    <h3 class="text-xl font-semibold leading-5 text-gray-800">Coupon Code</h3>
+    <div class="flex justify-center items-center w-full space-y-4 flex-col border-gray-200 border-b pb-4">
+
+        <ul class="list-none mb-4 w-full h-60 overflow-auto">
+            <ng-container *ngIf="allPromocode.length > 0; else noPromo">
+                <li *ngFor="let promo of allPromocode" class="bg-white shadow-md rounded px-4 py-2 mb-2">
+                    <div class="flex justify-between">
+                        <span class="flex flex-col">
+                            <span class="text-lg font-bold">{{ promo.code }}</span>
+                            <span class="text-sm text-gray-600">
+                                {{ promo.discount_amount | number }}{{ promo.discount_type === 'percentage' ? '% ' : 'TK
+                                ' }}
+                                off all products
+                            </span>
+                        </span>
+                        <span class="text-sm text-gray-600">
+                            Expires: {{ inExpire(promo.valid_to) }}
+                        </span>
+                    </div>
+                </li>
+            </ng-container>
+
+            <ng-template #noPromo>
+                <h2 class="text-center text-gray-500">No public promocodes available</h2>
+            </ng-template>
+        </ul>
+
+
+    </div>
+    <div class="flex justify-between items-center w-full">
+        <div>
+            <div class="w-full flex gap-x-2">
+                <input [ngClass]="isError.length>0?'border-red-600 text-red-700':''" [(ngModel)]="promocode"
+                    type="text "
+                    class=" hover:rounded-none border hover:border-gray-800 border-gray-400 py-4  px-3 uppercase w-2/3"
+                    placeholder="Add Coupon code">
+                <button (click)="verify()"
+                    class="bg-transparent hover:bg-gray-800 hover:text-white border-gray-400 border py-4 w-1/3">
+
+                    <div *ngIf="isLoading"
+                        class="w-6 h-6 border-4 mx-auto rounded-full border-blue-700 border-t-transparent animate-spin">
+                    </div>
+
+                    <span *ngIf="!isLoading">Apply</span>
+
+                </button>
+
+
+            </div>
+            <span class="text-red-600">{{isError}}</span>
+        </div>
+    </div>
+</div>

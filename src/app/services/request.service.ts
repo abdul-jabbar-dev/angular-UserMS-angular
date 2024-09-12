@@ -7,8 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RequestService {
-  private apiUrl = 'https://angular-userms-nest-knex.onrender.com';
-  // private apiUrl = 'http://localhost:3000';
+  // private apiUrl = 'https://angular-userms-nest-knex-production.up.railway.app'; //valid
+  // private apiUrl = 'https://angular-userms-nest-knex.onrender.com';
+  public apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient, public store: StoreService) {}
 
@@ -17,14 +18,13 @@ export class RequestService {
     query?: Record<string, string | number | boolean | null>
   ): Promise<Observable<any>> {
     try {
-      
       let options = { headers: new HttpHeaders(), params: new HttpParams() };
 
-      const token = this.store.getToken() as string;
+      const token = this.store.getTokenFromStore() as string;
       if (token && token.length > 15) {
         options.headers = options.headers.append('Authorization', token);
       }
-  
+
       if (query) {
         Object.keys(query).forEach((key) => {
           if (query[key]) {
@@ -35,12 +35,13 @@ export class RequestService {
           }
         });
       }
-      return this.http.get(this.apiUrl + pref, {
+      const res = await this.http.get(this.apiUrl + pref, {
         headers: options.headers,
         params: options.params,
       });
+      return res;
     } catch (error) {
-      console.log(error);
+ 
       throw new Error(JSON.stringify(error));
     }
   }
@@ -48,12 +49,11 @@ export class RequestService {
   async put(pref: string, body: any): Promise<Observable<any>> {
     let options = { headers: new HttpHeaders() };
 
-    const token = this.store.getToken() as string;
+    const token = this.store.getTokenFromStore() as string;
     if (token && token.length > 15) {
       options.headers = options.headers.append('Authorization', token);
     }
 
-    console.log(this.apiUrl + pref);
     return this.http.put(this.apiUrl + pref, body, {
       headers: options.headers,
     });
@@ -62,7 +62,7 @@ export class RequestService {
   async delete(pref: string): Promise<Observable<any>> {
     let options = { headers: new HttpHeaders() };
 
-    const token = this.store.getToken() as string;
+    const token = this.store.getTokenFromStore() as string;
     if (token && token.length > 15) {
       options.headers = options.headers.append('Authorization', token);
     }
@@ -73,7 +73,7 @@ export class RequestService {
   }
 
   async create(pref: string, data: any): Promise<Observable<any>> {
-    const token = this.store.getToken() as string;
+    const token = this.store.getTokenFromStore() as string;
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });

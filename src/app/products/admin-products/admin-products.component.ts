@@ -1,6 +1,7 @@
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { Component, OnInit } from '@angular/core';
 import { RequestService } from 'src/app/services/request.service';
+ import { formatDistanceToNow } from 'date-fns';
 
 interface TProduct {
   id: string | number;
@@ -90,8 +91,11 @@ export class AdminProductsComponent implements OnInit {
   }
 
   getDay(dateString: any) {
-    const date = new Date(dateString);
-    return date.toUTCString();
+    const result = formatDistanceToNow(new Date(dateString), {
+      addSuffix: true,
+      includeSeconds: true,
+    });
+    return result;
   }
 
   async toggleStatus(id: string | number) {

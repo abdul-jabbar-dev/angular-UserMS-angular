@@ -1,0 +1,23 @@
+<div  class="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
+    <div class="flex justify-start items-start space-y-2 flex-col">
+        <p class="text-base select-none font-medium leading-6 text-gray-600">{{ time }}</p>
+    </div>
+    <div
+        class="flex flex-col xl:flex-row justify-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
+        <div class="flex flex-col justify-start w-full space-y-4">
+            <app-shipping-product [product]="product"></app-shipping-product>
+            <div class="space-y-1 grid grid-rows-2">
+                <div class="flex mb-4 space-x-2">
+                    <app-shipping-delivery></app-shipping-delivery>
+                    <app-shipping-promo [product]="product"></app-shipping-promo>
+                </div>
+                <app-shipping-summary></app-shipping-summary>
+            </div>
+        </div>
+        <app-shipping-address   [exist]="exist"
+  [product]="product"
+  (orderStatus)="handleOrderStatus($event)"
+  (confirmOrderEvent)="onConfirmOrder()"></app-shipping-address>
+    </div>
+</div>
+
