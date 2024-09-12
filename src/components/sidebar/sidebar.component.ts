@@ -101,8 +101,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.userMenus = [
       {
         title: 'Edit Profile',
-        id: 'edit_profile',
-        link: '/edit_profile',
+        id: 'profile',
+        link: '/profile',
         isActive: false,
         icon: '/assets/icon/nav/User.svg',
         forAdmin: false,

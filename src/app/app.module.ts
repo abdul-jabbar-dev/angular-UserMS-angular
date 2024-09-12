@@ -1,3 +1,11 @@
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatStepperModule } from '@angular/material/stepper';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { QRCodeModule } from 'angularx-qrcode';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ProfileComponent } from './profile/profile.component';
 import { WebsocketService } from './services/websocket.service';
 import { PasswordInputComponent } from './../components/common/password-input/password-input.component';
 import { GlobalGuard } from './GlocalGuard';
@@ -47,12 +55,12 @@ import { ShippingAddressComponent } from './shipping/shipping-address/shipping-a
 import { ShippingProductComponent } from './shipping/shipping-product/shipping-product.component';
 import { ShippingPromoComponent } from './shipping/shipping-promo/shipping-promo.component';
 import { ShippingDeliveryComponent } from './shipping/shipping-delivery/shipping-delivery.component';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 import { PaymentComponent } from './shipping/payment/payment.component';
 import { PromocodeComponent } from './promocode/promocode.component';
 import { CreatePromoComponent } from './promocode/create-promo/create-promo.component';
 import { OrdersComponent } from './orders/orders.component';
-import { QRCodeModule } from 'angularx-qrcode';
+
 import { VerifyBillComponent } from './verify-bill/verify-bill.component';
 import { RiderComponent } from './rider/rider.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -60,20 +68,18 @@ import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
 import { RiderDashComponent } from './rider/rider-dash/rider-dash.component';
 import { SplitPipe } from './split.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RiderOrdersComponent } from './rider/rider-orders/rider-orders.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatRippleModule } from '@angular/material/core';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatIconModule } from '@angular/material/icon';
 import { OrderStatusStepperComponent } from './orders/order-status-stepper/order-status-stepper.component';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
-import { ChatRiderComponent } from './orders/chat-rider/chat-rider.component'; 
+import { ChatRiderComponent } from './orders/chat-rider/chat-rider.component';
+import { MatRippleModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ProfileSidebarComponent } from './profile/profile-sidebar/profile-sidebar.component';
+import { ProfileAccountComponent } from './profile/profile-account/profile-account.component';
+import { ProfilePasswordComponent } from './profile/profile-password/profile-password.component';
 
 // export function initializeWebSocket(
 //   authService: AuthService,
@@ -139,6 +145,10 @@ import { ChatRiderComponent } from './orders/chat-rider/chat-rider.component';
     ForgotPasswordComponent,
     PasswordInputComponent,
     ChatRiderComponent,
+    ProfileComponent,
+    ProfileSidebarComponent,
+    ProfileAccountComponent,
+    ProfilePasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -160,7 +170,7 @@ import { ChatRiderComponent } from './orders/chat-rider/chat-rider.component';
     MatInputModule,
     MatAutocompleteModule,
     MatSnackBarModule,
-    MatChipsModule, 
+    MatChipsModule,
   ],
   providers: [
     AuthService,

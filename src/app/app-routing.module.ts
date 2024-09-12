@@ -25,11 +25,14 @@ import { SingleOrderComponent } from './orders/single-order/single-order.compone
 import { VerifyBillComponent } from './verify-bill/verify-bill.component';
 import { RiderComponent } from './rider/rider.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfilePasswordComponent } from './profile/profile-password/profile-password.component';
+import { ProfileAccountComponent } from './profile/profile-account/profile-account.component';
 // import { WebsocketService } from './services/websocket.service';
 
 const routes: Routes = [
-  // { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
-  // { path: 'contact', component: ContactusComponent },
+  { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
+  { path: 'contact', component: ContactusComponent },
   { path: 'login', component: LoginComponent },
   {
     path: 'registration',
@@ -45,17 +48,23 @@ const routes: Routes = [
     component: VerifyBillComponent,
   },
   {
-    path: 'edit_profile',
-    component: EditProfileComponent,
+    path: 'profile',
+    component: ProfileComponent,
     canActivate: [AuthGuard],
+    children: [
+      { path: '', component: EditProfileComponent },
+      { path: 'password', component: ProfilePasswordComponent },
+      { path: 'account', component: ProfileAccountComponent },
+    ],
   },
   {
     path: 'promocode',
     component: PromocodeComponent,
     canActivate: [AuthGuard],
-  },  {
+  },
+  {
     path: 'forgot_password',
-    component: ForgotPasswordComponent
+    component: ForgotPasswordComponent,
   },
   {
     path: 'my_orders',
@@ -102,10 +111,12 @@ const routes: Routes = [
   {
     path: 'product/:id',
     component: SingleProductComponent,
-  },  {
+  },
+  {
     path: 'dash',
     component: RiderComponent,
-  }, {
+  },
+  {
     path: 'admin_orders',
     component: AdminOrdersComponent,
   },
@@ -126,6 +137,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {
- 
-}
+export class AppRoutingModule {}

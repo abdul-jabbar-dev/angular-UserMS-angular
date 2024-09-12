@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { RequestService } from 'src/app/services/request.service';
 import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
+  MatSnackBar
 } from '@angular/material/snack-bar';
 interface TUser {
   new_password?: string;
@@ -27,7 +25,16 @@ export class EditProfileComponent implements OnInit {
   toggoleShow() {
     this.isVisible = !this.isVisible;
   }
-  profile: TUser | null = null;
+  profile: TUser = {
+    new_password: '',
+    role: 'subscriber',
+    first_name: '',
+    email: '',
+    username: '',
+    last_name: '',
+    age: 0,
+    phone: '',
+  };
   isVisible = false;
 
   constructor(public request: RequestService, private _snackBar: MatSnackBar) {}

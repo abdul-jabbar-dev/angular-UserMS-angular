@@ -1,20 +1,18 @@
-<div class="parentClass w-full    ">
+<div class="parentClass w-full">
     <app-navbar></app-navbar>
-    <div class="w-full flex">
-        <!-- <div [@slideInOut]="isVisible.toString()" *ngIf="routeService.showSidebar" class="relative w-72 h-full"> -->
+    <div class="w-full flex ">
+        <div [@slideInOut]="isVisible.toString()" *ngIf="routeService.showSidebar" class=" w-72 h-full">
             <app-sidebar *ngIf="routeService.showSidebar"></app-sidebar>
-        <!-- </div> -->
-        <div class="flex-1 w-full flex justify-end ">
+
+        </div>
+        <div class="flex-1 w-full flex justify-end relative">
+            <div [ngClass]="{'-left-4':isVisible,}" class="example-button-container mt-6 absolute left-0">
+                <button (click)="toggleSideBar()" mat-mini-fab color="primary"
+                    class="px-3 py-2 hover:bg-gray-200 rounded-full">
+                    <mat-icon class="w-8 h-8">{{!isVisible?'menu':'close'}}</mat-icon>
+                </button>
+            </div>
             <div *ngIf="routeService.showSidebar" class="container mx-auto mr">
-
-
-                <!-- <div class="example-button-container mt-6">
-                    <button (click)="toggleSideBar()" mat-mini-fab color="primary"
-                        class="px-3 py-2 hover:bg-gray-200 rounded-full">
-                        <mat-icon class="w-8 h-8">{{!isVisible?'menu':'close'}}</mat-icon>
-                    </button>
-                </div> -->
-
 
                 <router-outlet></router-outlet>
             </div>

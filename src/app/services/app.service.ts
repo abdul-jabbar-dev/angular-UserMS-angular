@@ -18,12 +18,15 @@ export class RouteService {
   }
   async checkRoute(url: string) {
     if (url.includes('/verify/')) {
-      this.showSidebar = false;
     } else if (url === '/login' || url === '/registration') {
       const res = await this.auth.getProfile();
+
       if (res?.data?.user?.id) {
         this.router.navigate(['/']);
+      } else {
+        return;
       }
+
       this.showSidebar = false;
     } else {
       this.showSidebar = true;

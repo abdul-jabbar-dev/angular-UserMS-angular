@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { RequestService } from '../services/request.service';
-import { CookieService } from 'ngx-cookie-service';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,7 +16,6 @@ export class ForgotPasswordComponent {
 
   constructor(
     public request: RequestService,
-    protected cookie: CookieService,
     private router: Router
   ) {}
 
@@ -41,9 +40,6 @@ export class ForgotPasswordComponent {
           })
         );
         if (res?.reset_code && !this.match_password) {
-          const expiryDate = new Date();
-          expiryDate.setTime(expiryDate.getTime() + 2 * 60 * 1000);
-          this.cookie.set('reset_token', res.email, { expires: expiryDate });
           this.codeInfo = res;
           console.log(res);
           this.sendedCode = true;

@@ -10,7 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class LoginComponent {
   error = '';
 
-  // constructor(public auth: AuthService) {}
+  constructor(public auth: AuthService) {}
 
   loginUserForm = new FormGroup({
     email: new FormControl<string>('', [Validators.required, Validators.email]),
@@ -21,19 +21,19 @@ export class LoginComponent {
   });
 
   async onSubmit() {
-    // try {
-    //   const data = this.loginUserForm.getRawValue();
-    //   if (data.email&&data.password) {
-    //     const result = await this.auth.signInWithEmail(data);
-    //     this.error = ''; 
-    //   }else{
+    try {
+      const data = this.loginUserForm.getRawValue();
+      if (data.email&&data.password) {
+        const result = await this.auth.signInWithEmail(data);
+        this.error = ''; 
+      }else{
 
-    //   }
-    // } catch (error) { 
-    //   this.error = error as string;
-    //   setTimeout(() => {
-    //     this.error = '';
-    //   }, 5000);0
-    // }
+      }
+    } catch (error) { 
+      this.error = error as string;
+      setTimeout(() => {
+        this.error = '';
+      }, 5000);0
+    }
   }
 }
