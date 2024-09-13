@@ -4,7 +4,6 @@ import { RequestService } from './request.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { StoreService } from './store.service';
-import { take } from 'rxjs/operators';
 
 interface TProduct {
   price: number;

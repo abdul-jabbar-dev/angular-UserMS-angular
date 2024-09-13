@@ -1,3 +1,5 @@
+import { DialogStaticComponent } from './../components/common/dialog-static/dialog-static.component';
+ 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -6,7 +8,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { QRCodeModule } from 'angularx-qrcode';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ProfileComponent } from './profile/profile.component';
-import { WebsocketService } from './services/websocket.service';
 import { PasswordInputComponent } from './../components/common/password-input/password-input.component';
 import { GlobalGuard } from './GlocalGuard';
 import { SingleOrderComponent } from './orders/single-order/single-order.component';
@@ -29,7 +30,7 @@ import { RouterLinkService } from './services/router-link.service';
 import { RouteService } from './services/app.service';
 import { SidebarComponent } from './../components/sidebar/sidebar.component';
 import { NavbarComponent } from './../components/navbar/navbar.component';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -80,6 +81,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ProfileSidebarComponent } from './profile/profile-sidebar/profile-sidebar.component';
 import { ProfileAccountComponent } from './profile/profile-account/profile-account.component';
 import { ProfilePasswordComponent } from './profile/profile-password/profile-password.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // export function initializeWebSocket(
 //   authService: AuthService,
@@ -102,6 +104,7 @@ import { ProfilePasswordComponent } from './profile/profile-password/profile-pas
 
 @NgModule({
   declarations: [
+    DialogStaticComponent,
     AppComponent,
     ChildComponentComponent,
     AboutComponent,
@@ -155,6 +158,7 @@ import { ProfilePasswordComponent } from './profile/profile-password/profile-pas
     AppRoutingModule,
     FormsModule,
     MatSlideToggleModule,
+    MatDialogModule,
     ReactiveFormsModule,
     QRCodeModule,
     HttpClientModule,
@@ -170,7 +174,7 @@ import { ProfilePasswordComponent } from './profile/profile-password/profile-pas
     MatInputModule,
     MatAutocompleteModule,
     MatSnackBarModule,
-    MatChipsModule,
+    MatChipsModule, 
   ],
   providers: [
     AuthService,

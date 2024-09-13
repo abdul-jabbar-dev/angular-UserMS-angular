@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { RequestService } from 'src/app/services/request.service';
-import {
-  MatSnackBar
-} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 interface TUser {
   new_password?: string;
   role?: 'admin' | 'subscriber' | 'rider';
@@ -60,21 +58,29 @@ export class EditProfileComponent implements OnInit {
   async saveProfile() {
     this.isUpdating = true;
     try {
-      console.log(this.profile);
       const response = await firstValueFrom(
         await this.request.put('/user/update_profile', this.profile)
       );
       if (response) {
-        this._snackBar.open('Profile successfully updated', 'Close', {
+        this._snackBar.open('Profile successfully updated', '', {
           duration: 3000,
           horizontalPosition: 'end',
           verticalPosition: 'bottom',
-          panelClass: ['custom-snackbar'],
+          panelClass: ['custom-snackbar-green'],
         });
         this.isUpdating = false;
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error.error.message) {
+        this._snackBar.open(error.error.message, '', {
+          duration: 5000,
+          horizontalPosition: 'end',
+          verticalPosition: 'bottom',
+          panelClass: ['custom-snackbar-red'],
+        });
+      }
       console.error('Error updating profile:', error);
+      await this.getProfile();
     }
     this.isUpdating = false;
   }

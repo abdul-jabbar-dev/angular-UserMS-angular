@@ -64,7 +64,7 @@
                             <select formControlName="status"
                                 class="px-4 py-3 font-normal my-2 rounded  appearance-none bg-white border text-black"
                                 name="status" id="status">
-                                <option class="text-green-800" value="available">Available</option>
+                                <option class="text-teal-800" value="available">Available</option>
                                 <option class=" " value="hide">Hide</option>
                             </select>
                             <div class="text-red-800 m-0 p-0 text-sm"
@@ -112,10 +112,10 @@
 
 
                 <span *ngIf="isEditable" class="flex flex-col gap-y-4">
-                    <span class="hover:underline hover:text-green-900 active:text-red-700"
+                    <span class="hover:underline hover:text-teal-900 active:text-red-700"
                         (click)="closeUpdate()">Close</span>
                     <button type="submit"
-                        class="hover:underline hover:text-green-900 active:text-red-700">Confirm</button>
+                        class="hover:underline hover:text-teal-900 active:text-red-700">Confirm</button>
 
                 </span>
             </div>
@@ -136,7 +136,7 @@
 
     </li>
     <span *ngIf="isSuccess"
-        class="px-6 py-2 rounded-md bg-green-100 text-gray-600 absolute bottom-0 right-0 border-b-2 border-green-300">
+        class="px-6 py-2 rounded-md bg-teal-100 text-gray-600 absolute bottom-0 right-0 border-b-2 border-teal-300">
         Product Update Successfully
     </span>
 </span>
