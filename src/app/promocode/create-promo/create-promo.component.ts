@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { firstValueFrom } from 'rxjs';
 import { RequestService } from 'src/app/services/request.service';
 
@@ -57,7 +58,11 @@ export class CreatePromoComponent implements OnDestroy {
     ]),
   });
 
-  constructor(private fb: FormBuilder, protected request: RequestService) {}
+  constructor(
+    private fb: FormBuilder,
+    protected request: RequestService,
+    public _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.createPromoForm = this.fb.group({
@@ -95,10 +100,13 @@ export class CreatePromoComponent implements OnDestroy {
           await this.request.create('/promo/create', promocode)
         );
         if (result) {
+          this._snackBar.open('New promocode created..', '', {
+            duration: 5000,
+            horizontalPosition: 'end',
+            verticalPosition: 'bottom',
+            panelClass: ['custom-snackbar-green'],
+          });
           this.successEvent(true);
-          setTimeout(() => {
-            this.successEvent(false);
-          }, 3000);
         }
         this.createPromoForm.reset();
       } else {

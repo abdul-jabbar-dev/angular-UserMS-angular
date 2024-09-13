@@ -33,6 +33,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { RequestService } from 'src/app/services/request.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-my-products',
@@ -44,7 +45,8 @@ export class EditMyProductsComponent implements OnInit, OnChanges {
   constructor(
     public supabase: SupabaseService,
     public request: RequestService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    public _snackBar: MatSnackBar
   ) {}
   @Input() item: any;
   @Output() updatedProduct = new EventEmitter<any>();
@@ -228,6 +230,12 @@ export class EditMyProductsComponent implements OnInit, OnChanges {
     this.isSuccess = true;
     if (updatedResult) {
       this.updatedProduct.emit(updatedResult);
+      this._snackBar.open('Product updated', '', {
+        duration: 5000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        panelClass: ['custom-snackbar-green'],
+      });
     }
 
     this.isUpdating = false;

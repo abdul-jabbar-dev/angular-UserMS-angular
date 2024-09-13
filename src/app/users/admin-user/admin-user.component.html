@@ -93,7 +93,7 @@
 
                                     <div class="flex items-center gap-x-6 w-full justify-between">
 
-                                        <button (click)="toggleStatus(user.id)">
+                                        <button (click)="toggleStatus(user.id,user.username,user.status)">
 
                                             <span *ngIf="user.status==='active'; else icon ">
 
@@ -175,7 +175,7 @@
                                             </button>
 
                                         </button>
-                                        <button (click)="deleteItem(user.id)">
+                                        <button (click)="deleteItem(user.id,user.username)">
 
 
 

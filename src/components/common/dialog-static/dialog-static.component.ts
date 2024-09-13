@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dialog-static',
@@ -6,4 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./dialog-static.component.css'],
 })
 export class DialogStaticComponent {
+  title: string = '';
+  desc: string = '';
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+    this.title = data.title; // 'Value 1'
+    this.desc = data.desc; // 'Value 2'
+  }
 }

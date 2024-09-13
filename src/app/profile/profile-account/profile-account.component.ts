@@ -20,6 +20,10 @@ export class ProfileAccountComponent {
   async openDialog() {
     const dialogRef = this.dialog.open(DialogStaticComponent, {
       maxWidth: '500px',
+      data: {
+        title: 'Are you sure?',
+        desc: 'Do you really want to delete your account? This process cannot be undone.',
+      },
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
