@@ -7,7 +7,12 @@ import { StoreService } from './store.service';
 import { Router } from '@angular/router';
 import { RequestService } from './request.service';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
-
+interface DeviceInfo {
+  address: string | null;
+  deviceId: string;
+  userAgent: string;
+  platform: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -76,16 +81,31 @@ export class AuthService {
     }
   }
 
-  async signInWithEmail(data: any) {
+  async signInWithEmail(data: any, devInfor: DeviceInfo | null) {
     try {
+      let meta = {};
+      const exist = localStorage.getItem('session_device');
+      if (exist) {
+        meta = {
+          exist: true,
+          storeDevId: exist,
+        };
+      } else {
+        meta = {
+          exist: false,
+          deviceInfo: devInfor,
+        };
+      }
+
       const result = await firstValueFrom(
         await this.request.create('/user/login', {
           email: data?.email,
           password: data?.password,
+          meta,
         })
       );
-      console.log(result);
       if (result.token) {
+        localStorage.setItem('session_device', devInfor?.deviceId!);
         this.store.addTokenFromStore(result.token);
         await this.handleAuthSuccess();
       }
@@ -113,7 +133,7 @@ export class AuthService {
       return null;
     }
   }
- async getProfileObs() {
+  async getProfileObs() {
     try {
       const result = await firstValueFrom(
         await this.request.get('/user/get_my_profile')

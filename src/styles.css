@@ -9,6 +9,22 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+.product-title {
+    display: -webkit-box;
+    /* Fallback for older browsers */
+    -webkit-line-clamp: 2;
+    /* Limit the number of lines */
+    -webkit-box-orient: vertical;
+    /* Vertical orientation for the box */
+    overflow: hidden;
+    /* Hide the overflowing text */
+    text-overflow: ellipsis;
+    /* Show ellipsis for overflowing text */
+    line-height: 1.2em;
+    /* Adjust line height as needed */
+    height: 3em;
+    /* Adjust based on the number of lines and line height */
+}
 
 .mat-horizontal-content-container {
     display: none !important;
@@ -119,15 +135,24 @@ body {
 }
 
 
- .custom-snackbar-green * {
+.custom-snackbar-green * {
     border-radius: 5px !important;
     background-color: #4caf50 !important;
     color: white !important;
 }
- .custom-snackbar-red * {
+
+.custom-snackbar-red * {
     border-radius: 5px !important;
     background-color: #f1332c !important;
     color: white !important;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

@@ -89,14 +89,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
         isAuthorization: true,
         icon: '/assets/icon/nav/Orders.svg',
       },
-      {
-        title: 'Favourite',
-        id: 'favourite',
-        link: '/favourite',
-        isActive: false,
-        icon: '/assets/icon/nav/Love.svg',
-        isAuthorization: true,
-      },
+      // {
+      //   title: 'Favourite',
+      //   id: 'favourite',
+      //   link: '/favourite',
+      //   isActive: false,
+      //   icon: '/assets/icon/nav/Love.svg',
+      //   isAuthorization: true,
+      // },
     ];
     this.userMenus = [
       {

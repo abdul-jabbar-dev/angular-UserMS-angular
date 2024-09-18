@@ -158,22 +158,34 @@
 
                                         </button>
 
-                                        <button>
+                                        <button class="text-sm" (click)="toggleRole(user.id)">
+                                            <span *ngIf="user.role === 'subscriber'; else roletemp"
+                                                class="uppercase hover:underline text-white hover:text-teal-700">
+                                                Promot as Rider
+                                            </span>
 
-                                            <button class="text-sm" (click)="toggleRole(user.id)">
-                                                <span *ngIf="user.role==='subscriber'; else roletemp "
-                                                    class=" uppercase hover:underline text-white hover:text-teal-700 ">
-                                                    Make Admin
-
+                                            <ng-template #roletemp>
+                                                <span *ngIf="user.role === 'admin'; else riderTemplate"
+                                                    class="uppercase hover:underline text-white hover:text-red-700">
+                                                    Demote as Subscriber
                                                 </span>
 
-                                                <ng-template #roletemp>
-                                                    <span
-                                                        class=" uppercase hover:underline text-white hover:text-red-700 ">Remove
-                                                        Admin</span>
+                                                <!-- New block for rider -->
+                                                <ng-template #riderTemplate>
+                                                    <span *ngIf="user.role === 'rider'; else defaultRoleTemplate"
+                                                        class="uppercase hover:underline text-white hover:text-yellow-700">
+                                                        Promote as Admin
+                                                    </span>
                                                 </ng-template>
-                                            </button>
 
+                                                <!-- Default fallback role block -->
+                                                <ng-template #defaultRoleTemplate>
+                                                    <span
+                                                        class="uppercase hover:underline text-white hover:text-gray-700">
+                                                        Assign Role from database
+                                                    </span>
+                                                </ng-template>
+                                            </ng-template>
                                         </button>
                                         <button (click)="deleteItem(user.id,user.username)">
 

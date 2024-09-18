@@ -1,16 +1,22 @@
-import { AuthService } from 'src/app/services/auth.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
+import { ReverseGeocodingService } from 'src/app/services/reverse-geocoding.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   error = '';
-
-  constructor(public auth: AuthService) {}
+  address: string | null = null;
+  deviceInformation: {
+    address: string | null;
+    deviceId: string;
+    userAgent: string;
+    platform: string;
+  } | null = null;
 
   loginUserForm = new FormGroup({
     email: new FormControl<string>('', [Validators.required, Validators.email]),
@@ -20,20 +26,41 @@ export class LoginComponent {
     ]),
   });
 
+  constructor(
+    private auth: AuthService,
+    private geoService: ReverseGeocodingService
+  ) {}
+
+  async ngOnInit() {
+    try {
+      this.address = await this.geoService.getAddress();
+      this.deviceInformation = {
+        address: this.address,
+        deviceId: this.geoService.getDeviceId(),
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+      };
+    } catch (error) {
+      this.error =
+        'Failed to get location or address: ' + (error as any).message;
+      console.error('Error:', this.error);
+    }
+  }
+
   async onSubmit() {
     try {
       const data = this.loginUserForm.getRawValue();
-      if (data.email&&data.password) {
-        const result = await this.auth.signInWithEmail(data);
-        this.error = ''; 
-      }else{
-
+      if (data.email && data.password) {
+        await this.auth.signInWithEmail(data, this.deviceInformation);
+        this.error = '';
+      } else {
+        this.error = 'Email and password are required';
       }
-    } catch (error) { 
-      this.error = error as string;
+    } catch (error) {
+      this.error = 'Login failed: ' + (error as any).message;
       setTimeout(() => {
         this.error = '';
-      }, 5000);0
+      }, 5000);
     }
   }
 }

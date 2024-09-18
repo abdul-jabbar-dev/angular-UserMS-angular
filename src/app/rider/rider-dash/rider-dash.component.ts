@@ -18,7 +18,6 @@ export class RiderDashComponent implements OnChanges {
     await this.getMyHis();
     this.orders?.subscribe((res) => {
       this.allOrders = res;
-      console.log(res);
     });
   }
 

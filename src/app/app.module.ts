@@ -1,7 +1,6 @@
+import { ReverseGeocodingService } from './services/reverse-geocoding.service';
 import { DialogStaticComponent } from './../components/common/dialog-static/dialog-static.component';
- 
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatInputModule } from '@angular/material/input';
+
 import { MatStepperModule } from '@angular/material/stepper';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -73,15 +72,21 @@ import { RiderOrdersComponent } from './rider/rider-orders/rider-orders.componen
 import { OrderStatusStepperComponent } from './orders/order-status-stepper/order-status-stepper.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatChipsModule } from '@angular/material/chips';
 import { ChatRiderComponent } from './orders/chat-rider/chat-rider.component';
 import { MatRippleModule } from '@angular/material/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
+
 import { ProfileSidebarComponent } from './profile/profile-sidebar/profile-sidebar.component';
 import { ProfileAccountComponent } from './profile/profile-account/profile-account.component';
 import { ProfilePasswordComponent } from './profile/profile-password/profile-password.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HeroBrandingComponent } from './products/all-products/hero-branding/hero-branding.component';
+
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatChipListbox, MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatOptionModule } from '@angular/material/core';
 
 // export function initializeWebSocket(
 //   authService: AuthService,
@@ -105,7 +110,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     DialogStaticComponent,
-    AppComponent,
     ChildComponentComponent,
     AboutComponent,
     ContactusComponent,
@@ -152,6 +156,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ProfileSidebarComponent,
     ProfileAccountComponent,
     ProfilePasswordComponent,
+    AppComponent,
+    HeroBrandingComponent,
   ],
   imports: [
     BrowserModule,
@@ -173,15 +179,17 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
+    MatOptionModule,
     MatSnackBarModule,
-    MatChipsModule, 
+    MatChipsModule, // Ensure MatChipsModule is imported
+    MatAutocompleteModule,
   ],
   providers: [
     AuthService,
     RouteService,
     RouterLinkService,
     SupabaseService,
-    // WebsocketService,
+    // WebSocketService,
     StoreService,
     ShippingService,
     RequestService,
@@ -189,6 +197,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     StatusGuard,
     SharedModule,
     GlobalGuard,
+    ReverseGeocodingService,
     // {
     //   provide: APP_INITIALIZER,
     //   useFactory: initializeWebSocket,

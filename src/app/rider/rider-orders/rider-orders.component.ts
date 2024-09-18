@@ -54,8 +54,7 @@ export class RiderOrdersComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['orders']) {
-      console.log(this.orders);
+    if (changes['orders']) { 
       this.orders?.subscribe((res) => {
         this.allOrders = res;
 

@@ -1,74 +1,63 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WebsocketService {
-  public socket!: Socket;
-  private readonly uri: string = 'http://localhost:3000';
-  private userId!: string;
+export class WebSocketService {
+  private socket!: Socket;
+  private activeUsersSubject = new Subject<any>();
 
-  constructor() {}
+  constructor(private authService: AuthService) {}
 
-  // Initialize the WebSocket connection
-  async initializeSocket(userId: string): Promise<void> {
+  async connect(): Promise<void> {
     try {
-      if (userId) {
-        this.socket = io(this.uri, {
-          transports: ['websocket'],
-          query: { userID: userId },
-        });
-      } else {
-        throw new Error('No user ID provided');
-      }
+      const profile = await this.authService.getProfile();
+      const userId = profile.id;
+      this.socket = io('http://localhost:3000', {
+        path: '/realtime',
+        query: {
+          userId: userId,
+        },
+      });
+      console.log('WebSocket connection initialized with userId:', userId);
+
+      // Listen for active users event
+      this.socket.on('activeUsers', (users: any) => {
+        this.activeUsersSubject.next(users);
+      });
     } catch (error) {
-      console.error('Error initializing WebSocket:', error);
+      console.error('Error connecting to WebSocket:', error);
     }
+  }
+  // Get active users as an observable
+  getActiveUsers(): Observable<any> {
+    const res = this.activeUsersSubject.asObservable();
+
+    return res;
   }
 
-  // Emit a message to the server
-  sendMessage(event: string, message: any) {
-    if (this.socket) {
-      this.socket.emit(event, message);
-    } else {
-      console.error('Socket is not initialized.');
-    }
+  sendMessage(event: string, data: any): void {
+    this.socket.emit(event, data);
   }
-  listen(eventName: string) {
+
+  onMessage(event: string): Observable<any> {
     return new Observable((subscriber) => {
-      this.socket.on(eventName, (data) => {
+      this.socket.on(event, (data: any) => {
         subscriber.next(data);
       });
-    });
-  }
-  // Listen for a message from the server
-  onMessage(event: string): Observable<any> {
-    return new Observable((observer) => {
-      this.socket.on(event, (data) => {
-        observer.next(data);
-      });
+
       return () => {
         this.socket.off(event);
       };
     });
   }
 
-  // Disconnect the WebSocket
-  disconnect() {
-    this.socket?.disconnect();
-  }
-
-  // Request active users and listen for updates in real-time
-  getActiveUsers(id: string): Observable<boolean> {
-    this.socket.emit('getActiveUsers');
-
-    return new Observable((observer) => {
-      this.socket.on('activeUsers', (activeUsers) => {
-       
-        observer.next(activeUsers.includes(id + ''));
-      });
-    });
+  disconnect(): void {
+    if (this.socket) {
+      this.socket.disconnect();
+    }
   }
 }

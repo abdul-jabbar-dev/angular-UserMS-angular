@@ -1,4 +1,4 @@
-import {
+ import {
   animate,
   state,
   style,
@@ -6,7 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { RouteService } from './services/app.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,10 +22,12 @@ import { Component } from '@angular/core';
     ]),
   ],
 })
-export class AppComponent {
+export class AppComponent  {
   isVisible = true;
   toggleSideBar() {
     this.isVisible = !this.isVisible;
   }
-  constructor(public routeService: RouteService) {}
+  constructor(
+    public routeService: RouteService 
+  ) {} 
 }

@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class RequestService {
-  // private apiUrl = 'https://angular-userms-nest-knex-production.up.railway.app'; //valid
+  private apiUrl = 'https://angular-userms-nest-knex-production.up.railway.app'; //valid
   // private apiUrl = 'https://angular-userms-nest-knex.onrender.com';
-  public apiUrl = 'http://localhost:3000';
+  // public apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient, public store: StoreService) {}
 
