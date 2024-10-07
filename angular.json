@@ -20,7 +20,10 @@
               "html2canvas",
               "qrcode",
               "canvg",
-              "color-convert"
+              "color-convert",
+              "core-js",
+              "raf",
+              "rgbcolor"
             ],
             "outputPath": "dist/test-supabse",
             "index": "src/index.html",

@@ -191,6 +191,7 @@ export class EditMyProductsComponent implements OnInit, OnChanges {
         'products/' + this.selectedImage.name,
         this.selectedImage.file as File
       );
+      console.log(data);
       await this.supabase.deleteAvatar(this.item.image);
       if (data) {
         this.productEdit.patchValue({
@@ -244,8 +245,7 @@ export class EditMyProductsComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.setDefaultValue();
   }
-  ngOnChanges(c: any) {
-    console.log(this.item);
+  ngOnChanges(c: any) { 
     this.setDefaultValue();
   }
 

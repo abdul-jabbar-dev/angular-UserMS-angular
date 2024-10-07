@@ -5,13 +5,14 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
   providedIn: 'root',
 })
 export class SupabaseService {
-  private supabaseUrl: string = 'https://vdlbpitmjmlzfxhvgyxo.supabase.co';
+  private supabaseUrl: string = 'https://hjbmpwhdfhhbabkepizk.supabase.co';
   private supabaseKey: string =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkbGJwaXRtam1semZ4aHZneXhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI3NzM2NzgsImV4cCI6MjAzODM0OTY3OH0.yKAebcoV2IF5a-FoMXkhfptUNQPAuK12rmEiWCYUQPg';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhqYm1wd2hkZmhoYmFia2VwaXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI5NDM5MjUsImV4cCI6MjAzODUxOTkyNX0._7FiD-vFeN0wjbDd7pwnKA8-iJ6Po-7hXybP4AefnAE';
   supabase: SupabaseClient;
 
   constructor() {
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
+ 
   }
 
   async getData(table: string) {
@@ -24,7 +25,7 @@ export class SupabaseService {
 
   async insertData(table: string, newData: any) {
     let data = await this.supabase.from(table).insert(newData);
- 
+
     if (data?.error) {
       console.error('Error inserting data:', data?.error);
     } else {
@@ -51,7 +52,7 @@ export class SupabaseService {
     }
     return data;
   }
-  async uploadAvatar(filePath: string, file: File) {
+  async uploadAvatar(filePath: string, file: File) { 
     return await this.supabase.storage
       .from('media')
       .upload(filePath + '__' + Date.now(), file, {
