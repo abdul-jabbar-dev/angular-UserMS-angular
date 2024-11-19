@@ -13,9 +13,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { ShippingService } from 'src/app/services/shipping.service';
-import { RequestService } from 'src/app/services/request.service';
-import { firstValueFrom } from 'rxjs';
-
+import { RequestService } from 'src/app/services/request.service'; 
 @Component({
   selector: 'app-shipping-address',
   templateUrl: './shipping-address.component.html',
@@ -44,7 +42,7 @@ export class ShippingAddressComponent
     username: string;
     email: string;
     phone: string;
-    role: 'admin' | 'subscriber'|'rider';
+    role: 'admin' | 'subscriber' | 'rider';
     status: 'active' | 'deactive';
     age: number | null;
     created_at: string;
@@ -77,7 +75,8 @@ export class ShippingAddressComponent
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['exist']?.currentValue?.id) {
+    console.log(changes)
+    if (changes['exist']?.currentValue?.order_id) {
       this.billingForm.patchValue({
         phone: this.exist.shipping_phone,
         email: this.exist.shipping_email,
@@ -95,6 +94,7 @@ export class ShippingAddressComponent
   async ngOnInit() {
     try {
       this.user = await this.auth.getProfile();
+ 
       this.billingForm.patchValue({
         email: this.user?.email,
         phone: this.user?.phone,

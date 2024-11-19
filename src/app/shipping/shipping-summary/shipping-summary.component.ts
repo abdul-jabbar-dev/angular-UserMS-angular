@@ -30,13 +30,13 @@ export class ShippingSummaryComponent implements OnInit {
   ngOnInit(): void {
     this.shipping.product$.subscribe((data) => {
       this.product = data;
-      this.calculateTotal(); 
+      this.calculateTotal();
     });
 
-    this.shipping.shippingOrder$.subscribe((data) => {
+    this.shipping.shippingOrder$.subscribe((data) => { 
       this.shippingCost = data.shippingSpot;
       this.coupon = data.coupon;
-      this.calculateTotal(); 
+      this.calculateTotal();
     });
   }
 

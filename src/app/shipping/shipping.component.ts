@@ -20,11 +20,6 @@ import { format } from 'date-fns';
 })
 export class ShippingComponent implements OnInit, OnDestroy {
   @Input() isMessage: string = '';
-
-  time: string;
-  param: string | null = null;
-  private intervalId: any;
-
   @Output() product: {
     price: number;
     id: string;
@@ -36,6 +31,11 @@ export class ShippingComponent implements OnInit, OnDestroy {
   } | null = null;
 
   @Output() exist: any;
+
+  time: string;
+  param: string | null = null;
+  private intervalId: any;
+
 
   constructor(
     protected route: ActivatedRoute,
@@ -82,6 +82,7 @@ export class ShippingComponent implements OnInit, OnDestroy {
 
       await this.getProducts(this.param);
 
+      console.log(this.product);
       const res = await this.shipping.getExistingOrder(this.product as any);
     });
 

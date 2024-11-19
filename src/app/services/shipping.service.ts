@@ -201,6 +201,7 @@ export class ShippingService implements OnInit {
       const result: ShippingType = await firstValueFrom(
         await this.request.get(`/shipping/${product.id}`)
       );
+      console.log(result)
       this.setShippingDetailsFroDB(result);
       return result;
     }
