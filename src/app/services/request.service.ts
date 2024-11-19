@@ -6,20 +6,19 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-
 export class RequestService {
-  private apiUrl = 'https://angular-userms-nest-knex-production.up.railway.app';//valid
+  private apiUrl = 'https://tasty-dorthea-totocompany-d5f6d16c.koyeb.app'; //valid
   // private apiUrl = 'https://angular-userms-nest-knex.onrender.com';
-//  public apiUrl = 'http://localhost:3000'; 
+  //  public apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient, public store: StoreService) {}
 
   async get(
     pref: string,
     query?: Record<string, string | number | boolean | null>
-  ): Promise<Observable<any>> { 
+  ): Promise<Observable<any>> {
     try {
-       let options = { headers: new HttpHeaders(), params: new HttpParams() };
+      let options = { headers: new HttpHeaders(), params: new HttpParams() };
 
       const token = this.store.getTokenFromStore() as string;
       if (token && token.length > 15) {
@@ -40,12 +39,12 @@ export class RequestService {
         headers: options.headers,
         params: options.params,
       });
-    } catch (error) { 
+    } catch (error) {
       throw new Error(JSON.stringify(error));
     }
   }
 
-  async put(pref: string, body: any): Promise<Observable<any>> { 
+  async put(pref: string, body: any): Promise<Observable<any>> {
     let options = { headers: new HttpHeaders() };
 
     const token = this.store.getTokenFromStore() as string;

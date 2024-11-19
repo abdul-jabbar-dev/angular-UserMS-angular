@@ -1,7 +1,7 @@
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { Component, OnInit } from '@angular/core';
 import { RequestService } from 'src/app/services/request.service';
- import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 
 interface TProduct {
   id: string | number;

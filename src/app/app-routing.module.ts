@@ -52,9 +52,10 @@ const routes: Routes = [
     path: 'promocode',
     component: PromocodeComponent,
     canActivate: [AuthGuard],
-  },  {
+  },
+  {
     path: 'forgot_password',
-    component: ForgotPasswordComponent
+    component: ForgotPasswordComponent,
   },
   {
     path: 'my_orders',
@@ -101,10 +102,12 @@ const routes: Routes = [
   {
     path: 'product/:id',
     component: SingleProductComponent,
-  },  {
+  },
+  {
     path: 'dash',
     component: RiderComponent,
-  }, {
+  },
+  {
     path: 'admin_orders',
     component: AdminOrdersComponent,
   },
